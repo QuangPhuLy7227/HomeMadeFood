@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">HomeMadeFood</string>
+    <string name="_3_99_delivery">$3.99 delivery</string>
+    <string name="_30_mins">30 mins</string>
+    <string name="restaurant_1">Restaurant 1</string>
+    <string name="_4_5">4.5</string>
+    <string name="_350">(350+)</string>
+    <string name="_0_6mi">0.6mi</string>
+    <string name="todo">TODO</string>
+</resources>
