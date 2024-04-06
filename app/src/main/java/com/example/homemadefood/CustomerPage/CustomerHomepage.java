@@ -10,6 +10,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantData;
 import com.example.homemadefood.R;
 
 import java.util.ArrayList;
