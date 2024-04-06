@@ -1,0 +1,32 @@
+{
+  "project_info": {
+    "project_number": "467034507523",
+    "project_id": "homemadefood-415918",
+    "storage_bucket": "homemadefood-415918.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467034507523:android:acfa41cf382dfb49184136",
+        "android_client_info": {
+          "package_name": "com.example.homemadefood"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+
+          "current_key": "AIzaSyDAPZRooUpLTeA2kLEW4BN14a7z1PuUA0k"
+
+
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

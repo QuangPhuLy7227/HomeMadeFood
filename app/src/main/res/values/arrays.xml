@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="food_categories">
+        <item>Select Food Category</item> <!-- Empty item for default text -->
+        <item>Fast Food</item>
+        <item>Breakfast</item>
+        <item>Coffee</item>
+        <item>Pizza</item>
+        <item>Burger</item>
+        <item>Sushi</item>
+    </string-array>
+</resources>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".CustomerPage.DemoAddRestaurants">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:text="Upload Restaurant's Information"
+        android:textStyle="bold"
+        android:textSize="30sp" />
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+
+        app:cardCornerRadius="30dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@drawable/lavender_border"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/uploadRestaurantImage"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
+                android:src="@drawable/photo" />
+
+            <Button
+                android:id="@+id/selectRestaurantImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                android:text="Select Image"
+                style="@style/Widget.Material3.Button.OutlinedButton.Icon" />
+
+            <Spinner
+                android:id="@+id/foodCategorySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:padding="10dp"
+                android:background="@drawable/lavender_border"
+                android:textAlignment="center"
+                android:entries="@array/food_categories" />
+
+            <EditText
+                android:id="@+id/addName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:padding="16dp"
+                android:background="@drawable/lavender_border"
+                android:hint="Add Restaurant's Name"
+                android:inputType="text" />
+
+
+            <EditText
+                android:id="@+id/addRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:padding="16dp"
+                android:background="@drawable/lavender_border"
+                android:hint="Add Rating"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/addTotalRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:padding="16dp"
+                android:background="@drawable/lavender_border"
+                android:hint="Add Total Rating"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/addDeliveryFee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:background="@drawable/lavender_border"
+                android:hint="Add Delivery Fee"
+                android:inputType="numberDecimal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/backButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/default_grey"
+                    android:textColor="@color/black"
+                    android:text="Visit Homepage" />
+
+                <Button
+                    android:id="@+id/saveRestaurantInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="20dp"
+                    android:text="Add Restaurant" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+</LinearLayout>

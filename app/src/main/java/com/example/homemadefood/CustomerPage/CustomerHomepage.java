@@ -10,8 +10,8 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantData;
 import com.example.homemadefood.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +19,6 @@ public class CustomerHomepage extends AppCompatActivity {
 
     private List<RestaurantData> dataList;
     private MyAdapter adapter;
-
     private SearchView searchView;
     private RecyclerView recyclerView;
     private ImageButton backButton;
