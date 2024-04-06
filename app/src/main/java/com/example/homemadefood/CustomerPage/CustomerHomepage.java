@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantData;
 import com.example.homemadefood.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
