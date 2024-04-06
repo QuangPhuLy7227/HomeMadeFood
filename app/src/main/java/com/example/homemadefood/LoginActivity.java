@@ -16,9 +16,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.homemadefood.CustomerPage.CustomerHomepage;
-import com.example.homemadefood.ProviderPage.ProviderHomepage;
-import com.example.homemadefood.databinding.ActivityLoginBinding;
+import com.example.homemadefood.CustomerPage.MainPage.CustomerHomepage;
+import com.example.homemadefood.ProviderPage.ProviderHomePage;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -124,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                         isUser(cusRef);
                     } else if (checkType == R.id.provider) {
                         isUser(provRef);
+
                     }
                 }
             }
@@ -169,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
                             intent.putExtra("username", usernameFromDB);
                             startActivity(intent);
                         } else if (ref == provRef) {
-                            Intent intent = new Intent(LoginActivity.this, ProviderHomepage.class);
+                            Intent intent = new Intent(LoginActivity.this, ProviderHomePage.class);
                             intent.putExtra("name", nameFromDB);
                             intent.putExtra("username", usernameFromDB);
                             startActivity(intent);

@@ -5,4 +5,7 @@
     <color name="yellow">#FEAA1A</color>
     <color name="mango">#FFC82A</color>
     <color name="banana">#FFC82A</color>
+    <color name="default_grey">#CCCCCC</color>
+    <color name="light_grey">#E1DFDF</color>
+    <color name="lavender">#8692f7</color>
 </resources>
