@@ -19,7 +19,6 @@ public class CustomerHomepage extends AppCompatActivity {
 
     private List<RestaurantData> dataList;
     private MyAdapter adapter;
-
     private SearchView searchView;
     private RecyclerView recyclerView;
     private ImageButton backButton;
