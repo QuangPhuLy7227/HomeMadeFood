@@ -16,9 +16,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.homemadefood.CustomerPage.CustomerHomepage;
-import com.example.homemadefood.ProviderPage.ProviderHomepage;
-import com.example.homemadefood.databinding.ActivityLoginBinding;
+import com.example.homemadefood.CustomerPage.MainPage.CustomerHomepage;
+import com.example.homemadefood.ProviderPage.ProviderHomePage;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -87,17 +86,20 @@ public class LoginActivity extends AppCompatActivity {
 //        });
 //    }
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
 
+
         logo = findViewById(R.id.logoLogin);
         callSignup = findViewById(R.id.call_signup);
         logoText = findViewById(R.id.logo_text_login);
         slogan = findViewById(R.id.slogan_login);
         goBtn_Login = findViewById(R.id.go_login);
+
 
         username = findViewById(R.id.username_login);
         password = findViewById(R.id.password_login);
@@ -110,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
         goBtn_Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String login_username = username.getEditText().getText().toString();
                 String login_passwd = password.getEditText().getText().toString();
                 int checkType = usertype.getCheckedRadioButtonId();
@@ -124,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                         isUser(cusRef);
                     } else if (checkType == R.id.provider) {
                         isUser(provRef);
+
                     }
                 }
             }
@@ -169,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                             intent.putExtra("username", usernameFromDB);
                             startActivity(intent);
                         } else if (ref == provRef) {
-                            Intent intent = new Intent(LoginActivity.this, ProviderHomepage.class);
+                            Intent intent = new Intent(LoginActivity.this, ProviderHomePage.class);
                             intent.putExtra("name", nameFromDB);
                             intent.putExtra("username", usernameFromDB);
                             startActivity(intent);

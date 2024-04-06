@@ -102,6 +102,7 @@ public class SignUpActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sign_up);
 
+
         logo = findViewById(R.id.logoSignup);
         callLogin = findViewById(R.id.call_login);
         logoText = findViewById(R.id.logo_text_signup);
@@ -117,6 +118,7 @@ public class SignUpActivity extends AppCompatActivity {
         regUserType = findViewById(R.id.userType);
 
         goBtn_signup.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 rootNode = FirebaseDatabase.getInstance();
@@ -148,6 +150,7 @@ public class SignUpActivity extends AppCompatActivity {
                     if (!validateConfirmPass()) {
                         Toast.makeText(SignUpActivity.this, "Please retype Password and Confirm Password", Toast.LENGTH_SHORT).show();
                         return;
+
                     } else {
                         UserHelperClass userHelperClass = new UserHelperClass(name,username,email,phone,passwd);
                         if (checkType == R.id.customer) {

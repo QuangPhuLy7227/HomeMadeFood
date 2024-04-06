@@ -44,8 +44,8 @@
       android:layout_height="wrap_content"
       android:hint="Restaurant rating"
       android:layout_marginTop="0dp"
-      android:inputType="numberDecimal"
-      android:id="@+id/resRating"/>
+      android:id="@+id/resRating"
+      android:inputType="numberDecimal"/>
 
   <EditText
       android:layout_width="match_parent"
