@@ -59,3 +59,4 @@ public class UserInfoDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 }
+

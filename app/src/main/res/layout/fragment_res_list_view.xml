@@ -70,4 +70,8 @@
         android:src="@drawable/no_result"
         android:background="@android:color/transparent" />
 
+
+
 </FrameLayout>
+
+

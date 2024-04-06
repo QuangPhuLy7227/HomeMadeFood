@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.homemadefood.RestaurantDataModel;
+
 import androidx.annotation.Nullable;
 
 public class RestaurantDatabaseHelper extends SQLiteOpenHelper {
@@ -55,3 +57,4 @@ public class RestaurantDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 }
+

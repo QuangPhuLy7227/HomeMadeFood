@@ -1,148 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".SignUpActivity">
-    
+
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#fff"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/logoSignup"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:transitionName="logo_image"
+            android:src="@drawable/food_logo" />
 
         <TextView
+            android:id="@+id/logo_text_signup"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Welcome to"
-            android:textSize="25sp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Home Made Food"
+            android:layout_height="72dp"
+            android:fontFamily="@font/bungee"
+            android:text="welcome"
+            android:textColor="@color/black"
             android:textSize="40sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"/>
+            android:transitionName="logo_text" />
 
         <TextView
+            android:id="@+id/slogan_signup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Signup Page"
+            android:text="SignUp to for new food experience"
             android:textSize="20sp"
-            android:textStyle="italic"
-            android:layout_gravity="center"
-            android:layout_marginTop="70dp"/>
+            android:transitionName="slogan"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="30dp"
-            android:padding="20dp">
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/signupUsername"
-                android:layout_width="350dp"
-                android:layout_height="60dp"
-                android:background="@drawable/yellow_box"
-                android:layout_marginTop="30dp"
-                android:padding="8dp"
-                android:hint="Username"
-                android:drawableLeft="@drawable/baseline_email_24"
-                android:drawablePadding="8dp"/>
-
-            <EditText
-                android:id="@+id/signupPassword"
-                android:layout_width="350dp"
-                android:layout_height="60dp"
-                android:background="@drawable/yellow_box"
-                android:layout_marginTop="20dp"
-                android:padding="8dp"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:drawableLeft="@drawable/baseline_lock_24"
-                android:drawablePadding="8dp"/>
-
-            <EditText
-                android:id="@+id/signupConfirm"
-                android:layout_width="350dp"
-                android:layout_height="60dp"
-                android:background="@drawable/yellow_box"
-                android:layout_marginTop="20dp"
-                android:padding="8dp"
-                android:hint="Confirm Password"
-                android:inputType="textPassword"
-                android:drawableLeft="@drawable/baseline_password_24"
-                android:drawablePadding="8dp"/>
-
-            <LinearLayout
-                android:layout_width="350sp"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/yellow_box"
-                android:layout_marginTop="20dp">
+                android:id="@+id/fullname"
+                android:hint="Fullname"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/username_signup"
+                android:hint="Username"
+                app:counterEnabled="true"
+                app:counterMaxLength="15"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/userType"
+                android:background="@drawable/white_box"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:padding="5dp">
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Usertype:"
+                    android:padding="5dp"
+                    android:textSize="16sp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="30dp"
+                    android:textStyle="bold"/>
+
+                <RadioButton
+                    android:id="@+id/customer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Customer"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="15dp"
+                    android:buttonTint="@color/black"/>
+
+                <RadioButton
+                    android:id="@+id/provider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Provider"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="10dp"
+                    android:buttonTint="@color/black"/>
+
+            </RadioGroup>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/email"
+                android:hint="Email"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Login as:"
-                    android:padding="8dp"
-                    android:drawableLeft="@drawable/baseline_account_circle_24"
-                    android:drawablePadding="8dp"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
+                    android:inputType="textEmailAddress"/>
 
-                <RadioGroup
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/phone"
+                android:hint="Phone"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp"
-                    android:id="@+id/radio1">
+                    android:inputType="number"/>
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/customer"
-                        android:text="Customer"
-                        android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/provider"
-                        android:text="Provider"
-                        android:textSize="16sp"
-                        android:layout_marginStart="30dp"/>
-                </RadioGroup>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/password_signup"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:passwordToggleEnabled="true"
+                android:hint="Password">
 
-            </LinearLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/confirm_password"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:passwordToggleEnabled="true"
+                android:hint="Confirm Password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <Button
-                android:layout_width="350dp"
-                android:layout_height="70dp"
-                android:text="Sign Up"
-                android:id="@+id/signupButton"
-                android:textSize="18sp"
-                android:layout_marginTop="30dp"
-                app:cornerRadius = "30dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/go_signup"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/loginRedirectText"
-                android:text="Already an user? Login"
-                android:layout_gravity="center"
-                android:padding="8dp"
-                android:textSize="18sp"
-                android:layout_marginTop="8dp"/>
+                android:text="GO"
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:paddingTop="5dp"
+                android:transitionName="go_button"
+                android:paddingBottom="5dp"/>
+
+            <Button
+                android:id="@+id/call_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:textColor="#000"
+                android:fontFamily="@font/antic"
+                android:text="Already have an account? LOG IN"
+                android:transitionName="log_sign"
+                android:layout_margin="5dp" />
 
         </LinearLayout>
 
     </LinearLayout>
 
 </ScrollView>
+
+

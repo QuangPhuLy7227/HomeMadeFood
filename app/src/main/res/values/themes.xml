@@ -1,7 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.HomeMadeFood" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorAccent">@android:color/white</item>
+
+
+    <style name="Base.Theme.HomeMadeFood" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+         <item name="colorPrimary">@color/black</item>
+
     </style>
 
 <!--    <style name="AppTheme.MenuTextStyle" parent="@android:style/TextAppearance.Widget.IconMenu.Item">-->
@@ -14,6 +18,7 @@
 
     <style name="Button.White" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">@android:color/white</item>
+
     </style>
 
     <style name="Theme.HomeMadeFood" parent="Base.Theme.HomeMadeFood" />
