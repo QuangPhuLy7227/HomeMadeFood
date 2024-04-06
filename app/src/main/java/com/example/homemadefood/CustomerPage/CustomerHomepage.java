@@ -1,12 +1,15 @@
 package com.example.homemadefood.CustomerPage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,24 +26,47 @@ public class CustomerHomepage extends AppCompatActivity {
     private SearchView searchView;
     private RecyclerView recyclerView;
     private ImageButton backButton;
+    ResListViewFragment listViewFragment;
+    MapsFragment mapsFragment;
+    TextView username, name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_homepage);
+        Intent intent = getIntent();
+        String cusName = intent.getStringExtra("name");
+        String cusUsername = intent.getStringExtra("username");
+
+        listViewFragment = new ResListViewFragment();
+        mapsFragment = new MapsFragment();
 
         searchView = findViewById(R.id.searchView);
-        recyclerView = findViewById(R.id.recyclerView);
         backButton = findViewById(R.id.backButton);
-
+        username = findViewById(R.id.username);
+        name = findViewById(R.id.name);
+        username.setText("UserName: " + cusUsername);
+        name.setText("Welcome Back, " + cusName);
+        RadioGroup radioGroup = findViewById(R.id.viewChoice);
 
         // Initialize dataList and adapter
-        dataList = generateDataList();
-        adapter = new MyAdapter(this, dataList);
+        dataList = listViewFragment.dataList;
+        adapter = listViewFragment.adapter;
 
-        // Set adapter to RecyclerView
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                if (checkedId == R.id.listView) {
+                    ft.replace(R.id.flContainer, listViewFragment);
+                } else if (checkedId == R.id.mapView) {
+                    ft.replace(R.id.flContainer, mapsFragment);
+                }
+                ft.commit();
+            }
+        });
+
+        getSupportFragmentManager().beginTransaction().add(R.id.flContainer, listViewFragment).commit();
 
         searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -52,7 +78,7 @@ public class CustomerHomepage extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchList(newText);
+                listViewFragment.searchList(newText);
                 return false;
             }
         });
@@ -61,10 +87,10 @@ public class CustomerHomepage extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    recyclerView.setVisibility(View.GONE);
+                    listViewFragment.recyclerView.setVisibility(View.GONE);
                     backButton.setVisibility(View.VISIBLE);
                 } else {
-                    recyclerView.setVisibility(View.VISIBLE);
+                    listViewFragment.recyclerView.setVisibility(View.VISIBLE);
                     backButton.setVisibility(View.GONE);
                 }
             }
@@ -78,33 +104,4 @@ public class CustomerHomepage extends AppCompatActivity {
         });
     }
 
-    private void searchList(String text) {
-        List<RestaurantData> searchListData = new ArrayList<>();
-
-        for (RestaurantData data : dataList) {
-            if (data.getName().toLowerCase().contains(text.toLowerCase())) {
-                searchListData.add(data);
-            }
-        }
-
-        if (searchListData.isEmpty()) {
-            adapter.setData(new ArrayList<>()); // Clear the RecyclerView by setting an empty list
-            findViewById(R.id.noResultFound).setVisibility(View.VISIBLE);
-        } else {
-            adapter.setData(searchListData);
-            findViewById(R.id.noResultFound).setVisibility(View.GONE);
-        }
-    }
-
-    private List<RestaurantData> generateDataList() {
-        List<RestaurantData> dataList = new ArrayList<>();
-
-        dataList.add(new RestaurantData(R.drawable.burger, "Burger King", "$3.99", 4.5f,
-                350, 30));
-        dataList.add(new RestaurantData(R.drawable.mcdonald, "McDonald's", "$2.99", 4.2f,
-                200, 25));
-        dataList.add(new RestaurantData(R.drawable.chick_fil_a, "Chick-fil-A", "$5.99", 4.7f,
-                500, 35));
-        return dataList;
-    }
 }
