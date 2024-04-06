@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#8F0C0C">
+    <item
+        android:id="@+id/viewAccount"
+        android:title="View Account" />
+
+    <item
+        android:id="@+id/changePassword"
+        android:title="Change Password" />
+
+    <item
+        android:id="@+id/logOut"
+        android:title="Log Out"
+        android:icon="@drawable/logout_background" />
+</menu>
