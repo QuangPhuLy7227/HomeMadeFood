@@ -14,7 +14,7 @@ import com.example.homemadefood.databinding.ActivitySignUpBinding;
 public class SignUpActivity extends AppCompatActivity {
 
     ActivitySignUpBinding binding;
-    DatabaseHelper databaseHelper;
+    UserInfoDatabaseHelper userInfoDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class SignUpActivity extends AppCompatActivity {
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        databaseHelper = new DatabaseHelper(this);
+        userInfoDatabaseHelper = new UserInfoDatabaseHelper(this);
         binding.signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,9 +41,9 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
                 } else {
                     if (password.equals(confirmPassword)){
-                        Boolean checkUserEmail = databaseHelper.checkEmail(username,usertype);
+                        Boolean checkUserEmail = userInfoDatabaseHelper.checkEmail(username,usertype);
                         if (checkUserEmail == false) {
-                            Boolean insert = databaseHelper.insertData(username, password, usertype);
+                            Boolean insert = userInfoDatabaseHelper.insertData(username, password, usertype);
                             if (insert == true) {
                                 Toast.makeText(SignUpActivity.this, "Signup Successful!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);

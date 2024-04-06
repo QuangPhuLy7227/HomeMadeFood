@@ -7,13 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.homemadefood.CustomerPage.CustomerHomepage;
+import com.example.homemadefood.CustomerPage.MainPage.CustomerHomepage;
 import com.example.homemadefood.ProviderPage.ProviderHomepage;
 import com.example.homemadefood.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
-    DatabaseHelper databaseHelper;
+    UserInfoDatabaseHelper userInfoDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +21,13 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        databaseHelper = new DatabaseHelper(this);
+        userInfoDatabaseHelper = new UserInfoDatabaseHelper(this);
 
         binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = binding.loginUsername.getText().toString();
-                String passsword = binding.loginPassword.getText().toString();
+                String password = binding.loginPassword.getText().toString();
                 int checkID = binding.radio2.getCheckedRadioButtonId();
                 String usertype = null;
                 if (checkID == R.id.customer) {
@@ -36,10 +36,10 @@ public class LoginActivity extends AppCompatActivity {
                     usertype = "provider";
                 }
 
-                if (username.equals("") || passsword.equals("") || checkID == -1){
+                if (username.equals("") || password.equals("") || checkID == -1){
                     Toast.makeText(LoginActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
                 } else {
-                    Boolean checkAccounts = databaseHelper.checkEmailPassword(username, passsword, usertype);
+                    Boolean checkAccounts = userInfoDatabaseHelper.checkEmailPassword(username, password, usertype);
                     if (checkAccounts == true) {
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                         if (checkID == R.id.customer) {
