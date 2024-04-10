@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
@@ -18,6 +19,7 @@ import com.example.homemadefood.CustomerPage.BottomSheetDialog.DeliveryFeeListen
 import com.example.homemadefood.CustomerPage.BottomSheetDialog.DeliveryFeesBottomSheetFragment;
 import com.example.homemadefood.CustomerPage.BottomSheetDialog.PriceBottomSheetFragment;
 import com.example.homemadefood.CustomerPage.DemoAddRestaurants;
+import com.example.homemadefood.CustomerPage.Map.MapsActivity;
 import com.example.homemadefood.LoginActivity;
 import com.example.homemadefood.R;
 
@@ -25,9 +27,10 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
     private ImageView searchIcon;
     private SearchView searchView;
     private ResListViewFragment listViewFragment;
-    public String state = "All";
+    private String state = "All";
     private boolean isRotated = false;
     private ImageButton lastClickedButton;
+    private float maxDeliveryFee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
         setContentView(R.layout.activity_customer_homepage);
 
         LinearLayout openingSection = findViewById(R.id.openingSection);
+        LinearLayout titleForHorizontalRV = findViewById(R.id.titleForHorizontalRecyclerView);
         searchIcon = findViewById(R.id.search_icon);
         searchView = findViewById(R.id.searchView);
         Button backButton = findViewById(R.id.backButton);
@@ -95,8 +99,6 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
             }
         });
 
-
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -131,7 +133,8 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     openingSection.setVisibility(View.GONE);
-                    listViewFragment.verticalRecyclerView.setVisibility(View.GONE);
+                    titleForHorizontalRV.setVisibility(View.GONE);
+                    listViewFragment.nestedScrollView.setVisibility(View.GONE);
                     mapButton.setVisibility(View.GONE);
                     backButton.setVisibility(View.VISIBLE);
                     searchIcon.setVisibility(View.GONE);
@@ -139,7 +142,8 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
                     findViewById(R.id.filterSection).setVisibility(View.GONE);
                 } else {
                     openingSection.setVisibility(View.VISIBLE);
-                    listViewFragment.verticalRecyclerView.setVisibility(View.VISIBLE);
+                    titleForHorizontalRV.setVisibility(View.VISIBLE);
+                    listViewFragment.nestedScrollView.setVisibility(View.VISIBLE);
                     backButton.setVisibility(View.GONE);
                     mapButton.setVisibility(View.VISIBLE);
                     findViewById(R.id.categorySection).setVisibility(View.VISIBLE);
@@ -164,52 +168,58 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
             }
         });
 
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CustomerHomepage.this, MapsActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         fastFoodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rotateButton(fastFoodButton);
-                state = "Fast Food";
-//                listViewFragment.queryBasedOnFastFood();
-                listViewFragment.queryBasedOnCategory(state);
+                rotateButton(fastFoodButton, "Fast Food");
             }
         });
 
-       breakfastButton.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               rotateButton(breakfastButton);
-               state = "breakfast";
-//               listViewFragment.queryBasedOnBreakFast();
-           }
-       });
+        breakfastButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rotateButton(breakfastButton, "Breakfast");
+            }
+        });
+
+        coffeeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rotateButton(coffeeButton, "Coffee");
+            }
+        });
 
         pizzaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rotateButton(pizzaButton);
-                state = "pizza";
-//                listViewFragment.queryBasedOnPizza();
+                rotateButton(pizzaButton, "Pizza");
             }
         });
 
         burgerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rotateButton(burgerButton);
-//                listViewFragment.queryBasedOnBurger();
+                rotateButton(burgerButton, "Burger");
             }
         });
     }
 
-    private void rotateButton(ImageButton button) {
+    private void rotateButton(ImageButton button, String category) {
         RotateAnimation animation;
         // If the clicked button is different from the last clicked button, reset the last clicked button
         if (lastClickedButton != null && lastClickedButton != button) {
             resetButtonAnimation(lastClickedButton);
             lastClickedButton.clearAnimation();
             isRotated = false;
-//            onResetClicked();
         }
 
         if (!isRotated && button.getRotation() == 0) {
@@ -217,14 +227,16 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
 
+            state = category;
+            listViewFragment.queryBasedOnCategory(state);
         } else {
-            animation = new RotateAnimation(-20, 50,
+            animation = new RotateAnimation(-20, 0,
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
-            listViewFragment.dataList1.clear();
-            listViewFragment.adapter1.notifyDataSetChanged();
-            onResetClicked();
 
+            state = "All";
+            listViewFragment.queryBasedOnCategory(state);
+//            listViewFragment.queryBasedOnDeliveryFeeAndCategory(maxDeliveryFee, state);
         }
         animation.setDuration(200);
         animation.setFillAfter(true);
@@ -234,9 +246,6 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
         lastClickedButton = button; // Set the current clicked button as the last clicked button
     }
 
-
-
-
     private void resetButtonAnimation(ImageButton button) { // Reset animation
         RotateAnimation animation = new RotateAnimation(-20, 0,
                 Animation.RELATIVE_TO_SELF, 0.5f,
@@ -244,7 +253,7 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
         animation.setDuration(0);
         animation.setFillAfter(true);
         button.startAnimation(animation);
-        onResetClicked();
+
     }
 
     private void logout() {
@@ -266,7 +275,6 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
 
     @Override
     public void onDeliveryFeeSelected(int selectedInterval) {
-        float maxDeliveryFee;
         switch (selectedInterval) {
             case 0:
                 maxDeliveryFee = 1.0f;
@@ -281,7 +289,7 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
                 maxDeliveryFee = 0.0f;
                 break;
         }
-        listViewFragment.queryBasedOnDeliveryFee(maxDeliveryFee);
+        listViewFragment.queryBasedOnDeliveryFeeAndCategory(maxDeliveryFee, state);
     }
 
     @Override
