@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,7 +39,7 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
     protected List<RestaurantPromotion> dataList2;
     protected RestaurantPromotionAdapter adapter2;
     protected RecyclerView horizontalRecyclerView;
-
+    protected NestedScrollView nestedScrollView;
     private DatabaseReference mDatabase;
 
     @Override
@@ -65,6 +66,7 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
         verticalRecyclerView = view.findViewById(R.id.verticalRecyclerView);
         verticalRecyclerView.setAdapter(adapter1);
         verticalRecyclerView.setHasFixedSize(true);
+        nestedScrollView = view.findViewById(R.id.nestedScrollView);
         fetchDataFromFirebase();
     }
 
@@ -92,14 +94,56 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dataList1.clear(); // Clear the list before adding new data
+                dataList1.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     RestaurantData restaurantData = snapshot.getValue(RestaurantData.class);
                     if (restaurantData != null && restaurantData.getDeliveryFee() <= maxDeliveryFee) {
                         dataList1.add(restaurantData);
                     }
                 }
-                adapter1.notifyDataSetChanged(); // Update adapter after fetching all data
+                adapter1.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getContext(), "Failed to read data from Firebase", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void queryBasedOnDeliveryFeeAndCategory(float maxDeliveryFee, String category) {
+        Query query;
+        switch (category) {
+            case "All":
+                fetchDataFromFirebase();
+                return;
+            case "Fast Food":
+                query = mDatabase.orderByChild("category").equalTo("Fast Food");
+                break;
+
+            case "Pizza":
+                query = mDatabase.orderByChild("category").equalTo("Pizza");
+                break;
+            case "Burger":
+                query = mDatabase.orderByChild("category").equalTo("Burger");
+                break;
+            default:
+                query = mDatabase.orderByChild("category").equalTo(category);
+                break;
+        }
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                dataList1.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    RestaurantData restaurantData = snapshot.getValue(RestaurantData.class);
+                    // Check if the restaurant belongs to the selected category and has a delivery fee under the specified limit
+                    if (restaurantData != null && restaurantData.getCategory() != null && restaurantData.getCategory().equals(category) && restaurantData.getDeliveryFee() <= maxDeliveryFee) {
+                        dataList1.add(restaurantData);
+                    }
+                }
+                adapter1.notifyDataSetChanged();
             }
 
             @Override
@@ -115,26 +159,6 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
         adapter1.notifyDataSetChanged();
     }
 
-    public void queryBasedOnFastFood() {
-        Query query = mDatabase.orderByChild("category").equalTo("Fast Food");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dataList1.clear(); // Clear the list before adding the new data
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    RestaurantData restaurantData = snapshot.getValue(RestaurantData.class);
-                    dataList1.add(restaurantData);
-                }
-                adapter1.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
     public void queryBasedOnCategory(String category) {
         Query query;
         switch (category) {
@@ -144,8 +168,13 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
             case "Fast Food":
                 query = mDatabase.orderByChild("category").equalTo("Fast Food");
                 break;
+
             case "Pizza":
                 query = mDatabase.orderByChild("category").equalTo("Pizza");
+                break;
+            case "Burger":
+                query = mDatabase.orderByChild("category").equalTo("Burger");
+                break;
             default:
                 query = mDatabase.orderByChild("category").equalTo(category);
                 break;
@@ -154,7 +183,7 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dataList1.clear(); // Clear the list before adding the new data
+                dataList1.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     RestaurantData restaurantData = snapshot.getValue(RestaurantData.class);
                     dataList1.add(restaurantData);
@@ -170,7 +199,6 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
     }
 
 
-
     @Override
     public void onItemClick(int position) {
         RestaurantData data = dataList1.get(position);
@@ -184,7 +212,7 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
         List<RestaurantPromotion> searchListData2 = new ArrayList<>();
 
         for (RestaurantData data : dataList1) {
-            if (data.getName().toLowerCase().contains(text.toLowerCase())) {
+            if (data.getName() != null && data.getName().toLowerCase().contains(text.toLowerCase())) {
                 searchListData1.add(data);
             }
         }
@@ -198,7 +226,7 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
         }
 
         for (RestaurantPromotion data : dataList2) {
-            if (data.getRestaurantName().toLowerCase().contains(text.toLowerCase())) {
+            if (data.getRestaurantName() != null && data.getRestaurantName().toLowerCase().contains(text.toLowerCase())) {
                 searchListData2.add(data);
             }
         }
