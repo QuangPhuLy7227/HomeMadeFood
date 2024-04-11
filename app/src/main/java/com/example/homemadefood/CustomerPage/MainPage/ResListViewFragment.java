@@ -2,6 +2,7 @@ package com.example.homemadefood.CustomerPage.MainPage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +21,9 @@ import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotio
 import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotionAdapter;
 import com.example.homemadefood.CustomerPage.RestaurantPage.RestaurantMenuActivity;
 import com.example.homemadefood.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +38,8 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
     protected RestaurantPromotionAdapter adapter2;
     protected RecyclerView horizontalRecyclerView;
     protected NestedScrollView nestedScrollView;
-    private DatabaseReference mDatabase;
+
+    private FirebaseFirestore db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,8 +48,7 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
         adapter1 = new RestaurantMenuAdapter(getContext(), dataList1, this);
         dataList2 = generatePromotionList();
         adapter2 = new RestaurantPromotionAdapter(getContext(), dataList2, this);
-        mDatabase = FirebaseDatabase.getInstance().getReference(); // Initialize database reference
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("restaurants");
+        db = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -67,137 +65,53 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
         verticalRecyclerView.setAdapter(adapter1);
         verticalRecyclerView.setHasFixedSize(true);
         nestedScrollView = view.findViewById(R.id.nestedScrollView);
-        fetchDataFromFirebase();
+        fetchDataFromFirestore();
     }
 
-    private void fetchDataFromFirebase() {
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dataList1.clear(); // Clear the list before adding new data
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    RestaurantData restaurantData = snapshot.getValue(RestaurantData.class);
-                    dataList1.add(restaurantData);
-                }
-                adapter1.notifyDataSetChanged(); // Update adapter after fetching all data
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(), "Failed to read data from Firebase", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public void queryBasedOnDeliveryFee(float maxDeliveryFee) {
-        Query query = mDatabase.orderByChild("deliveryFee").endAt(maxDeliveryFee);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dataList1.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    RestaurantData restaurantData = snapshot.getValue(RestaurantData.class);
-                    if (restaurantData != null && restaurantData.getDeliveryFee() <= maxDeliveryFee) {
+    private void fetchDataFromFirestore() {
+        db.collection("restaurants")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    dataList1.clear();
+                    for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                        RestaurantData restaurantData = snapshot.toObject(RestaurantData.class);
                         dataList1.add(restaurantData);
                     }
-                }
-                adapter1.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(), "Failed to read data from Firebase", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    adapter1.notifyDataSetChanged();
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(getContext(), "Failed to read data from Firestore", Toast.LENGTH_SHORT).show());
     }
 
-    public void queryBasedOnDeliveryFeeAndCategory(float maxDeliveryFee, String category) {
-        Query query;
-        switch (category) {
-            case "All":
-                fetchDataFromFirebase();
-                return;
-            case "Fast Food":
-                query = mDatabase.orderByChild("category").equalTo("Fast Food");
-                break;
+    public void queryRestaurants(float maxDeliveryFee, String category) {
+        Query query = db.collection("restaurants");
 
-            case "Pizza":
-                query = mDatabase.orderByChild("category").equalTo("Pizza");
-                break;
-            case "Burger":
-                query = mDatabase.orderByChild("category").equalTo("Burger");
-                break;
-            default:
-                query = mDatabase.orderByChild("category").equalTo(category);
-                break;
+        if (!category.equals("All")) {
+            query = query.whereEqualTo("category", category);
         }
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dataList1.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    RestaurantData restaurantData = snapshot.getValue(RestaurantData.class);
-                    // Check if the restaurant belongs to the selected category and has a delivery fee under the specified limit
-                    if (restaurantData != null && restaurantData.getCategory() != null && restaurantData.getCategory().equals(category) && restaurantData.getDeliveryFee() <= maxDeliveryFee) {
-                        dataList1.add(restaurantData);
-                    }
-                }
-                adapter1.notifyDataSetChanged();
-            }
+        if (maxDeliveryFee > 0) {
+            query = query.whereLessThanOrEqualTo("deliveryFee", maxDeliveryFee);
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(), "Failed to read data from Firebase", Toast.LENGTH_SHORT).show();
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            dataList1.clear();
+            for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                RestaurantData restaurantData = snapshot.toObject(RestaurantData.class);
+                dataList1.add(restaurantData);
             }
+            adapter1.notifyDataSetChanged();
+        }).addOnFailureListener(e -> {
+            Log.e("Firestore", "Failed to query data from Firestore", e);
+            Toast.makeText(getContext(), "Failed to query data from Firestore", Toast.LENGTH_SHORT).show();
         });
     }
+
+
 
     public void restoreOriginalList() {
-        dataList1.clear();
-        fetchDataFromFirebase();
-        adapter1.notifyDataSetChanged();
+        fetchDataFromFirestore();
     }
-
-    public void queryBasedOnCategory(String category) {
-        Query query;
-        switch (category) {
-            case "All":
-                fetchDataFromFirebase();
-                return;
-            case "Fast Food":
-                query = mDatabase.orderByChild("category").equalTo("Fast Food");
-                break;
-
-            case "Pizza":
-                query = mDatabase.orderByChild("category").equalTo("Pizza");
-                break;
-            case "Burger":
-                query = mDatabase.orderByChild("category").equalTo("Burger");
-                break;
-            default:
-                query = mDatabase.orderByChild("category").equalTo(category);
-                break;
-        }
-
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dataList1.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    RestaurantData restaurantData = snapshot.getValue(RestaurantData.class);
-                    dataList1.add(restaurantData);
-                }
-                adapter1.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Failed to read data from Firebase", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
 
     @Override
     public void onItemClick(int position) {
@@ -209,7 +123,6 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
 
     public void searchList(String text) {
         List<RestaurantData> searchListData1 = new ArrayList<>();
-        List<RestaurantPromotion> searchListData2 = new ArrayList<>();
 
         for (RestaurantData data : dataList1) {
             if (data.getName() != null && data.getName().toLowerCase().contains(text.toLowerCase())) {
@@ -222,20 +135,6 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
             requireView().findViewById(R.id.noResultFound).setVisibility(View.VISIBLE);
         } else {
             adapter1.setData(searchListData1);
-            requireView().findViewById(R.id.noResultFound).setVisibility(View.GONE);
-        }
-
-        for (RestaurantPromotion data : dataList2) {
-            if (data.getRestaurantName() != null && data.getRestaurantName().toLowerCase().contains(text.toLowerCase())) {
-                searchListData2.add(data);
-            }
-        }
-
-        if (searchListData2.isEmpty()) {
-            adapter2.setData(new ArrayList<>());
-            requireView().findViewById(R.id.noResultFound).setVisibility(View.VISIBLE);
-        } else {
-            adapter2.setData(searchListData2);
             requireView().findViewById(R.id.noResultFound).setVisibility(View.GONE);
         }
     }

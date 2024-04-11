@@ -3,6 +3,7 @@ package com.example.homemadefood.CustomerPage;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,23 +20,28 @@ import com.bumptech.glide.Glide;
 import com.example.homemadefood.CustomerPage.MainPage.CustomerHomepage;
 import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantData;
 import com.example.homemadefood.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DemoAddRestaurants extends AppCompatActivity {
 
-    private DatabaseReference mDatabase;
+    private FirebaseFirestore mFirestore;
+    private CollectionReference mRestaurantsCollection;
+    private StorageReference mStorageRef;
     private List<RestaurantData> dataList;
     private ImageView addRestaurantImage;
-    private Uri selectedImageUri; // To store the URI of the selected image
+    private Uri selectedImageUri;
     private ActivityResultLauncher<String> imagePickerLauncher;
 
     @Override
@@ -46,18 +52,18 @@ public class DemoAddRestaurants extends AppCompatActivity {
         addRestaurantImage = findViewById(R.id.uploadRestaurantImage);
         Button selectRestaurantImage = findViewById(R.id.selectRestaurantImage);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();  // Initialize Firebase database reference
+        mFirestore = FirebaseFirestore.getInstance();
+        mRestaurantsCollection = mFirestore.collection("restaurants");
+        mStorageRef = FirebaseStorage.getInstance().getReference().child("restaurant_images");
         dataList = new ArrayList<>();
 
-        // Initialize the ActivityResultLauncher for image picking
         imagePickerLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
             if (uri != null) {
                 selectedImageUri = uri;
-                // Load and resize the image using Glide
                 Glide.with(this)
                         .load(selectedImageUri)
-                        .override(600, 600) // Resize the image to 600x600 pixels
-                        .into(addRestaurantImage); // Display the image in ImageView
+                        .override(600, 600)
+                        .into(addRestaurantImage);
             }
         });
 
@@ -98,10 +104,9 @@ public class DemoAddRestaurants extends AppCompatActivity {
                     return;
                 }
 
-
                 RestaurantData restaurantData = new RestaurantData(selectedImageUri.toString(), name, category, deliveryFeeValue, ratingValue, (int) totalRatingValue);
 
-                uploadRestaurantToFirebase(restaurantData);
+                uploadRestaurantToFireStore(restaurantData);
             }
         });
 
@@ -118,47 +123,59 @@ public class DemoAddRestaurants extends AppCompatActivity {
         imagePickerLauncher.launch("image/*");
     }
 
-    private void uploadRestaurantToFirebase(RestaurantData restaurantData) {
-        DatabaseReference restaurantsRef = mDatabase.child("restaurants"); // Reference to the root database
+    private void uploadRestaurantToFireStore(RestaurantData restaurantData) {
+        String restaurantName = restaurantData.getName();
 
-        String restaurantName = restaurantData.getName(); // Get the restaurant name
-
-        // Check if the restaurant name already exists
-        restaurantsRef.child(restaurantName).addListenerForSingleValueEvent(new ValueEventListener() {
+        mRestaurantsCollection.document(restaurantName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
                     Toast.makeText(DemoAddRestaurants.this, "Restaurant with this name already exists", Toast.LENGTH_SHORT).show();
                 } else {
-                    DatabaseReference restaurantRef = restaurantsRef.child(restaurantName); // Use restaurant name as the key
-                    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("restaurant_images").child(restaurantName); // Reference to the Firebase Storage
+                    DocumentReference restaurantRef = mRestaurantsCollection.document(restaurantName);
 
-                    // Upload image to Firebase Storage
-                    storageRef.putFile(selectedImageUri)
-                            .addOnSuccessListener(taskSnapshot -> storageRef.getDownloadUrl().addOnSuccessListener(uri -> { // Get the download URL
-                                restaurantData.setRestaurantImageUri(uri.toString());  // Save download URL along with other restaurant details in the database
-                                restaurantRef.setValue(restaurantData)
-                                        .addOnSuccessListener(aVoid -> {
-                                            Toast.makeText(DemoAddRestaurants.this, "Restaurant added successfully", Toast.LENGTH_SHORT).show();
-                                            dataList.add(restaurantData);
-                                        })
-                                        .addOnFailureListener(e -> Toast.makeText(DemoAddRestaurants.this, "Failed to add restaurant", Toast.LENGTH_SHORT).show());
-                            }).addOnFailureListener(e -> {
-                                Toast.makeText(DemoAddRestaurants.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
-                            }))
+                    mStorageRef.child(restaurantName).putFile(selectedImageUri)
+                            .addOnSuccessListener(taskSnapshot -> {
+                                mStorageRef.child(restaurantName).getDownloadUrl().addOnSuccessListener(uri -> {
+                                    restaurantData.setRestaurantImageUri(uri.toString());
+
+                                    // Create a new document with restaurantData
+                                    Map<String, Object> restaurant = new HashMap<>();
+                                    restaurant.put("name", restaurantData.getName());
+                                    restaurant.put("category", restaurantData.getCategory());
+                                    restaurant.put("deliveryFee", restaurantData.getDeliveryFee());
+                                    restaurant.put("rating", restaurantData.getRating());
+                                    restaurant.put("totalRating", restaurantData.getTotalRating());
+                                    restaurant.put("restaurantImageUri", restaurantData.getRestaurantImageUri());
+
+                                    // Add a new document to the Firestore collection
+                                    mRestaurantsCollection.document(restaurantName)
+                                            .set(restaurant)
+                                            .addOnSuccessListener(aVoid -> {
+                                                Toast.makeText(DemoAddRestaurants.this, "Restaurant added successfully", Toast.LENGTH_SHORT).show();
+                                                dataList.add(restaurantData);
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                Toast.makeText(DemoAddRestaurants.this, "Failed to add restaurant: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.e("Firestore", "Error adding document", e);
+                                            });
+                                }).addOnFailureListener(e -> {
+                                    Toast.makeText(DemoAddRestaurants.this, "Failed to get download URL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Log.e("Firestore", "Failed to get download URL", e);
+                                });
+                            })
                             .addOnFailureListener(e -> {
-                                Toast.makeText(DemoAddRestaurants.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DemoAddRestaurants.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Log.e("Firestore", "Failed to upload image", e);
                             });
                 }
             }
-
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(DemoAddRestaurants.this, "Database error", Toast.LENGTH_SHORT).show();
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(DemoAddRestaurants.this, "Database error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Firestore", "Database error", e);
             }
         });
     }
-
-
-
 }

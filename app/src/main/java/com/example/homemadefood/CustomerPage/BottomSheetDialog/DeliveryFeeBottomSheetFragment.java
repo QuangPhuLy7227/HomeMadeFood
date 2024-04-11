@@ -1,5 +1,7 @@
 package com.example.homemadefood.CustomerPage.BottomSheetDialog;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,16 +18,18 @@ import androidx.core.content.ContextCompat;
 import com.example.homemadefood.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-public class DeliveryFeesBottomSheetFragment extends BottomSheetDialogFragment {
+public class DeliveryFeeBottomSheetFragment extends BottomSheetDialogFragment {
 
     private TextView[] intervals;
     private DeliveryFeeListener listener;
     private SeekBar seekBar;
+    private static final String PREFS_NAME = "DeliveryPrefs";
+    private static final String INTERVAL_KEY = "selectedInterval";
 
     public void setListener(DeliveryFeeListener listener) {
         this.listener = listener;
     }
-    
+
 
     @Nullable
     @Override
@@ -66,6 +70,10 @@ public class DeliveryFeesBottomSheetFragment extends BottomSheetDialogFragment {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        int savedInterval = sharedPreferences.getInt(INTERVAL_KEY, 0);
+        seekBar.setProgress(savedInterval);
 
         Button viewResults = view.findViewById(R.id.viewResults);
         viewResults.setOnClickListener(new View.OnClickListener() {

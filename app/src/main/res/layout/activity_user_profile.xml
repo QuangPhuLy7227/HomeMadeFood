@@ -9,53 +9,166 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="360dp"
         android:padding="20dp"
-        android:background="#fece2f">
+        android:background="#fece2f" >
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/back_arrow" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="220dp"
+            android:layout_toEndOf="@+id/backButton"
+            android:background="@drawable/cart" />
+
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@+id/imageButton2"
+            android:background="@drawable/notification" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/backButton"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            android:text="My" />
+
+        <TextView
+            android:id="@+id/profileTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView"
+            android:layout_alignParentStart="true"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="Profile" />
+
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/profileCardView"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            app:cardCornerRadius="20dp" >
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="130dp"
+            android:layout_marginBottom="0dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="10dp"
+            app:cardUseCompatPadding="true">
 
-            <TextView
-                android:id="@+id/user_full_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Quang Phu Ly"
-                android:textSize="25sp"
-                android:fontFamily="@font/bungee"
-                android:includeFontPadding="false"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="50dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="23dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/user_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/user_full_name"
-                android:includeFontPadding="false"
-                android:text="ly001@gannon.edu"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:textSize="18sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="User Name"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#D21F3C"
-                android:text="Log Out"
-                android:layout_marginTop="90dp"
-                android:layout_marginLeft="10dp"
-                android:padding="10dp"
-                android:layout_below="@id/user_email"
-                android:textColor="@color/white" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="email: username@gmail.com"
+                    android:textColor="#5C5A5A"
+                    android:textSize="13sp"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#79D6D1D1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <Button
+                        android:id="@+id/updateProfileButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:textSize="14sp"
+                        android:text="Update Profile"
+                        android:textColor="#636262" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#79D6D1D1" />
+
+                    <Button
+                        android:id="@+id/changePasswordButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:textSize="13sp"
+                        android:text="Change Password"
+                        android:textColor="#636262" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#79D6D1D1" />
+
+                    <Button
+                        android:id="@+id/addPaymentButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:textSize="13sp"
+                        android:text="Add Payment"
+                        android:textColor="#636262" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
 
         </androidx.cardview.widget.CardView>
 
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="98dp"
+            android:layout_height="98dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:elevation="45dp"
+            android:padding="5dp"
+            android:src="@drawable/chef"
+            app:shapeAppearanceOverlay="@style/Circular" />
 
 
     </RelativeLayout>
@@ -65,42 +178,45 @@
         android:layout_height="2dp"
         android:background="@color/black"/>
 
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:orientation="horizontal">-->
+
+<!--        <Button-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:backgroundTint="#fece2f"-->
+<!--            android:text="Update Profile"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:layout_marginEnd="15dp"/>-->
+
+<!--        <Button-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:backgroundTint="#fece2f"-->
+<!--            android:text="Add payment"-->
+<!--            android:textColor="@color/black" />-->
+
+<!--    </LinearLayout>-->
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#fece2f"
-            android:text="Update Profile"
-            android:textColor="@color/black"
-            android:layout_marginEnd="15dp"/>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#fece2f"
-            android:text="Add payment"
-            android:textColor="@color/black" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:orientation="vertical" >
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:hint="Full Name">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -108,9 +224,63 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/baseline_account_circle_24"
                 android:drawablePadding="10dp"
-                android:text="Quang Phu Ly" />
+                android:text="User's Full Name" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:hint="Info1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/baseline_account_circle_24"
+                android:drawablePadding="10dp"
+                android:text="User's Info1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="Info2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/baseline_account_circle_24"
+                android:drawablePadding="10dp"
+                android:text="User's Info2" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:hint="Info3">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/baseline_account_circle_24"
+                android:drawablePadding="10dp"
+                android:text="User's Info3" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Log Out"
+            android:backgroundTint="@color/red" />
+
+
 
     </LinearLayout>
 

@@ -19,5 +19,10 @@
 
     </style>
 
+    <style name="Circular">
+        <item name="cornerSize">50%</item>
+
+    </style>
+
     <style name="Theme.HomeMadeFood" parent="Base.Theme.HomeMadeFood" />
 </resources>
