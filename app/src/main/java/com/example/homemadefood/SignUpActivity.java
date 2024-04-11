@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.homemadefood.databinding.ActivitySignUpBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,6 +28,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -38,6 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
     Button goBtn_signup;
     TextInputLayout regName, regUsername, regEmail, regPhone, regPass, regConfirmPass;
     RadioGroup regUserType;
+    FirebaseFirestore db;
 
 //    ActivitySignUpBinding binding;
 //    UserInfoDatabaseHelper userInfoDatabaseHelper;
@@ -102,6 +112,8 @@ public class SignUpActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sign_up);
 
+        db = FirebaseFirestore.getInstance();
+        CollectionReference usersCollection = db.collection("users");
 
         logo = findViewById(R.id.logoSignup);
         callLogin = findViewById(R.id.call_login);
@@ -150,15 +162,9 @@ public class SignUpActivity extends AppCompatActivity {
                     if (!validateConfirmPass()) {
                         Toast.makeText(SignUpActivity.this, "Please retype Password and Confirm Password", Toast.LENGTH_SHORT).show();
                         return;
-
                     } else {
-                        UserHelperClass userHelperClass = new UserHelperClass(name,username,email,phone,passwd);
-                        if (checkType == R.id.customer) {
-                            checkExistUsersAndAdd(cusRef,username,userHelperClass);
-                        } else if (checkType == R.id.provider) {
-                            checkExistUsersAndAdd(provRef,username,userHelperClass);
-                        }
-//                        Toast.makeText(SignUpActivity.this, "Sign Up success! Please LogIn to continue", Toast.LENGTH_LONG).show();
+                        UserHelperClass user = new UserHelperClass(name, username, email, phone, passwd, usertype);
+                        checkExistUsersAndAdd(usersCollection, username, user);
                         loginIntent();
                     }
                 }
@@ -285,26 +291,40 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private void checkExistUsersAndAdd(DatabaseReference ref, String username, UserHelperClass userHelperClass) {
-        Query checkUser = ref.orderByChild("username").equalTo(username);
-        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    // User already exists
-                    Toast.makeText(SignUpActivity.this, "User already Signed Up!", Toast.LENGTH_SHORT).show();
-                } else {
-                    ref.child(username).setValue(userHelperClass);
-                    Toast.makeText(SignUpActivity.this, "Sign Up success! Please LogIn to continue", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error
-                Toast.makeText(SignUpActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+    private void checkExistUsersAndAdd(CollectionReference usersCollection, String username, UserHelperClass userHelperClass) {
+        usersCollection.whereEqualTo("username", username).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            // User already exists
+                            Toast.makeText(SignUpActivity.this, "User already Signed Up!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            usersCollection.document(username).set(userHelperClass)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(SignUpActivity.this, "Sign Up success! Please LogIn to continue", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // Handle failure
+                                            Toast.makeText(SignUpActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                        Toast.makeText(SignUpActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
+
 
 }
