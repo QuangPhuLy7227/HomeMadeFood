@@ -17,7 +17,7 @@ public class RestaurantMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.restaurant_menu);
+        setContentView(R.layout.activity_customer_menu_selection);
 
         ImageView restaurantImage = findViewById(R.id.restaurantImage);
         ImageButton closeButton = findViewById(R.id.closeButton);
