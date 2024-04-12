@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.homemadefood.CustomerPage.MainPage.CustomerHomepage;
-import com.example.homemadefood.ProviderPage.ProviderHomePage;
+import com.example.homemadefood.ProviderPage.ProvidersHomePage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
@@ -185,7 +185,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         } else if (type.equals("prov")) {
                             if (checkType == R.id.provider) {
-                                Intent intent = new Intent(LoginActivity.this, ProviderHomePage.class);
+                                Intent intent = new Intent(LoginActivity.this, ProvidersHomePage.class);
                                 intent.putExtra("username", usernameFromDB);
                                 startActivity(intent);
                             } else {

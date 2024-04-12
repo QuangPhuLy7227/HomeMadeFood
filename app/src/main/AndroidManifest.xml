@@ -41,9 +41,9 @@
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".ProviderPage.ProviderHomePage"
+            android:name=".ProviderPage.ProvidersHomePage"
             android:exported="false" />
-
+        <activity android:name=".ProviderPage.AddRestaurantInfoActivity" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

@@ -1,9 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProviderPage.ProviderHomePage">
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".ProviderPage.ProvidersHomePage">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Top Section with Browse Text, Search, and Profile Button -->
+    <LinearLayout
+        android:id="@+id/openingSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal">
+
+        <!-- Browse Text -->
+        <TextView
+            android:id="@+id/browseTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:text="Browse"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <!-- Profile Button -->
+        <ImageButton
+            android:id="@+id/profileButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="top|end"
+            android:layout_marginStart="225dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/people"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+    </LinearLayout>
+
+    <!-- Add Restaurant button -->
+    <Button
+        android:id="@+id/addRestaurantButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="end"
+        android:text="Add Restaurant"
+        android:visibility="gone"/>
+
+    <!-- Placeholder for restaurant data -->
+    <TextView
+        android:id="@+id/restaurantPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No restaurant data available"
+        android:visibility="gone" />
+
+    <!-- Restaurant Name TextView -->
+    <TextView
+        android:id="@+id/restaurantNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"/>
+
+    <!-- Restaurant Info TextView -->
+    <TextView
+        android:id="@+id/restaurantInfoTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"/>
+
+    <!-- Restaurant Address TextView -->
+    <TextView
+        android:id="@+id/restaurantAddressTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"/>
+
+    <!-- Add Menu button -->
+    <Button
+        android:id="@+id/addMenuButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:layout_gravity="end"
+        android:text="Add Menu"
+        android:visibility="gone" />
+
+    <!-- Placeholder for menu data -->
+    <TextView
+        android:id="@+id/menuPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No menu data available"
+        android:visibility="gone" />
+
+</LinearLayout>
