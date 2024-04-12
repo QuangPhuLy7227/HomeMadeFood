@@ -1,6 +1,9 @@
 package com.example.homemadefood.CustomerPage.RecyclerViewData;
 
-public class RestaurantData {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class RestaurantData implements Parcelable {
 
     private String restaurantImageUri;
     private String name;
@@ -24,6 +27,28 @@ public class RestaurantData {
         this.deliveryTime = 0;
     }
 
+    protected RestaurantData(Parcel in) {
+        restaurantImageUri = in.readString();
+        name = in.readString();
+        category = in.readString();
+        deliveryFee = in.readFloat();
+        rating = in.readFloat();
+        totalRating = in.readInt();
+        deliveryTime = in.readInt();
+    }
+
+    public static final Creator<RestaurantData> CREATOR = new Creator<RestaurantData>() {
+        @Override
+        public RestaurantData createFromParcel(Parcel in) {
+            return new RestaurantData(in);
+        }
+
+        @Override
+        public RestaurantData[] newArray(int size) {
+            return new RestaurantData[size];
+        }
+    };
+
     public void setRestaurantImageUri(String restaurantImageUri) {
         this.restaurantImageUri = restaurantImageUri;
     }
@@ -44,7 +69,6 @@ public class RestaurantData {
         return deliveryFee;
     }
 
-
     public float getRating() {
         return rating;
     }
@@ -55,5 +79,21 @@ public class RestaurantData {
 
     public int getDeliveryTime() {
         return deliveryTime;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(restaurantImageUri);
+        dest.writeString(name);
+        dest.writeString(category);
+        dest.writeFloat(deliveryFee);
+        dest.writeFloat(rating);
+        dest.writeInt(totalRating);
+        dest.writeInt(deliveryTime);
     }
 }
