@@ -143,17 +143,17 @@ public class AddRestaurantInfoActivity extends AppCompatActivity {
         restaurantData.put("date", date);
 
         // Add the user ID who added the restaurant
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            String userId = currentUser.getUid();
-            restaurantData.put("addedBy", userId);
-            Log.d("Authentication", "User ID: " + userId);
-        } else {
-            // Handle case where user is not logged in
-            Log.d("Authentication", "User not logged in");
-            Toast.makeText(this, "User not logged in. Please log in to add a restaurant.", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//        if (currentUser != null) {
+//            String userId = currentUser.getUid();
+//            restaurantData.put("addedBy", userId);
+//            Log.d("Authentication", "User ID: " + userId);
+//        } else {
+//            // Handle case where user is not logged in
+//            Log.d("Authentication", "User not logged in");
+//            Toast.makeText(this, "User not logged in. Please log in to add a restaurant.", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         // Upload the image to Firestore storage
         uploadImageToStorage(name, restaurantData);
