@@ -1,4 +1,4 @@
-package com.example.homemadefood.CustomerPage;
+package com.example.homemadefood.CustomerPage.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.homemadefood.CustomerPage.FetchData;
 import com.example.homemadefood.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;

@@ -2,16 +2,17 @@ package com.example.homemadefood;
 
 public class UserHelperClass {
 //    private int id;
-    String name, username, email, phone, passwd, confirmPasswd;
+    String name, username, email, phone, passwd, type;
 //    private static int nextId = 0;
 
-    public UserHelperClass(String name, String username, String email, String phone, String passwd) {
+    public UserHelperClass(String name, String username, String email, String phone, String passwd, String type) {
 //        this.id = nextId++;
         this.name = name;
         this.username = username;
         this.email = email;
         this.phone = phone;
         this.passwd = passwd;
+        this.type = type;
 //        id += 1;
     }
 
@@ -19,6 +20,17 @@ public class UserHelperClass {
 //        this.id = nextId++;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 //    public int getId() {
 //        return id;
 //    }
@@ -73,13 +85,5 @@ public class UserHelperClass {
 
     public void setPasswd(String passwd) {
         this.passwd = passwd;
-    }
-
-    public String getConfirmPasswd() {
-        return confirmPasswd;
-    }
-
-    public void setConfirmPasswd(String confirmPasswd) {
-        this.confirmPasswd = confirmPasswd;
     }
 }

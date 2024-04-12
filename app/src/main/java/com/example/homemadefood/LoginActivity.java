@@ -17,14 +17,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.homemadefood.CustomerPage.MainPage.CustomerHomepage;
-import com.example.homemadefood.ProviderPage.ProviderHomePage;
+import com.example.homemadefood.ProviderPage.ProvidersHomePage;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginActivity extends AppCompatActivity {
     ImageView logo;
@@ -34,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     TextInputLayout username, password;
     RadioGroup usertype;
     DatabaseReference reference, cusRef, provRef;
+    FirebaseFirestore db;
 //    ActivityLoginBinding binding;
 //    UserInfoDatabaseHelper userInfoDatabaseHelper;
 //
@@ -93,6 +100,8 @@ public class LoginActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
 
+        db = FirebaseFirestore.getInstance();
+        CollectionReference usersCollection = db.collection("users");
 
         logo = findViewById(R.id.logoLogin);
         callSignup = findViewById(R.id.call_signup);
@@ -123,12 +132,8 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     if (checkType == -1){
                         Toast.makeText(LoginActivity.this, "Please choose your User Type!", Toast.LENGTH_SHORT).show();
-                    } else if (checkType == R.id.customer) {
-                        isUser(cusRef);
-                    } else if (checkType == R.id.provider) {
-                        isUser(provRef);
-
                     }
+                    isUser(usersCollection);
                 }
             }
         });
@@ -150,36 +155,43 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void isUser(DatabaseReference ref) {
+    private void isUser(CollectionReference ref) {
         final String userEnteredUsername = username.getEditText().getText().toString().trim();
         final String userEnteredPassword = password.getEditText().getText().toString().trim();
 
-        Query checkUser = ref.orderByChild("username").equalTo(userEnteredUsername);
-        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query checkUser = ref.whereEqualTo("username", userEnteredUsername);
+        checkUser.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (!queryDocumentSnapshots.isEmpty()) {
                     username.setError(null);
                     username.setErrorEnabled(false);
-                    String passwordFromDB = snapshot.child(userEnteredUsername).child("passwd").getValue(String.class);
+                    DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
+                    String passwordFromDB = documentSnapshot.getString("passwd");
+                    String type = documentSnapshot.getString("type");
                     if (passwordFromDB.equals(userEnteredPassword)) {
                         username.setError(null);
                         username.setErrorEnabled(false);
-                        String nameFromDB = snapshot.child(userEnteredUsername).child("name").getValue(String.class);
-                        String usernameFromDB = snapshot.child(userEnteredUsername).child("username").getValue(String.class);
-                        if (ref == cusRef) {
-                            Intent intent = new Intent(LoginActivity.this, CustomerHomepage.class);
-                            intent.putExtra("name", nameFromDB);
-                            intent.putExtra("username", usernameFromDB);
-                            startActivity(intent);
-                        } else if (ref == provRef) {
-                            Intent intent = new Intent(LoginActivity.this, ProviderHomePage.class);
-                            intent.putExtra("name", nameFromDB);
-                            intent.putExtra("username", usernameFromDB);
-                            startActivity(intent);
+                        String usernameFromDB = documentSnapshot.getString("username");
+                        int checkType = usertype.getCheckedRadioButtonId();
+
+                        if (type.equals("cus")) {
+                            if (checkType == R.id.customer) {
+                                Intent intent = new Intent(LoginActivity.this, CustomerHomepage.class);
+                                intent.putExtra("username", usernameFromDB);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Incorrect User Type!", Toast.LENGTH_SHORT).show();
+                            }
+                        } else if (type.equals("prov")) {
+                            if (checkType == R.id.provider) {
+                                Intent intent = new Intent(LoginActivity.this, ProvidersHomePage.class);
+                                intent.putExtra("username", usernameFromDB);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Incorrect User Type!", Toast.LENGTH_SHORT).show();
+                            }
                         }
-
-
                     } else {
                         password.setError("Wrong Password");
                         password.requestFocus();
@@ -189,13 +201,15 @@ public class LoginActivity extends AppCompatActivity {
                     username.requestFocus();
                 }
             }
-
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onFailure(@NonNull Exception e) {
+                // Handle failure
+                Toast.makeText(LoginActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     private Boolean validateUsername() {
         String val = username.getEditText().getText().toString();

@@ -1,6 +1,8 @@
 package com.example.homemadefood.CustomerPage.MainPage;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,23 +13,29 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
 import com.example.homemadefood.CustomerPage.BottomSheetDialog.DeliveryFeeListener;
-import com.example.homemadefood.CustomerPage.BottomSheetDialog.DeliveryFeesBottomSheetFragment;
+import com.example.homemadefood.CustomerPage.BottomSheetDialog.DeliveryFeeBottomSheetFragment;
 import com.example.homemadefood.CustomerPage.BottomSheetDialog.PriceBottomSheetFragment;
 import com.example.homemadefood.CustomerPage.DemoAddRestaurants;
+import com.example.homemadefood.CustomerPage.Map.MapsActivity;
 import com.example.homemadefood.LoginActivity;
 import com.example.homemadefood.R;
+import com.example.homemadefood.UserProfileActivity;
 
 public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeListener {
     private ImageView searchIcon;
     private SearchView searchView;
     private ResListViewFragment listViewFragment;
-    public String state = "All";
+    private String state = "All";
     private boolean isRotated = false;
     private ImageButton lastClickedButton;
+    private float maxDeliveryFee;
+    private static final String PREFS_NAME = "DeliveryPrefs";
+    private static final String INTERVAL_KEY = "selectedInterval";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +43,7 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
         setContentView(R.layout.activity_customer_homepage);
 
         LinearLayout openingSection = findViewById(R.id.openingSection);
+        LinearLayout titleForHorizontalRV = findViewById(R.id.titleForHorizontalRecyclerView);
         searchIcon = findViewById(R.id.search_icon);
         searchView = findViewById(R.id.searchView);
         Button backButton = findViewById(R.id.backButton);
@@ -74,7 +83,8 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         if (menuItem.getItemId() == R.id.viewAccount) {
-
+                            Intent intent = new Intent(CustomerHomepage.this, UserProfileActivity.class);
+                            startActivity(intent);
                         } else if (menuItem.getItemId() == R.id.changePassword) {
 
                         } else if (menuItem.getItemId() == R.id.logOut) {
@@ -94,8 +104,6 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
                 startActivity(intent);
             }
         });
-
-
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -131,7 +139,8 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     openingSection.setVisibility(View.GONE);
-                    listViewFragment.verticalRecyclerView.setVisibility(View.GONE);
+                    titleForHorizontalRV.setVisibility(View.GONE);
+                    listViewFragment.nestedScrollView.setVisibility(View.GONE);
                     mapButton.setVisibility(View.GONE);
                     backButton.setVisibility(View.VISIBLE);
                     searchIcon.setVisibility(View.GONE);
@@ -139,7 +148,8 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
                     findViewById(R.id.filterSection).setVisibility(View.GONE);
                 } else {
                     openingSection.setVisibility(View.VISIBLE);
-                    listViewFragment.verticalRecyclerView.setVisibility(View.VISIBLE);
+                    titleForHorizontalRV.setVisibility(View.VISIBLE);
+                    listViewFragment.nestedScrollView.setVisibility(View.VISIBLE);
                     backButton.setVisibility(View.GONE);
                     mapButton.setVisibility(View.VISIBLE);
                     findViewById(R.id.categorySection).setVisibility(View.VISIBLE);
@@ -151,7 +161,7 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listViewFragment.adapter1.setData(listViewFragment.dataList1);
+                listViewFragment.queryRestaurants(maxDeliveryFee, state);
                 searchView.clearFocus();
                 searchView.setQuery("", false);
                 searchView.setIconified(true);
@@ -164,52 +174,64 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
             }
         });
 
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CustomerHomepage.this, MapsActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         fastFoodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rotateButton(fastFoodButton);
-                state = "Fast Food";
-//                listViewFragment.queryBasedOnFastFood();
-                listViewFragment.queryBasedOnCategory(state);
+                rotateButton(fastFoodButton, "Fast Food");
             }
         });
 
-       breakfastButton.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               rotateButton(breakfastButton);
-               state = "breakfast";
-//               listViewFragment.queryBasedOnBreakFast();
-           }
-       });
+        breakfastButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rotateButton(breakfastButton, "Breakfast");
+            }
+        });
+
+        coffeeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rotateButton(coffeeButton, "Coffee");
+            }
+        });
 
         pizzaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rotateButton(pizzaButton);
-                state = "pizza";
-//                listViewFragment.queryBasedOnPizza();
+                rotateButton(pizzaButton, "Pizza");
             }
         });
 
         burgerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rotateButton(burgerButton);
-//                listViewFragment.queryBasedOnBurger();
+                rotateButton(burgerButton, "Burger");
             }
         });
+
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        int savedInterval = sharedPreferences.getInt(INTERVAL_KEY, 0);
+        if (savedInterval != 0) {
+            maxDeliveryFee = getDeliveryFeeForInterval(savedInterval);
+        }
     }
 
-    private void rotateButton(ImageButton button) {
+    private void rotateButton(ImageButton button, String category) {
         RotateAnimation animation;
         // If the clicked button is different from the last clicked button, reset the last clicked button
         if (lastClickedButton != null && lastClickedButton != button) {
             resetButtonAnimation(lastClickedButton);
             lastClickedButton.clearAnimation();
             isRotated = false;
-//            onResetClicked();
         }
 
         if (!isRotated && button.getRotation() == 0) {
@@ -217,14 +239,15 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
 
+            state = category;
+            listViewFragment.queryRestaurants(maxDeliveryFee, state);
         } else {
-            animation = new RotateAnimation(-20, 50,
+            animation = new RotateAnimation(-20, 0,
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
-            listViewFragment.dataList1.clear();
-            listViewFragment.adapter1.notifyDataSetChanged();
-            onResetClicked();
 
+            state = "All";
+            listViewFragment.queryRestaurants(maxDeliveryFee, state);
         }
         animation.setDuration(200);
         animation.setFillAfter(true);
@@ -234,9 +257,6 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
         lastClickedButton = button; // Set the current clicked button as the last clicked button
     }
 
-
-
-
     private void resetButtonAnimation(ImageButton button) { // Reset animation
         RotateAnimation animation = new RotateAnimation(-20, 0,
                 Animation.RELATIVE_TO_SELF, 0.5f,
@@ -244,7 +264,7 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
         animation.setDuration(0);
         animation.setFillAfter(true);
         button.startAnimation(animation);
-        onResetClicked();
+
     }
 
     private void logout() {
@@ -253,8 +273,8 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
         finish();
     }
 
-    private void showDistanceBottomSheetDialog(){
-        DeliveryFeesBottomSheetFragment distanceBottomSheet = new DeliveryFeesBottomSheetFragment();
+    private void showDistanceBottomSheetDialog() {
+        DeliveryFeeBottomSheetFragment distanceBottomSheet = new DeliveryFeeBottomSheetFragment();
         distanceBottomSheet.setListener(this); // Set the listener to the activity
         distanceBottomSheet.show(getSupportFragmentManager(), null);
     }
@@ -266,26 +286,41 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
 
     @Override
     public void onDeliveryFeeSelected(int selectedInterval) {
-        float maxDeliveryFee;
-        switch (selectedInterval) {
-            case 0:
-                maxDeliveryFee = 1.0f;
-                break;
-            case 1:
-                maxDeliveryFee = 3.0f;
-                break;
-            case 2:
-                maxDeliveryFee = 5.0f;
-                break;
-            default:
-                maxDeliveryFee = 0.0f;
-                break;
+        maxDeliveryFee = getDeliveryFeeForInterval(selectedInterval);
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(INTERVAL_KEY, selectedInterval);
+        editor.apply();
+        if (state.equals("All")) {
+            listViewFragment.queryRestaurants(maxDeliveryFee, state);
+        } else {
+            listViewFragment.queryRestaurants(maxDeliveryFee, state);
         }
-        listViewFragment.queryBasedOnDeliveryFee(maxDeliveryFee);
     }
 
     @Override
     public void onResetClicked() {
-        listViewFragment.restoreOriginalList();
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(INTERVAL_KEY);
+        editor.apply();
+        if (state.equals("All")) {
+            listViewFragment.restoreOriginalList();
+        } else {
+            listViewFragment.queryRestaurants(maxDeliveryFee, state);
+        }
+    }
+
+    private float getDeliveryFeeForInterval(int interval) {
+        switch (interval) {
+            case 0:
+                return 1.0f;
+            case 1:
+                return 3.0f;
+            case 2:
+                return 5.0f;
+            default:
+                return 0.0f;
+        }
     }
 }
