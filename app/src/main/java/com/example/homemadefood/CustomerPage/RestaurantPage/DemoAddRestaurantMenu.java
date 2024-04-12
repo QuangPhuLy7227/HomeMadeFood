@@ -54,12 +54,12 @@ public class DemoAddRestaurantMenu extends AppCompatActivity {
         final CollectionReference foodMenu = mFirestore.collection("restaurants")
                 .document("Breakfast")
                 .collection("Menu")
-                .getParent().collection("Food_Menu");
+                .document("Food Menu").collection("Food_Menu");
 
         final CollectionReference drinkMenu = mFirestore.collection("restaurants")
                 .document("Breakfast")
                 .collection("Menu")
-                .getParent().collection("Drink_Menu");
+                .document().collection("Drink_Menu");
 
         imagePickerLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
             if (uri != null) {

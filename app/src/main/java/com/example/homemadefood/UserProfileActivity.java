@@ -2,9 +2,16 @@ package com.example.homemadefood;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.example.homemadefood.CustomerPage.MainPage.CustomerHomepage;
+import com.example.homemadefood.ProviderPage.ProviderHomePage;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -26,6 +33,34 @@ public class UserProfileActivity extends AppCompatActivity {
         String fullName = sharedPreferences.getString(KEY_FULL_NAME, "");
         String email = sharedPreferences.getString(KEY_EMAIL, "");
         String phone = sharedPreferences.getString(KEY_PHONE, "");
+
+        ImageButton backButton= findViewById(R.id.backButton);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserProfileActivity.this, CustomerHomepage.class);
+                startActivity(intent);
+            }
+        });
+
+        Button updateProfileButton = findViewById(R.id.updateProfile);
+        updateProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        Button logOutButton = findViewById(R.id.logOut);
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserProfileActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         // Set user profile data to appropriate TextViews
         TextView usernameTextView = findViewById(R.id.userNameTextView);
