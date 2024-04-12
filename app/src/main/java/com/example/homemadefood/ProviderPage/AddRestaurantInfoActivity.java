@@ -1,8 +1,7 @@
 package com.example.homemadefood.ProviderPage;
 
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,12 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.homemadefood.R;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AddRestaurantInfoActivity extends AppCompatActivity {
@@ -125,38 +126,52 @@ public class AddRestaurantInfoActivity extends AppCompatActivity {
             return;
         }
 
+        // Convert address to latitude and longitude
+        LatLng latLng = getLocationFromAddress(address, zipCode);
+        if (latLng != null) {
+            double latitude = latLng.latitude;
+            double longitude = latLng.longitude;
+            Log.d("RestaurantLocation", "Latitude: " + latitude + ", Longitude: " + longitude);
 
-        // Check if the restaurant name already exists
-        // Implement your logic to check if the restaurant name already exists in Firestore
-        // You may query the Firestore collection to check if a document with the same name exists
+            // Construct the restaurant data
+            Map<String, Object> restaurantData = new HashMap<>();
+            restaurantData.put("name", name);
+            restaurantData.put("info", info);
+            restaurantData.put("address", address);
+            restaurantData.put("zipCode", zipCode);
+            restaurantData.put("phoneNumber", phoneNumber);
+            restaurantData.put("openHours", openHours);
+            restaurantData.put("closeHours", closeHours);
+            restaurantData.put("category", category);
+            restaurantData.put("date", date);
+            restaurantData.put("latitude", latitude);
+            restaurantData.put("longitude", longitude);
 
-        // Construct the restaurant data
-        Map<String, Object> restaurantData = new HashMap<>();
-        restaurantData.put("name", name);
-        restaurantData.put("info", info);
-        restaurantData.put("address", address);
-        restaurantData.put("zipCode", zipCode);
-        restaurantData.put("phoneNumber", phoneNumber);
-        restaurantData.put("openHours", openHours);
-        restaurantData.put("closeHours", closeHours);
-        restaurantData.put("category", category);
-        restaurantData.put("date", date);
-
-        // Add the user ID who added the restaurant
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            String userId = currentUser.getUid();
-            restaurantData.put("addedBy", userId);
-            Log.d("Authentication", "User ID: " + userId);
+            // Upload the image to Firestore storage
+            uploadImageToStorage(name, restaurantData);
         } else {
-            // Handle case where user is not logged in
-            Log.d("Authentication", "User not logged in");
-            Toast.makeText(this, "User not logged in. Please log in to add a restaurant.", Toast.LENGTH_SHORT).show();
-            return;
+            Toast.makeText(this, "Failed to convert address to coordinates", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Convert address to latitude and longitude
+    private LatLng getLocationFromAddress(String strAddress, String zipCode) {
+        Geocoder coder = new Geocoder(this);
+        List<Address> address;
+        LatLng latLng = null;
+
+        try {
+            address = coder.getFromLocationName(strAddress + " " + zipCode, 1);
+            if (address == null || address.isEmpty()) {
+                return null;
+            }
+            Address location = address.get(0);
+            latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        // Upload the image to Firestore storage
-        uploadImageToStorage(name, restaurantData);
+        return latLng;
     }
 
     // Upload the restaurant image to Firestore storage
