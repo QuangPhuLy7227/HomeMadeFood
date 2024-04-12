@@ -1,7 +1,11 @@
 package com.example.homemadefood.ProviderPage;
 
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,18 +15,14 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.homemadefood.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -125,6 +125,7 @@ public class AddRestaurantInfoActivity extends AppCompatActivity {
             return;
         }
 
+
         // Check if the restaurant name already exists
         // Implement your logic to check if the restaurant name already exists in Firestore
         // You may query the Firestore collection to check if a document with the same name exists
@@ -140,6 +141,19 @@ public class AddRestaurantInfoActivity extends AppCompatActivity {
         restaurantData.put("closeHours", closeHours);
         restaurantData.put("category", category);
         restaurantData.put("date", date);
+
+        // Add the user ID who added the restaurant
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            restaurantData.put("addedBy", userId);
+            Log.d("Authentication", "User ID: " + userId);
+        } else {
+            // Handle case where user is not logged in
+            Log.d("Authentication", "User not logged in");
+            Toast.makeText(this, "User not logged in. Please log in to add a restaurant.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         // Upload the image to Firestore storage
         uploadImageToStorage(name, restaurantData);
