@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                         username.setError(null);
                         username.setErrorEnabled(false);
                         String usernameFromDB = documentSnapshot.getString("username"); // Shared preference to local storage
-                        String fullNameFromDB = documentSnapshot.getString("fullName");
+                        String fullNameFromDB = documentSnapshot.getString("name");
                         String emailFromDB = documentSnapshot.getString("email");
                         String phoneFromDB = documentSnapshot.getString("phone");
 
