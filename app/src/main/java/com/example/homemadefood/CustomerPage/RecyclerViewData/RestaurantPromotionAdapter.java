@@ -18,23 +18,25 @@ public class RestaurantPromotionAdapter extends RecyclerView.Adapter<RestaurantP
     private final Context context;
     private List<RestaurantPromotion> dataList;
     private final RecyclerViewInterface recyclerViewInterface;
+    private boolean isHorizontal;
 
-    public RestaurantPromotionAdapter(Context context, List<RestaurantPromotion> dataList, RecyclerViewInterface recyclerViewInterface) {
+    public RestaurantPromotionAdapter(Context context, List<RestaurantPromotion> dataList, RecyclerViewInterface recyclerViewInterface, boolean isHorizontal) {
         this.context = context;
         this.dataList = dataList;
         this.recyclerViewInterface = recyclerViewInterface;
+        this.isHorizontal = isHorizontal;
     }
 
     public void setData(List<RestaurantPromotion> dataList) {
         this.dataList = dataList;
         notifyDataSetChanged();
-
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.horizontal_recycler_view_restaurant, parent, false);
+        int layoutRes = isHorizontal ? R.layout.horizontal_recycler_view_top_restaurant_item : R.layout.vertical_recycler_view_top_restaurant_item;
+        View view = LayoutInflater.from(parent.getContext()).inflate(layoutRes, parent, false);
         return new ViewHolder(view);
     }
 
@@ -46,24 +48,15 @@ public class RestaurantPromotionAdapter extends RecyclerView.Adapter<RestaurantP
             return;
         }
 
-        holder.restaurantImage.setImageResource(promotion.getRestaurantImage());
-        holder.restaurantName.setText(promotion.getRestaurantName());
-        holder.ratingTextView.setText(String.valueOf(promotion.getRating()));
-        holder.totalRatingNumber.setText(String.valueOf(promotion.getTotalRating()));
-        holder.distance.setText(promotion.getDistance());
-        holder.deliveryTime.setText(promotion.getDeliveryTime());
-        holder.priceRange.setText(promotion.getPriceRange());
+        holder.bind(promotion);
     }
 
     @Override
     public int getItemCount() {
-        if (dataList != null) {
-            return dataList.size();
-        }
-        return 0;
+        return dataList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView restaurantImage;
         private TextView restaurantName;
@@ -72,6 +65,7 @@ public class RestaurantPromotionAdapter extends RecyclerView.Adapter<RestaurantP
         private TextView distance;
         private TextView deliveryTime;
         private TextView priceRange;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -82,7 +76,16 @@ public class RestaurantPromotionAdapter extends RecyclerView.Adapter<RestaurantP
             distance = itemView.findViewById(R.id.distance);
             deliveryTime = itemView.findViewById(R.id.deliveryTime);
             priceRange = itemView.findViewById(R.id.priceRange);
+        }
 
+        public void bind(RestaurantPromotion promotion) {
+            restaurantImage.setImageResource(promotion.getRestaurantImage());
+            restaurantName.setText(promotion.getRestaurantName());
+            ratingTextView.setText(String.valueOf(promotion.getRating()));
+            totalRatingNumber.setText(String.valueOf(promotion.getTotalRating()));
+            distance.setText(promotion.getDistance());
+            deliveryTime.setText(promotion.getDeliveryTime());
+            priceRange.setText(promotion.getPriceRange());
         }
     }
 }

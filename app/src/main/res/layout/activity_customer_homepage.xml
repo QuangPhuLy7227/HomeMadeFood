@@ -428,6 +428,7 @@
                     android:backgroundTint="@color/light_grey">
 
                     <ImageButton
+                        android:id="@+id/topRestaurantActivityButton"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:background="@drawable/next_arrow"
@@ -452,11 +453,12 @@
                 android:id="@+id/flContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/viewMode"
                 android:layout_marginTop="0dp"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+
 
 
 </LinearLayout>

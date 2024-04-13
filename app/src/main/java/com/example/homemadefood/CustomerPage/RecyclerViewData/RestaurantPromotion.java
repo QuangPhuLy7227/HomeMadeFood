@@ -1,6 +1,9 @@
 package com.example.homemadefood.CustomerPage.RecyclerViewData;
 
-public class RestaurantPromotion {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class RestaurantPromotion implements Parcelable {
     private final int restaurantImage;
     private final String restaurantName;
     private final float rating;
@@ -18,6 +21,28 @@ public class RestaurantPromotion {
         this.deliveryTime = deliveryTime;
         this.priceRange = priceRange;
     }
+
+    protected RestaurantPromotion(Parcel in) {
+        restaurantImage = in.readInt();
+        restaurantName = in.readString();
+        rating = in.readFloat();
+        totalRating = in.readInt();
+        distance = in.readString();
+        deliveryTime = in.readString();
+        priceRange = in.readString();
+    }
+
+    public static final Creator<RestaurantPromotion> CREATOR = new Creator<RestaurantPromotion>() {
+        @Override
+        public RestaurantPromotion createFromParcel(Parcel in) {
+            return new RestaurantPromotion(in);
+        }
+
+        @Override
+        public RestaurantPromotion[] newArray(int size) {
+            return new RestaurantPromotion[size];
+        }
+    };
 
     public int getRestaurantImage() {
         return restaurantImage;
@@ -43,9 +68,23 @@ public class RestaurantPromotion {
         return deliveryTime;
     }
 
-
     public String getPriceRange() {
         return priceRange;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(restaurantImage);
+        dest.writeString(restaurantName);
+        dest.writeFloat(rating);
+        dest.writeInt(totalRating);
+        dest.writeString(distance);
+        dest.writeString(deliveryTime);
+        dest.writeString(priceRange);
+    }
 }

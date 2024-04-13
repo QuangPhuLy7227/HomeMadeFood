@@ -20,11 +20,17 @@ import androidx.appcompat.widget.SearchView;
 import com.example.homemadefood.CustomerPage.BottomSheetDialog.DeliveryFeeListener;
 import com.example.homemadefood.CustomerPage.BottomSheetDialog.DeliveryFeeBottomSheetFragment;
 import com.example.homemadefood.CustomerPage.BottomSheetDialog.PriceBottomSheetFragment;
-import com.example.homemadefood.CustomerPage.DemoAddRestaurants;
+import com.example.homemadefood.CustomerPage.CustomerViewRestaurant.TopRestaurant;
+import com.example.homemadefood.CustomerPage.RestaurantPage.DemoAddRestaurantMenu;
+import com.example.homemadefood.CustomerPage.RestaurantPage.DemoAddRestaurants;
 import com.example.homemadefood.CustomerPage.Map.MapsActivity;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotion;
 import com.example.homemadefood.LoginActivity;
 import com.example.homemadefood.R;
 import com.example.homemadefood.UserProfileActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeListener {
     private ImageView searchIcon;
@@ -56,6 +62,15 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
         ImageButton coffeeButton = findViewById(R.id.coffeeCategory);
         ImageButton pizzaButton = findViewById(R.id.pizzaCategory);
         ImageButton burgerButton = findViewById(R.id.burgerCategory);
+
+        Button pickUpButton = findViewById(R.id.pickUp);
+        pickUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CustomerHomepage.this, DemoAddRestaurantMenu.class);
+                startActivity(intent);
+            }
+        });
 
         Button deliveryButton = findViewById(R.id.deliveryFee);
         deliveryButton.setOnClickListener(new View.OnClickListener() {
@@ -223,6 +238,19 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
         if (savedInterval != 0) {
             maxDeliveryFee = getDeliveryFeeForInterval(savedInterval);
         }
+
+        ImageButton topRestaurantButton = findViewById(R.id.topRestaurantActivityButton);
+        topRestaurantButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Pass data to TopRestaurant activity
+                List<RestaurantPromotion> promotionList = listViewFragment.generatePromotionList();
+                Intent intent = new Intent(CustomerHomepage.this, TopRestaurant.class);
+                intent.putParcelableArrayListExtra("promotion_list", new ArrayList<>(promotionList));
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void rotateButton(ImageButton button, String category) {
@@ -298,6 +326,19 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
         }
     }
 
+    private float getDeliveryFeeForInterval(int interval) {
+        switch (interval) {
+            case 0:
+                return 1.0f;
+            case 1:
+                return 3.0f;
+            case 2:
+                return 5.0f;
+            default:
+                return 0.0f;
+        }
+    }
+
     @Override
     public void onResetClicked() {
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -311,16 +352,4 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
         }
     }
 
-    private float getDeliveryFeeForInterval(int interval) {
-        switch (interval) {
-            case 0:
-                return 1.0f;
-            case 1:
-                return 3.0f;
-            case 2:
-                return 5.0f;
-            default:
-                return 0.0f;
-        }
-    }
 }
