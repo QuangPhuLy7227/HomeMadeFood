@@ -3,7 +3,7 @@ package com.example.homemadefood.CustomerPage.RecyclerViewData;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class RestaurantData implements Parcelable {
+public class RestaurantDataModel implements Parcelable {
 
     private String restaurantImageUri;
     private String name;
@@ -12,12 +12,13 @@ public class RestaurantData implements Parcelable {
     private float rating;
     private int totalRating;
     private int deliveryTime;
+    private String providerUsername; // New field to store provider's username
 
-    public RestaurantData() {
+    public RestaurantDataModel() {
         // Default constructor required for Firebase deserialization
     }
 
-    public RestaurantData(String restaurantImageUri, String name, String category, float deliveryFee, float rating, int totalRating) {
+    public RestaurantDataModel(String restaurantImageUri, String name, String category, float deliveryFee, float rating, int totalRating, String providerUsername) {
         this.restaurantImageUri = restaurantImageUri;
         this.name = name;
         this.category = category;
@@ -25,9 +26,10 @@ public class RestaurantData implements Parcelable {
         this.rating = rating;
         this.totalRating = totalRating;
         this.deliveryTime = 0;
+        this.providerUsername = providerUsername;
     }
 
-    protected RestaurantData(Parcel in) {
+    protected RestaurantDataModel(Parcel in) {
         restaurantImageUri = in.readString();
         name = in.readString();
         category = in.readString();
@@ -35,17 +37,18 @@ public class RestaurantData implements Parcelable {
         rating = in.readFloat();
         totalRating = in.readInt();
         deliveryTime = in.readInt();
+        providerUsername = in.readString(); // Read provider's username from Parcel
     }
 
-    public static final Creator<RestaurantData> CREATOR = new Creator<RestaurantData>() {
+    public static final Creator<RestaurantDataModel> CREATOR = new Creator<RestaurantDataModel>() {
         @Override
-        public RestaurantData createFromParcel(Parcel in) {
-            return new RestaurantData(in);
+        public RestaurantDataModel createFromParcel(Parcel in) {
+            return new RestaurantDataModel(in);
         }
 
         @Override
-        public RestaurantData[] newArray(int size) {
-            return new RestaurantData[size];
+        public RestaurantDataModel[] newArray(int size) {
+            return new RestaurantDataModel[size];
         }
     };
 
@@ -81,6 +84,10 @@ public class RestaurantData implements Parcelable {
         return deliveryTime;
     }
 
+    public String getProviderUsername() {
+        return providerUsername;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -95,5 +102,6 @@ public class RestaurantData implements Parcelable {
         dest.writeFloat(rating);
         dest.writeInt(totalRating);
         dest.writeInt(deliveryTime);
+        dest.writeString(providerUsername); // Write provider's username to Parcel
     }
 }

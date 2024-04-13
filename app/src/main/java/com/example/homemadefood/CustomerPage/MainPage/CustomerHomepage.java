@@ -24,7 +24,7 @@ import com.example.homemadefood.CustomerPage.CustomerViewRestaurant.TopRestauran
 import com.example.homemadefood.CustomerPage.RestaurantPage.DemoAddRestaurantMenu;
 import com.example.homemadefood.CustomerPage.RestaurantPage.DemoAddRestaurants;
 import com.example.homemadefood.CustomerPage.Map.MapsActivity;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotion;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotionModel;
 import com.example.homemadefood.LoginActivity;
 import com.example.homemadefood.R;
 import com.example.homemadefood.UserProfileActivity;
@@ -244,7 +244,7 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
             @Override
             public void onClick(View v) {
                 // Pass data to TopRestaurant activity
-                List<RestaurantPromotion> promotionList = listViewFragment.generatePromotionList();
+                List<RestaurantPromotionModel> promotionList = listViewFragment.generatePromotionList();
                 Intent intent = new Intent(CustomerHomepage.this, TopRestaurant.class);
                 intent.putParcelableArrayListExtra("promotion_list", new ArrayList<>(promotionList));
                 startActivity(intent);
