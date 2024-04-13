@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.homemadefood.CustomerPage.MainPage.CustomerHomepage;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotion;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotionModel;
 import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotionAdapter;
 import com.example.homemadefood.R;
 
@@ -27,7 +27,7 @@ public class TopRestaurant extends AppCompatActivity {
         // Receive data from intent
         Intent intent = getIntent();
         if (intent != null) {
-            ArrayList<RestaurantPromotion> promotionList = intent.getParcelableArrayListExtra("promotion_list");
+            ArrayList<RestaurantPromotionModel> promotionList = intent.getParcelableArrayListExtra("promotion_list");
             if (promotionList != null) {
                 // Set promotion list to RecyclerView adapter
                 RecyclerView recyclerView = findViewById(R.id.promotionVerticalRecyclerView);
