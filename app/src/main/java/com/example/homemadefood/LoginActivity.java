@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (passwordFromDB.equals(userEnteredPassword)) {
                         username.setError(null);
                         username.setErrorEnabled(false);
-                        String usernameFromDB = documentSnapshot.getString("username"); // Shared preferenced to local storage
+                        String usernameFromDB = documentSnapshot.getString("username"); // Shared preference to local storage
                         String fullNameFromDB = documentSnapshot.getString("name");
                         String emailFromDB = documentSnapshot.getString("email");
                         String phoneFromDB = documentSnapshot.getString("phone");
