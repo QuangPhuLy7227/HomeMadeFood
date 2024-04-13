@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-<<<<<<< HEAD
     android:orientation="vertical"
     tools:context=".ProviderPage.ProvidersHomePage">
 
@@ -31,21 +30,12 @@
             android:textStyle="bold" />
 
         <!-- Profile Button -->
-=======
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".ProviderPage.ProviderHomePage">
-
-
-
->>>>>>> 3b20a608f235c46e3e659829d517c1ec24a52c88
         <ImageButton
             android:id="@+id/profileButton"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-<<<<<<< HEAD
             android:layout_gravity="top|end"
             android:layout_marginStart="225dp"
             android:layout_marginTop="25dp"
@@ -122,31 +112,3 @@
         android:visibility="gone" />
 
 </LinearLayout>
-=======
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/people"
-            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="30sp"
-        android:textAlignment="center"
-        android:text="Provider's Homepage" />
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-
-
-
-</LinearLayout>
-
-
->>>>>>> 3b20a608f235c46e3e659829d517c1ec24a52c88
