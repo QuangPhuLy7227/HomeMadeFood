@@ -35,8 +35,8 @@ public class CustomerMenuSelection extends AppCompatActivity {
     private RestaurantMenuSelectionAdapter adapter;
     private List<RestaurantMenuDrinkModel> drinkList = new ArrayList<>();
 
-    private static final String SHARED_PREF_NAME = "homemadefood_shared_pref";
-    private static final String KEY_USERNAME = "username";
+//    private static final String SHARED_PREF_NAME = "homemadefood_shared_pref";
+//    private static final String KEY_USERNAME = "username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +52,14 @@ public class CustomerMenuSelection extends AppCompatActivity {
         TextView totalRatingTextView = findViewById(R.id.totalRatingTextView);
         recyclerView = findViewById(R.id.drinkRecyclerView);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-        String providerUsername = sharedPreferences.getString(KEY_USERNAME, "");
+//        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+//        String providerUsername = sharedPreferences.getString(KEY_USERNAME, "");
 
-        if (!providerUsername.isEmpty()) {
-            fetchDrinkMenu(providerUsername);
-        } else {
-            Toast.makeText(CustomerMenuSelection.this, "Provider not logged in", Toast.LENGTH_SHORT).show();
-        }
+//        if (!providerUsername.isEmpty()) {
+//            fetchDrinkMenu(providerUsername);
+//        } else {
+//            Toast.makeText(CustomerMenuSelection.this, "Provider not logged in", Toast.LENGTH_SHORT).show();
+//        }
 
         RestaurantDataModel restaurantData = getIntent().getParcelableExtra("restaurant_data");
 
@@ -68,6 +68,8 @@ public class CustomerMenuSelection extends AppCompatActivity {
             restaurantNameTextView.setText(restaurantData.getName());
             ratingTextView.setText(String.valueOf(restaurantData.getRating()));
             totalRatingTextView.setText(String.valueOf(restaurantData.getTotalRating()));
+            String resName = restaurantData.getName();
+            fetchDrinkMenu(resName);
         } else {
             Toast.makeText(CustomerMenuSelection.this, "No Data", Toast.LENGTH_SHORT).show();
         }
@@ -78,48 +80,71 @@ public class CustomerMenuSelection extends AppCompatActivity {
         });
     }
 
-    private void fetchDrinkMenu(String providerUsername) {
-        mFirestore.collection("restaurants")
-                .whereEqualTo("providerUsername", providerUsername)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        DocumentSnapshot restaurantDoc = queryDocumentSnapshots.getDocuments().get(0);
-                        String restaurantName = restaurantDoc.getId();
+    private void fetchDrinkMenu(String restaurantName) {
+        CollectionReference MenuRef = mFirestore.collection("restaurants")
+                .document(restaurantName)
+                .collection("Menu");
+        Query drinkQuery = MenuRef.whereEqualTo("category", "Drink");
+        drinkQuery.get().addOnSuccessListener(queryDocumentSnapshots1 -> {
+            drinkList.clear();
+            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots1) {
+                String drinkImageUri = documentSnapshot.getString("image");
+                String drinkName = documentSnapshot.getString("itemName");
+                float drinkPrice = documentSnapshot.getDouble("price").floatValue();
 
-                        CollectionReference drinkMenuRef = mFirestore.collection("restaurants")
-                                .document(restaurantName)
-                                .collection("Menu");
+                RestaurantMenuDrinkModel drinkModel = new RestaurantMenuDrinkModel(drinkImageUri, drinkName, drinkPrice);
+                drinkList.add(drinkModel);
+            }
 
-                        Query drinkQuery = drinkMenuRef.whereEqualTo("category", "Drink");
+            adapter = new RestaurantMenuSelectionAdapter(CustomerMenuSelection.this, drinkList);
+            recyclerView.setAdapter(adapter);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(CustomerMenuSelection.this, 2);
+            recyclerView.setLayoutManager(gridLayoutManager);
 
-                        drinkQuery.get().addOnSuccessListener(queryDocumentSnapshots1 -> {
-                            drinkList.clear();
-                            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots1) {
-                                String drinkImageUri = documentSnapshot.getString("image");
-                                String drinkName = documentSnapshot.getString("itemName");
-                                float drinkPrice = documentSnapshot.getDouble("price").floatValue();
+        }).addOnFailureListener(e -> {
+            Toast.makeText(CustomerMenuSelection.this, "Failed to fetch drink menu items", Toast.LENGTH_SHORT).show();
+        });
 
-                                RestaurantMenuDrinkModel drinkModel = new RestaurantMenuDrinkModel(drinkImageUri, drinkName, drinkPrice);
-                                drinkList.add(drinkModel);
-                            }
-
-                            adapter = new RestaurantMenuSelectionAdapter(CustomerMenuSelection.this, drinkList);
-                            recyclerView.setAdapter(adapter);
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(CustomerMenuSelection.this, 2);
-                            recyclerView.setLayoutManager(gridLayoutManager);
-
-                        }).addOnFailureListener(e -> {
-                            Toast.makeText(CustomerMenuSelection.this, "Failed to fetch drink menu items", Toast.LENGTH_SHORT).show();
-                        });
-
-                    } else {
-                        Toast.makeText(CustomerMenuSelection.this, "No restaurant found for this provider", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(CustomerMenuSelection.this, "Error fetching restaurant", Toast.LENGTH_SHORT).show();
-                });
+//        mFirestore.collection("restaurants")
+//                .whereEqualTo("name", restaurantName)
+//                .get()
+//                .addOnSuccessListener(queryDocumentSnapshots -> {
+//                    if (!queryDocumentSnapshots.isEmpty()) {
+//                        DocumentSnapshot restaurantDoc = queryDocumentSnapshots.getDocument(restaurantName);
+//
+//                        CollectionReference drinkMenuRef = mFirestore.collection("restaurants")
+//                                .document(restaurantName)
+//                                .collection("Menu");
+//
+//                        Query drinkQuery = drinkMenuRef.whereEqualTo("category", "Drink");
+//
+//                        drinkQuery.get().addOnSuccessListener(queryDocumentSnapshots1 -> {
+//                            drinkList.clear();
+//                            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots1) {
+//                                String drinkImageUri = documentSnapshot.getString("image");
+//                                String drinkName = documentSnapshot.getString("itemName");
+//                                float drinkPrice = documentSnapshot.getDouble("price").floatValue();
+//
+//                                RestaurantMenuDrinkModel drinkModel = new RestaurantMenuDrinkModel(drinkImageUri, drinkName, drinkPrice);
+//                                drinkList.add(drinkModel);
+//                            }
+//
+//                            adapter = new RestaurantMenuSelectionAdapter(CustomerMenuSelection.this, drinkList);
+//                            recyclerView.setAdapter(adapter);
+//                            GridLayoutManager gridLayoutManager = new GridLayoutManager(CustomerMenuSelection.this, 2);
+//                            recyclerView.setLayoutManager(gridLayoutManager);
+//
+//                        }).addOnFailureListener(e -> {
+//                            Toast.makeText(CustomerMenuSelection.this, "Failed to fetch drink menu items", Toast.LENGTH_SHORT).show();
+//                        });
+//
+//                    } else {
+//                        Toast.makeText(CustomerMenuSelection.this, "No restaurant found for this provider", Toast.LENGTH_SHORT).show();
+//                    }
+//                })
+//                .addOnFailureListener(e -> {
+//                    Toast.makeText(CustomerMenuSelection.this, "Error fetching restaurant", Toast.LENGTH_SHORT).show();
+//                });
     }
 }
 
