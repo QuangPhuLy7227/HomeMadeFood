@@ -8,17 +8,147 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/addNewCardTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Card Fragment"
-        android:textAlignment="center"/>
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:text="Add New Card"
+        android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/paymentRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        tools:listitem="@layout/change_password_recycler_view_item"/>
+        android:layout_marginTop="10dp" />
 
+    <Button
+        android:id="@+id/addNewCardButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:text="Add a New Card" />
+
+        <LinearLayout
+            android:id="@+id/addNewCardLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="Cardholder's Name"/>
+
+            <EditText
+                android:id="@+id/cardHolderNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:padding="10dp"
+                android:background="@drawable/rounded_edittext_background"
+                android:drawableLeft="@drawable/cardholder_icon"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="Card's Number"/>
+
+            <EditText
+                android:id="@+id/cardNumberEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:padding="10dp"
+                android:background="@drawable/rounded_edittext_background"
+                android:drawableLeft="@drawable/credit_card_icon" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="102dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:text="Expiration Date" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:text="CVV" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/expirationDateEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="43dp"
+                    android:layout_marginEnd="110dp"
+                    android:paddingStart="46dp"
+                    android:paddingEnd="15dp"
+                    android:hint="MM/YY"
+                    android:inputType="datetime"
+                    android:background="@drawable/rounded_edittext_background"/>
+
+                <EditText
+                    android:id="@+id/cvvEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:paddingStart="8dp"
+                    android:hint="CVV ###"
+                    android:inputType="number"
+                    android:background="@drawable/rounded_edittext_background" />
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/submitCardButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginEnd="10dp"
+                android:text="Submit Card" />
+
+
+        </LinearLayout>
 
 </LinearLayout>

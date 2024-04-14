@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotionModel;
 
@@ -20,9 +21,6 @@ import java.util.List;
 public class AddPaymentFragment extends Fragment {
     private List<PaymentModelClass> dataList;
     private PaymentAdapter adapter;
-
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,13 +37,34 @@ public class AddPaymentFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         RecyclerView paymentRecyclerView = view.findViewById(R.id.paymentRecyclerView);
 
         dataList = generatePaymentList();
         adapter = new PaymentAdapter(getContext(), dataList);
         paymentRecyclerView.setAdapter(adapter);
         paymentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        Button addNewCardButton = view.findViewById(R.id.addNewCardButton);
+        addNewCardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.findViewById(R.id.addNewCardTextView).setVisibility(View.VISIBLE);
+                paymentRecyclerView.setVisibility(View.GONE);
+                addNewCardButton.setVisibility(View.GONE);
+                view.findViewById(R.id.addNewCardLayout).setVisibility(View.VISIBLE);
+            }
+        });
+
+        Button submitCardButton = view.findViewById(R.id.submitCardButton);
+        submitCardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.findViewById(R.id.addNewCardTextView).setVisibility(View.GONE);
+                paymentRecyclerView.setVisibility(View.VISIBLE);
+                addNewCardButton.setVisibility(View.VISIBLE);
+                view.findViewById(R.id.addNewCardLayout).setVisibility(View.GONE);
+            }
+        });
     }
 
 
