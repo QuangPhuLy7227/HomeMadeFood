@@ -8,6 +8,7 @@
     <string name="_0_6mi">0.6mi</string>
     <string name="todo">TODO</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="open_close_hours_format">Open: %1$s - Close: %2$s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
