@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        tools:listitem="@layout/change_password_recycler_view_item"/>
+        tools:listitem="@layout/add_payment_recycler_view_item"/>
 
 
 </LinearLayout>

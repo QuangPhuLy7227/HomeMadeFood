@@ -23,7 +23,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
     @NonNull
     @Override
     public PaymentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.change_password_recycler_view_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.add_payment_recycler_view_item, parent, false);
         return new PaymentAdapter.ViewHolder(view);
     }
 
