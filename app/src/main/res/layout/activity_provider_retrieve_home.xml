@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- activity_restaurant_details.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".ProviderPage.ProvidersHomePage">
+    android:padding="16dp">
 
     <!-- Top Section with Browse Text, Search, and Profile Button -->
     <LinearLayout
@@ -27,7 +25,8 @@
             android:layout_marginTop="20dp"
             android:text="Browse"
             android:textSize="30dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
 
         <!-- Profile Button -->
         <ImageButton
@@ -44,17 +43,6 @@
             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
     </LinearLayout>
 
-    <!-- Add Restaurant button -->
-    <Button
-        android:id="@+id/addRestaurantButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="end"
-        android:text="Add Restaurant"
-        android:visibility="gone"/>
-
-    <!-- Modify button -->
     <Button
         android:id="@+id/modifyButton"
         android:layout_width="wrap_content"
@@ -63,62 +51,67 @@
         android:layout_gravity="end"
         android:text="Modify"
         android:visibility="gone" />
+    <!-- Image View for Restaurant Image -->
+    <ImageView
+        android:id="@+id/imageViewRestaurant"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"
+        tools:src="@drawable/default_restaurant_image" />
 
-    <!-- Placeholder for restaurant data -->
+    <!-- Restaurant Name -->
     <TextView
-        android:id="@+id/restaurantPlaceholder"
+        android:id="@+id/textViewRestaurantName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No restaurant data available"
-        android:visibility="gone" />
-
-    <!-- Restaurant Name TextView -->
-    <TextView
-        android:id="@+id/restaurantNameTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginTop="16dp"
-        android:visibility="gone"/>
+        tools:text="Restaurant Name" />
 
-    <!-- Restaurant Info TextView -->
+    <!-- Restaurant Information -->
     <TextView
-        android:id="@+id/restaurantInfoTextView"
+        android:id="@+id/textViewRestaurantInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        tools:text="Restaurant Information" />
+
+    <!-- Restaurant Address and Zip Code -->
+    <TextView
+        android:id="@+id/textViewRestaurantAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:textSize="16sp"
         android:layout_marginTop="8dp"
-        android:visibility="gone"/>
+        tools:text="Restaurant Address" />
 
-    <!-- Restaurant Address TextView -->
+    <!-- Restaurant Phone Number -->
     <TextView
-        android:id="@+id/restaurantAddressTextView"
+        android:id="@+id/textViewRestaurantPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
         android:textSize="16sp"
         android:layout_marginTop="8dp"
-        android:visibility="gone"/>
+        tools:text="Restaurant Phone Number" />
 
-    <!-- Add Menu button -->
-    <Button
-        android:id="@+id/addMenuButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:layout_gravity="end"
-        android:text="Add Menu"
-        android:visibility="gone" />
-
-    <!-- Placeholder for menu data -->
+    <!-- Open Hours and Close Hours -->
     <TextView
-        android:id="@+id/menuPlaceholder"
+        android:id="@+id/textViewRestaurantHours"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No menu data available"
-        android:visibility="gone" />
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        tools:text="Open Hours - Close Hours" />
 
+    <!-- Restaurant Date -->
+    <TextView
+        android:id="@+id/textViewRestaurantDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        tools:text="Restaurant Date" />
 </LinearLayout>

@@ -165,59 +165,6 @@ public class AddRestaurantInfoActivity extends AppCompatActivity {
         }
     }
 
-//    private void saveRestaurantToFirestore() {
-//        // Get input values from UI elements
-//        String name = resNameEditText.getText().toString().trim();
-//        String info = resInfoEditText.getText().toString().trim();
-//        String address = resAddressEditText.getText().toString().trim();
-//        String zipCode = zipCodeEditText.getText().toString().trim();
-//        String phoneNumber = phoneNumberEditText.getText().toString().trim();
-//        String openHours = openHoursEditText.getText().toString().trim();
-//        String closeHours = closeHoursEditText.getText().toString().trim();
-//        String category = selectCategorySpinner.getSelectedItem().toString().trim();
-//        String date = dateRangeSpinner.getSelectedItem().toString().trim();
-//
-//        // Check if all fields are filled
-//        if (name.isEmpty() || info.isEmpty() || address.isEmpty() || zipCode.isEmpty() ||
-//                phoneNumber.isEmpty() || openHours.isEmpty() || closeHours.isEmpty()) {
-//            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        // Check if an image is selected
-//        if (selectedImageUri == null) {
-//            Toast.makeText(this, "Please select a restaurant image", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        // Convert address to latitude and longitude
-//        LatLng latLng = getLocationFromAddress(address, zipCode);
-//        if (latLng != null) {
-//            double latitude = latLng.latitude;
-//            double longitude = latLng.longitude;
-//            Log.d("RestaurantLocation", "Latitude: " + latitude + ", Longitude: " + longitude);
-//
-//            // Construct the restaurant data
-//            Map<String, Object> restaurantData = new HashMap<>();
-//            restaurantData.put("name", name);
-//            restaurantData.put("info", info);
-//            restaurantData.put("address", address);
-//            restaurantData.put("zipCode", zipCode);
-//            restaurantData.put("phoneNumber", phoneNumber);
-//            restaurantData.put("openHours", openHours);
-//            restaurantData.put("closeHours", closeHours);
-//            restaurantData.put("category", category);
-//            restaurantData.put("date", date);
-//            restaurantData.put("latitude", latitude);
-//            restaurantData.put("longitude", longitude);
-//
-//            // Upload the image to Firestore storage
-//            uploadImageToStorage(name, restaurantData);
-//        } else {
-//            Toast.makeText(this, "Failed to convert address to coordinates", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
     // Convert address to latitude and longitude
     private LatLng getLocationFromAddress(String strAddress, String zipCode) {
         Geocoder coder = new Geocoder(this);

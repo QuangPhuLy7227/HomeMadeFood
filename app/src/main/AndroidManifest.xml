@@ -54,6 +54,11 @@
             android:name=".ProviderPage.ProvidersHomePage"
             android:exported="false" />
         <activity android:name=".ProviderPage.AddRestaurantInfoActivity" />
+        <activity
+            android:name=".ProviderPage.RestaurantDetailsActivity"
+            android:label="Restaurant Details">
+        </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

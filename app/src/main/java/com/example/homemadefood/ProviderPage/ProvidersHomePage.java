@@ -11,23 +11,19 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.homemadefood.LoginActivity;
-import com.example.homemadefood.ProviderPage.ProRecyclerViewData.MenuData;
-import com.example.homemadefood.ProviderPage.ProRecyclerViewData.RestaurantData;
+
 import com.example.homemadefood.R;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 public class ProvidersHomePage extends AppCompatActivity {
 
     private ImageButton profileBtn;
     private Button addButton;
     private Button addMenButton;
-    private FirestoreManager firestoreManager;
     private TextView restaurantPlaceholder;
     private TextView menuPlaceholder;
 
@@ -47,18 +43,12 @@ public class ProvidersHomePage extends AppCompatActivity {
         restaurantPlaceholder = findViewById(R.id.restaurantPlaceholder);
         menuPlaceholder = findViewById(R.id.menuPlaceholder);
 
-        // Initialize FirestoreManager
-        firestoreManager = new FirestoreManager();
-
         // Initialize Firestore
         firestore = FirebaseFirestore.getInstance();
 
         // Fetch user data from Firestore
 //        fetchUserData();
         showPlaceholderViews();
-
-        // Call the method to display restaurant data on the home page
-        displayRestaurantDataOnHomePage();
 
         // Set onClickListener for the profile button
         profileBtn.setOnClickListener(new View.OnClickListener() {
@@ -102,60 +92,6 @@ public class ProvidersHomePage extends AppCompatActivity {
         });
 
     }
-
-    // After successfully adding the restaurant data, retrieve and display it on the home page
-    private void displayRestaurantDataOnHomePage() {
-        // Retrieve restaurant data from Firestore
-        firestore.collection("restaurants")
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    // Check if there are any documents
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        // Iterate through each document
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            // Get the restaurant details from the document
-                            String name = documentSnapshot.getString("name");
-                            String info = documentSnapshot.getString("info");
-                            String address = documentSnapshot.getString("address");
-                            String zipCode = documentSnapshot.getString("zipCode");
-                            String phoneNumber = documentSnapshot.getString("phoneNumber");
-                            String openHours = documentSnapshot.getString("openHours");
-                            String closeHours = documentSnapshot.getString("closeHours");
-                            String category = documentSnapshot.getString("category");
-                            String date = documentSnapshot.getString("date");
-                            String imageURL = documentSnapshot.getString("restaurantImageUri");
-
-                            // Update the UI with the retrieved data
-                            // For example:
-                            // restaurantNameTextView.setText(name);
-                            // restaurantInfoTextView.setText(info);
-                            // ...
-
-                            // Note: You need to add appropriate views in your home page layout to display the restaurant data.
-                            // Below is an example assuming you have TextViews in your layout with ids restaurantNameTextView, restaurantInfoTextView, etc.
-                            // Update these with your actual view ids.
-
-                            TextView restaurantNameTextView = findViewById(R.id.restaurantNameTextView);
-                            TextView restaurantInfoTextView = findViewById(R.id.restaurantInfoTextView);
-                            TextView restaurantAddressTextView = findViewById(R.id.restaurantAddressTextView);
-                            // Set retrieved data to TextViews
-                            restaurantNameTextView.setText(name);
-                            restaurantInfoTextView.setText(info);
-                            restaurantAddressTextView.setText(address);
-                        }
-                    } else {
-                        // No restaurant data available, show a message or handle the scenario accordingly
-                        // For example:
-                        // restaurantNameTextView.setText("No restaurant data available");
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    // Failed to retrieve restaurant data
-                    Toast.makeText(this, "Failed to retrieve restaurant data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-    }
-
-
 
     private void showPlaceholderViews() {
         // Show the placeholder views
