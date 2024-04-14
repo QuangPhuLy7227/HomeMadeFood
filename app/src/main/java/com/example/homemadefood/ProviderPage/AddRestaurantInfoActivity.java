@@ -106,7 +106,6 @@ public class AddRestaurantInfoActivity extends AppCompatActivity {
     }
 
     // Save the restaurant data to Firestore
-    // Save the restaurant data to Firestore
     private void saveRestaurantToFirestore() {
         // Get input values from UI elements
         String name = resNameEditText.getText().toString().trim();

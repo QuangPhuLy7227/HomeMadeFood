@@ -16,9 +16,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.homemadefood.LoginActivity;
-
 import com.example.homemadefood.R;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 public class ProvidersHomePage extends AppCompatActivity {
 
     private ImageButton profileBtn;
@@ -26,6 +25,9 @@ public class ProvidersHomePage extends AppCompatActivity {
     private Button addMenButton;
     private TextView restaurantPlaceholder;
     private TextView menuPlaceholder;
+
+    // Declare FirebaseFirestore variable
+    private FirebaseFirestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,10 @@ public class ProvidersHomePage extends AppCompatActivity {
         restaurantPlaceholder = findViewById(R.id.restaurantPlaceholder);
         menuPlaceholder = findViewById(R.id.menuPlaceholder);
 
+        // Initialize Firestore
+        firestore = FirebaseFirestore.getInstance();
+
+        // Fetch user data from Firestore
         showPlaceholderViews();
 
         // Set onClickListener for the profile button
@@ -84,6 +90,8 @@ public class ProvidersHomePage extends AppCompatActivity {
         });
 
     }
+
+
 
     private void showPlaceholderViews() {
         // Show the placeholder views

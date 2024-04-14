@@ -65,6 +65,13 @@
         android:visibility="gone" />
 
     <!-- Placeholder for restaurant data -->
+    <ImageView
+        android:id="@+id/imageViewRestaurant"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"
+        tools:src="@drawable/default_restaurant_image" />
     <TextView
         android:id="@+id/restaurantPlaceholder"
         android:layout_width="match_parent"
@@ -102,6 +109,34 @@
         android:textSize="16sp"
         android:layout_marginTop="8dp"
         android:visibility="gone"/>
+
+    <!-- Restaurant Phone Number -->
+    <TextView
+        android:id="@+id/restaurantPhoneTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone" />
+
+    <!-- Open Hours and Close Hours -->
+    <TextView
+        android:id="@+id/restaurantHoursTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone" />
+
+    <!-- Restaurant Date -->
+    <TextView
+        android:id="@+id/restaurantDateTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone" />
+
 
     <!-- Add Menu button -->
     <Button
