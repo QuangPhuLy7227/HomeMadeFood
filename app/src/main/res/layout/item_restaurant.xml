@@ -31,4 +31,64 @@
         android:textSize="16sp"
         android:text="Restaurant Info" />
 
+    <TextView
+        android:id="@+id/textViewCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewRestaurantInfo"
+        android:layout_toEndOf="@id/imageViewRestaurant"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"
+        android:text="Category" />
+
+    <TextView
+        android:id="@+id/textViewAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewCategory"
+        android:layout_toEndOf="@id/imageViewRestaurant"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"
+        android:text="Address" />
+
+    <TextView
+        android:id="@+id/textViewZipCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewAddress"
+        android:layout_toEndOf="@id/imageViewRestaurant"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"
+        android:text="Zip Code" />
+
+    <TextView
+        android:id="@+id/textViewPhoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewZipCode"
+        android:layout_toEndOf="@id/imageViewRestaurant"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"
+        android:text="Phone Number" />
+
+    <TextView
+        android:id="@+id/textViewOpenCloseHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewPhoneNumber"
+        android:layout_toEndOf="@id/imageViewRestaurant"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"
+        android:text="Open - Close Hours" />
+
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewOpenCloseHours"
+        android:layout_toEndOf="@id/imageViewRestaurant"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"
+        android:text="Date" />
+
 </RelativeLayout>

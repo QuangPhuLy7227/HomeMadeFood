@@ -27,9 +27,6 @@ public class ProvidersHomePage extends AppCompatActivity {
     private TextView restaurantPlaceholder;
     private TextView menuPlaceholder;
 
-    // Declare FirebaseFirestore variable
-    private FirebaseFirestore firestore;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,11 +40,6 @@ public class ProvidersHomePage extends AppCompatActivity {
         restaurantPlaceholder = findViewById(R.id.restaurantPlaceholder);
         menuPlaceholder = findViewById(R.id.menuPlaceholder);
 
-        // Initialize Firestore
-        firestore = FirebaseFirestore.getInstance();
-
-        // Fetch user data from Firestore
-//        fetchUserData();
         showPlaceholderViews();
 
         // Set onClickListener for the profile button
