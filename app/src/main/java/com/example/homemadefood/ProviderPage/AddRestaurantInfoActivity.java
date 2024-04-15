@@ -40,13 +40,14 @@ public class AddRestaurantInfoActivity extends AppCompatActivity {
             phoneNumberEditText, openHoursEditText, closeHoursEditText;
 
     private Spinner selectCategorySpinner, dateRangeSpinner;
-    private Button addButton, cancelButton;
+    private Button saveButton, cancelButton;
 
     private FirebaseFirestore firestore;
     private ImageView addRestaurantImage;
     private Uri selectedImageUri;
     private Button selectRestaurantImage;
     private ActivityResultLauncher<String> imagePickerLauncher;
+    private boolean isEditMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +87,23 @@ public class AddRestaurantInfoActivity extends AppCompatActivity {
         closeHoursEditText = findViewById(R.id.closeHours);
         dateRangeSpinner = findViewById(R.id.dateRangeSpinner);
         selectCategorySpinner = findViewById(R.id.selectCategorySpinner);
-        addButton = findViewById(R.id.save);
+        saveButton = findViewById(R.id.save);
         cancelButton = findViewById(R.id.cancel);
 
-        // Set onClickListener for the Add button
-        addButton.setOnClickListener(v -> saveRestaurantToFirestore());
+        // Check if it's edit mode
+        isEditMode = getIntent().getBooleanExtra("isEditMode", false);
 
+        // Set onClickListener for the Save button
+        saveButton.setOnClickListener(v -> {
+            if (isEditMode) {
+                updateRestaurantInFirestore();
+            } else {
+                saveRestaurantToFirestore();
+            }
+        });
+
+        // Set onClickListener for the Add button
+//        saveButton.setOnClickListener(v -> saveRestaurantToFirestore());
         // Set onClickListener for the Cancel button
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +176,66 @@ public class AddRestaurantInfoActivity extends AppCompatActivity {
             Toast.makeText(this, "Failed to convert address to coordinates", Toast.LENGTH_SHORT).show();
         }
     }
+
+    // Update the restaurant data in Firestore
+    private void updateRestaurantInFirestore() {
+        // Get input values from UI elements
+        String name = resNameEditText.getText().toString().trim();
+        String info = resInfoEditText.getText().toString().trim();
+        String address = resAddressEditText.getText().toString().trim();
+        String zipCode = zipCodeEditText.getText().toString().trim();
+        String phoneNumber = phoneNumberEditText.getText().toString().trim();
+        String openHours = openHoursEditText.getText().toString().trim();
+        String closeHours = closeHoursEditText.getText().toString().trim();
+        String category = selectCategorySpinner.getSelectedItem().toString().trim();
+        String date = dateRangeSpinner.getSelectedItem().toString().trim();
+
+        // Check if all fields are filled
+        if (name.isEmpty() || info.isEmpty() || address.isEmpty() || zipCode.isEmpty() ||
+                phoneNumber.isEmpty() || openHours.isEmpty() || closeHours.isEmpty()) {
+            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Check if an image is selected
+        if (selectedImageUri == null) {
+            Toast.makeText(this, "Please select a restaurant image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Convert address to latitude and longitude
+        LatLng latLng = getLocationFromAddress(address, zipCode);
+        if (latLng != null) {
+            double latitude = latLng.latitude;
+            double longitude = latLng.longitude;
+            Log.d("RestaurantLocation", "Latitude: " + latitude + ", Longitude: " + longitude);
+
+            // Retrieve user data from SharedPreferences
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+            String addedByUsername = sharedPreferences.getString(KEY_USERNAME, "");
+
+            // Construct the restaurant data
+            Map<String, Object> restaurantData = new HashMap<>();
+            restaurantData.put("name", name);
+            restaurantData.put("info", info);
+            restaurantData.put("address", address);
+            restaurantData.put("zipCode", zipCode);
+            restaurantData.put("phoneNumber", phoneNumber);
+            restaurantData.put("openHours", openHours);
+            restaurantData.put("closeHours", closeHours);
+            restaurantData.put("category", category);
+            restaurantData.put("date", date);
+            restaurantData.put("latitude", latitude);
+            restaurantData.put("longitude", longitude);
+            restaurantData.put("addedBy", addedByUsername); // Add the username of the user who added the restaurant
+
+            // Upload the image to Firestore storage
+            uploadImageToStorage(name, restaurantData);
+        } else {
+            Toast.makeText(this, "Failed to convert address to coordinates", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     // Convert address to latitude and longitude
     private LatLng getLocationFromAddress(String strAddress, String zipCode) {

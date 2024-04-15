@@ -114,6 +114,20 @@ public class ProvidersHomePage extends AppCompatActivity {
             }
         });
 
+        modifyResButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create an Intent to start the AddRestaurantInfoActivity
+                Intent intent = new Intent(ProvidersHomePage.this, AddRestaurantInfoActivity.class);
+
+                // Pass a flag indicating it's for modification
+                intent.putExtra("isEditMode", true);
+
+                // Start the activity
+                startActivity(intent);
+            }
+        });
+
     }
     private void checkUserData() {
         // Retrieve the username of the current user
