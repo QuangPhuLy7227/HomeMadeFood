@@ -4,6 +4,7 @@ import static com.example.homemadefood.LoginActivity.KEY_USERNAME;
 import static com.example.homemadefood.LoginActivity.SHARED_PREF_NAME;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
@@ -223,6 +224,12 @@ public class AddRestaurantInfoActivity extends AppCompatActivity {
                 .addOnSuccessListener(aVoid -> {
                     // Restaurant data added successfully
                     Toast.makeText(this, "Restaurant added successfully!", Toast.LENGTH_SHORT).show();
+
+                    // Refresh the ProvidersHomePage activity
+                    Intent intent = new Intent(this, ProvidersHomePage.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+
                     // Finish the activity to go back to the home page
                     finish();
                 })

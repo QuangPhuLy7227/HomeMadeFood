@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -49,54 +48,65 @@
         android:id="@+id/addRestaurantButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="100dp"
         android:layout_gravity="end"
         android:text="Add Restaurant"
-        android:visibility="gone"/>
+        android:visibility="visible"
+        android:layout_alignParentEnd="true" />
 
-    <!-- Modify button -->
+    <!-- Modify Restaurant button -->
     <Button
         android:id="@+id/modifyResButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_gravity="end"
-        android:text="Modify Restaurant"
-        android:visibility="gone" />
-    <!-- RecyclerView to display restaurant data -->
+        android:text="Update Restaurant"
+        android:visibility="gone"
+        android:layout_below="@id/openingSection"
+        android:layout_alignParentEnd="true" />
+
+<!--     RecyclerView to display restaurant data -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:visibility="visible"
         android:padding="8dp"
-        tools:listitem="@layout/item_restaurant" />
+        tools:listitem="@layout/item_restaurant"
+        android:layout_below="@id/modifyResButton" />
 
     <TextView
         android:id="@+id/restaurantPlaceholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="No restaurant data available"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_below="@id/addRestaurantButton" />
 
-    <!-- Add Menu button -->
+
+    <!-- Modify Menu button -->
     <Button
         android:id="@+id/addMenuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="250dp"
         android:layout_gravity="end"
         android:text="Add Menu"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_below="@id/restaurantPlaceholder"
+        android:layout_alignParentEnd="true" />
+
     <Button
         android:id="@+id/modifyMenuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_gravity="end"
-        android:text="Modify Restaurant"
-        android:visibility="gone" />
+        android:text="Update Menu"
+        android:visibility="gone"
+        android:layout_below="@id/recyclerView"
+        android:layout_alignParentEnd="true" />
 
     <!-- Placeholder for menu data -->
     <TextView
@@ -104,6 +114,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="No menu data available"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_below="@id/addMenuButton" />
 
-</LinearLayout>
+</RelativeLayout>
