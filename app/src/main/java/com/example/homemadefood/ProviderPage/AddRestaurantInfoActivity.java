@@ -213,10 +213,12 @@ public class AddRestaurantInfoActivity extends AppCompatActivity {
         if (imageURL != null) {
             restaurantData.put("restaurantImageUri", imageURL);
         }
+        // Retrieve addedByUsername from the restaurantData map
+        String addedByUsername = (String) restaurantData.get("addedBy");
 
         // Save restaurant details to Firestore
         firestore.collection("restaurants")
-                .document(restaurantName)
+                .document(addedByUsername)
                 .set(restaurantData)
                 .addOnSuccessListener(aVoid -> {
                     // Restaurant data added successfully

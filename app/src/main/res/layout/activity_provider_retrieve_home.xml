@@ -51,67 +51,76 @@
         android:layout_gravity="end"
         android:text="Modify"
         android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="visible"
+        android:padding="8dp"
+        tools:listitem="@layout/item_restaurant" />
     <!-- Image View for Restaurant Image -->
-    <ImageView
-        android:id="@+id/imageViewRestaurant"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:scaleType="centerCrop"
-        android:layout_gravity="center"
-        tools:src="@drawable/default_restaurant_image" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageViewRestaurant"-->
+<!--        android:layout_width="150dp"-->
+<!--        android:layout_height="150dp"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:layout_gravity="center"-->
+<!--        tools:src="@drawable/default_restaurant_image" />-->
 
-    <!-- Restaurant Name -->
-    <TextView
-        android:id="@+id/textViewRestaurantName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        tools:text="Restaurant Name" />
+<!--    &lt;!&ndash; Restaurant Name &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/textViewRestaurantName"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="24sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        tools:text="Restaurant Name" />-->
 
-    <!-- Restaurant Information -->
-    <TextView
-        android:id="@+id/textViewRestaurantInfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_marginTop="8dp"
-        tools:text="Restaurant Information" />
+<!--    &lt;!&ndash; Restaurant Information &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/textViewRestaurantInfo"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="18sp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        tools:text="Restaurant Information" />-->
 
-    <!-- Restaurant Address and Zip Code -->
-    <TextView
-        android:id="@+id/textViewRestaurantAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"
-        tools:text="Restaurant Address" />
+<!--    &lt;!&ndash; Restaurant Address and Zip Code &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/textViewRestaurantAddress"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="16sp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        tools:text="Restaurant Address" />-->
 
-    <!-- Restaurant Phone Number -->
-    <TextView
-        android:id="@+id/textViewRestaurantPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"
-        tools:text="Restaurant Phone Number" />
+<!--    &lt;!&ndash; Restaurant Phone Number &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/textViewRestaurantPhone"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="16sp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        tools:text="Restaurant Phone Number" />-->
 
-    <!-- Open Hours and Close Hours -->
-    <TextView
-        android:id="@+id/textViewRestaurantHours"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"
-        tools:text="Open Hours - Close Hours" />
+<!--    &lt;!&ndash; Open Hours and Close Hours &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/textViewRestaurantHours"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="16sp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        tools:text="Open Hours - Close Hours" />-->
 
-    <!-- Restaurant Date -->
-    <TextView
-        android:id="@+id/textViewRestaurantDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"
-        tools:text="Restaurant Date" />
+<!--    &lt;!&ndash; Restaurant Date &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/textViewRestaurantDate"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="16sp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        tools:text="Restaurant Date" />-->
 </LinearLayout>

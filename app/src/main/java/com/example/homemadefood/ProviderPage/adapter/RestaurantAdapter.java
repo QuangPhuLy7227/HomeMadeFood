@@ -15,7 +15,6 @@ import com.example.homemadefood.ProviderPage.data.RestaurantData;
 import com.example.homemadefood.R;
 
 import java.util.List;
-
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
 
     private Context mContext;
@@ -40,6 +39,11 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.textViewName.setText(restaurant.getName());
         holder.textViewInfo.setText(restaurant.getInfo());
         holder.textViewAddress.setText(restaurant.getAddress());
+        holder.textViewCategory.setText(restaurant.getCategory());
+        holder.textViewZipcode.setText(restaurant.getZipCode());
+        holder.textViewPhoneNumber.setText(restaurant.getPhoneNumber());
+        holder.textViewOpenCloseHours.setText(restaurant.getOpenHours() + " - " + restaurant.getCloseHours());
+        holder.textViewDate.setText(restaurant.getDate());
 
         // Load restaurant image using Glide library
         Glide.with(mContext)
@@ -58,14 +62,23 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         TextView textViewName;
         TextView textViewInfo;
         TextView textViewAddress;
+        TextView textViewCategory;
+        TextView textViewZipcode;
+        TextView textViewPhoneNumber;
+        TextView textViewOpenCloseHours;
+        TextView textViewDate;
 
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewRestaurant = itemView.findViewById(R.id.imageViewRestaurant);
             textViewName = itemView.findViewById(R.id.textViewRestaurantName);
             textViewInfo = itemView.findViewById(R.id.textViewRestaurantInfo);
-            textViewAddress = itemView.findViewById(R.id.textViewRestaurantAddress);
+            textViewAddress = itemView.findViewById(R.id.textViewAddress);
+            textViewCategory = itemView.findViewById(R.id.textViewCategory);
+            textViewZipcode = itemView.findViewById(R.id.textViewZipCode);
+            textViewPhoneNumber = itemView.findViewById(R.id.textViewPhoneNumber);
+            textViewOpenCloseHours = itemView.findViewById(R.id.textViewOpenCloseHours);
+            textViewDate = itemView.findViewById(R.id.textViewDate);
         }
     }
 }
-

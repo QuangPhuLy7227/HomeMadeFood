@@ -14,6 +14,7 @@ public class RestaurantData {
     private String phoneNumber;
     private String restaurantImageUri;
     private String zipCode;
+    private String providerUsername; // New field
 
     // Default constructor (required by Firestore)
     public RestaurantData() {
@@ -23,7 +24,7 @@ public class RestaurantData {
     // Parameterized constructor
     public RestaurantData(String addedBy, String address, String category, String closeHours, String date,
                           String info, double latitude, double longitude, String name, String openHours,
-                          String phoneNumber, String restaurantImageUri, String zipCode) {
+                          String phoneNumber, String restaurantImageUri, String zipCode, String providerUsername) {
         this.addedBy = addedBy;
         this.address = address;
         this.category = category;
@@ -37,9 +38,11 @@ public class RestaurantData {
         this.phoneNumber = phoneNumber;
         this.restaurantImageUri = restaurantImageUri;
         this.zipCode = zipCode;
+        this.providerUsername = providerUsername;
     }
 
     // Getters and setters for all fields
+
     public String getAddedBy() {
         return addedBy;
     }
@@ -142,5 +145,14 @@ public class RestaurantData {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    // Getter and setter for providerUsername
+    public String getProviderUsername() {
+        return providerUsername;
+    }
+
+    public void setProviderUsername(String providerUsername) {
+        this.providerUsername = providerUsername;
     }
 }
