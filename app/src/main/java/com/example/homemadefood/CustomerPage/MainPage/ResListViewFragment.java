@@ -1,5 +1,6 @@
 package com.example.homemadefood.CustomerPage.MainPage;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,12 +15,12 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.homemadefood.CustomerPage.CustomerViewRestaurant.CustomerMenuSelection;
 import com.example.homemadefood.CustomerPage.RecyclerViewData.RecyclerViewInterface;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantData;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantDataModel;
 import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantMenuAdapter;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotion;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotionModel;
 import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotionAdapter;
-import com.example.homemadefood.CustomerPage.RestaurantPage.RestaurantMenuActivity;
 import com.example.homemadefood.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,16 +31,16 @@ import java.util.List;
 
 public class ResListViewFragment extends Fragment implements RecyclerViewInterface {
 
-    protected List<RestaurantData> dataList1;
+    protected List<RestaurantDataModel> dataList1;
     protected RestaurantMenuAdapter adapter1;
     protected RecyclerView verticalRecyclerView;
 
-    protected List<RestaurantPromotion> dataList2;
+    protected List<RestaurantPromotionModel> dataList2;
     protected RestaurantPromotionAdapter adapter2;
     protected RecyclerView horizontalRecyclerView;
     protected NestedScrollView nestedScrollView;
 
-    private FirebaseFirestore db;
+    private FirebaseFirestore mFirestore;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,8 +48,8 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
         dataList1 = new ArrayList<>();
         adapter1 = new RestaurantMenuAdapter(getContext(), dataList1, this);
         dataList2 = generatePromotionList();
-        adapter2 = new RestaurantPromotionAdapter(getContext(), dataList2, this);
-        db = FirebaseFirestore.getInstance();
+        adapter2 = new RestaurantPromotionAdapter(getContext(), dataList2, null, true);
+        mFirestore = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -68,13 +69,14 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
         fetchDataFromFirestore();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void fetchDataFromFirestore() {
-        db.collection("restaurants")
+        mFirestore.collection("restaurants")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     dataList1.clear();
                     for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
-                        RestaurantData restaurantData = snapshot.toObject(RestaurantData.class);
+                        RestaurantDataModel restaurantData = snapshot.toObject(RestaurantDataModel.class);
                         dataList1.add(restaurantData);
                     }
                     adapter1.notifyDataSetChanged();
@@ -83,8 +85,9 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
                         Toast.makeText(getContext(), "Failed to read data from Firestore", Toast.LENGTH_SHORT).show());
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void queryRestaurants(float maxDeliveryFee, String category) {
-        Query query = db.collection("restaurants");
+        Query query = mFirestore.collection("restaurants");
 
         if (!category.equals("All")) {
             query = query.whereEqualTo("category", category);
@@ -97,7 +100,7 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
             dataList1.clear();
             for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
-                RestaurantData restaurantData = snapshot.toObject(RestaurantData.class);
+                RestaurantDataModel restaurantData = snapshot.toObject(RestaurantDataModel.class);
                 dataList1.add(restaurantData);
             }
             adapter1.notifyDataSetChanged();
@@ -115,16 +118,17 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
 
     @Override
     public void onItemClick(int position) {
-        RestaurantData data = dataList1.get(position);
-        Intent intent = new Intent(getActivity(), RestaurantMenuActivity.class);
-        intent.putExtra("restaurant_name", data.getName());
+        RestaurantDataModel data = dataList1.get(position);
+        Intent intent = new Intent(getActivity(), CustomerMenuSelection.class);
+        intent.putExtra("restaurant_data", data);
         startActivity(intent);
     }
 
-    public void searchList(String text) {
-        List<RestaurantData> searchListData1 = new ArrayList<>();
 
-        for (RestaurantData data : dataList1) {
+    public void searchList(String text) {
+        List<RestaurantDataModel> searchListData1 = new ArrayList<>();
+
+        for (RestaurantDataModel data : dataList1) {
             if (data.getName() != null && data.getName().toLowerCase().contains(text.toLowerCase())) {
                 searchListData1.add(data);
             }
@@ -139,10 +143,11 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
         }
     }
 
-    private List<RestaurantPromotion> generatePromotionList() {
-        List<RestaurantPromotion> dataList = new ArrayList<>();
-        dataList.add(new RestaurantPromotion(R.drawable.steak, "Steak House", 4.5f, 350, "0.5 mile", "10 min", "$15"));
-        dataList.add(new RestaurantPromotion(R.drawable.lobster, "Red Lobster", 4.5f, 350, "0.5 mile", "10 min", "$15"));
+    public List<RestaurantPromotionModel> generatePromotionList() {
+        List<RestaurantPromotionModel> dataList = new ArrayList<>();
+        dataList.add(new RestaurantPromotionModel(R.drawable.steak, "Steak House", 4.5f, 350, "0.5 mile", "10 min", "$15"));
+        dataList.add(new RestaurantPromotionModel(R.drawable.lobster, "Red Lobster", 4.5f, 350, "0.5 mile", "10 min", "$15"));
+        dataList.add(new RestaurantPromotionModel(R.drawable.seafood, "Le Bernadine", 4.5f, 350, "0.5 mile", "10 min", "$15"));
         return dataList;
     }
 }

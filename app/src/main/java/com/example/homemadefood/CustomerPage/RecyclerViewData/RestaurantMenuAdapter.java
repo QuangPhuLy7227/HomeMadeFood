@@ -15,10 +15,10 @@ import java.util.List;
 
 public class RestaurantMenuAdapter extends RecyclerView.Adapter<RestaurantMenuAdapter.ViewHolder> {
     private final Context context;
-    private List<RestaurantData> dataList;
+    private List<RestaurantDataModel> dataList;
     private final RecyclerViewInterface recyclerViewInterface;
 
-    public RestaurantMenuAdapter(Context context, List<RestaurantData> dataList, RecyclerViewInterface recyclerViewInterface) {
+    public RestaurantMenuAdapter(Context context, List<RestaurantDataModel> dataList, RecyclerViewInterface recyclerViewInterface) {
         if (context == null) {
             throw new IllegalArgumentException("Context cannot be null");
         }
@@ -27,7 +27,7 @@ public class RestaurantMenuAdapter extends RecyclerView.Adapter<RestaurantMenuAd
         this.recyclerViewInterface = recyclerViewInterface;
     }
 
-    public void setData(List<RestaurantData> dataList) {
+    public void setData(List<RestaurantDataModel> dataList) {
         this.dataList = dataList;
         notifyDataSetChanged();
     }
@@ -41,7 +41,7 @@ public class RestaurantMenuAdapter extends RecyclerView.Adapter<RestaurantMenuAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        RestaurantData data = dataList.get(position);
+        RestaurantDataModel data = dataList.get(position);
         // Load restaurant image using Glide
         Glide.with(context)
                 .load(data.getRestaurantImageUri())

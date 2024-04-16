@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".CustomerPage.RestaurantPage.DemoAddRestaurants">
+    tools:context=".CustomerPage.RestaurantPage.DemoAddRestaurantMenu">
 
     <TextView
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="Upload Restaurant's Information"
+        android:text="Upload Restaurant's Item (Food / Drink)"
         android:textStyle="bold"
         android:textSize="30sp" />
 
@@ -35,7 +35,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/uploadRestaurantImage"
+                android:id="@+id/uploadItemImage"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:scaleX="0.9"
@@ -43,7 +43,7 @@
                 android:src="@drawable/photo" />
 
             <Button
-                android:id="@+id/selectRestaurantImage"
+                android:id="@+id/selectItemImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -60,47 +60,40 @@
                 android:padding="10dp"
                 android:background="@drawable/lavender_border"
                 android:textAlignment="center"
-                android:entries="@array/food_categories" />
+                android:entries="@array/item_categories" />
 
             <EditText
-                android:id="@+id/addName"
+                android:id="@+id/addFoodOrDrinkName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:padding="16dp"
                 android:background="@drawable/lavender_border"
-                android:hint="Add Restaurant's Name"
+                android:hint="Add Food/Drink's Name"
                 android:inputType="text" />
 
 
             <EditText
-                android:id="@+id/addRating"
+                android:id="@+id/addDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:padding="16dp"
                 android:background="@drawable/lavender_border"
-                android:hint="Add Rating"
-                android:inputType="numberDecimal" />
+                android:hint="Add Description"
+                android:maxLength="100"
+                android:inputType="text" />
 
             <EditText
-                android:id="@+id/addTotalRating"
+                android:id="@+id/addPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:padding="16dp"
                 android:background="@drawable/lavender_border"
-                android:hint="Add Total Rating"
+                android:hint="Add Price"
                 android:inputType="numberDecimal" />
 
-            <EditText
-                android:id="@+id/addDeliveryFee"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:background="@drawable/lavender_border"
-                android:hint="Add Delivery Fee"
-                android:inputType="numberDecimal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -120,13 +113,13 @@
                     android:text="Visit Homepage" />
 
                 <Button
-                    android:id="@+id/saveRestaurantInfo"
+                    android:id="@+id/addItem"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginTop="20dp"
                     android:theme="@style/Theme.Material3.DayNight.NoActionBar"
-                    android:text="Add Restaurant" />
+                    android:text="Add Item" />
 
 
             </LinearLayout>
