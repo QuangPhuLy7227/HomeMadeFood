@@ -16,6 +16,15 @@
         android:theme="@style/Theme.HomeMadeFood"
         tools:targetApi="31">
         <activity
+            android:name=".ProviderPage.ProviderOrderActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".UserProfileActivity"
             android:exported="false" />
         <activity
@@ -50,8 +59,7 @@
 
         <activity
             android:name=".SplashScreen"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".CustomerPage.DemoAddRestaurants"
             android:exported="false" />
@@ -60,22 +68,18 @@
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".CustomerPage.MainPage.CustomerHomepage"
-            android:exported="true">
+            android:exported="false">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".CustomerPage.RestaurantPage.RestaurantMenuActivity"
             android:exported="false" />
+
+        <activity android:name=".ProviderPage.MessageActivity" />
+
     </application>
 
 </manifest>
