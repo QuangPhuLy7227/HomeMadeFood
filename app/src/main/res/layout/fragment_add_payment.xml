@@ -15,14 +15,15 @@
         android:textAlignment="center"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:text="Add New Card"
+        android:text="Update/Add New Card"
         android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/paymentRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        tools:listitem="@layout/add_payment_recycler_view_item"/>
 
     <Button
         android:id="@+id/addNewCardButton"
@@ -138,15 +139,33 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/submitCardButton"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="25dp"
-                android:layout_marginEnd="10dp"
-                android:text="Submit Card" />
+                android:layout_marginEnd="10dp">
+
+                <Button
+                    android:id="@+id/viewCardButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="View Card"
+                    android:layout_marginEnd="15dp"/>
+
+                <Button
+                    android:id="@+id/submitCardButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Submit Card" />
+
+            </LinearLayout>
+
+
 
 
         </LinearLayout>
