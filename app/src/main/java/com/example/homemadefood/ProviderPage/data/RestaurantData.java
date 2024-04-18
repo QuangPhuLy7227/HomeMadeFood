@@ -41,6 +41,9 @@ public class RestaurantData {
         this.providerUsername = providerUsername;
     }
 
+    public RestaurantData(String address, double latitude, double longitude,  String zipCode) {
+    }
+
     // Getters and setters for all fields
 
     public String getAddedBy() {
