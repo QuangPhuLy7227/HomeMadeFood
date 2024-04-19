@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homemadefood.CustomerPage.CustomerViewRestaurant.CustomerMenuSelection;
 import com.example.homemadefood.CustomerPage.RecyclerViewData.RecyclerViewInterface;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantDataModel;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantMenuAdapter;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotionModel;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotionAdapter;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantDataModel;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.Adapter.RestaurantMenuAdapter;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantPromotionModel;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.Adapter.RestaurantPromotionAdapter;
 import com.example.homemadefood.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;

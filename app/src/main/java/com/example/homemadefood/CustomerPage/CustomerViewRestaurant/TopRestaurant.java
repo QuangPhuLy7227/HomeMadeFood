@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.homemadefood.CustomerPage.MainPage.CustomerHomepage;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotionModel;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotionAdapter;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantPromotionModel;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.Adapter.RestaurantPromotionAdapter;
 import com.example.homemadefood.R;
 
 import java.util.ArrayList;

@@ -5,6 +5,19 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!-- Preloaded Fonts -->
+    <meta-data
+        android:name="preloaded_fonts"
+        android:resource="@array/preloaded_fonts" />
+
+    <!-- Supports Screens -->
+    <supports-screens
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:anyDensity="true" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,15 +29,13 @@
         android:theme="@style/Theme.HomeMadeFood"
         tools:targetApi="31">
         <activity
+            android:name=".CustomerPage.MainPage.CustomerCartPage"
+            android:exported="false" />
+        <activity
             android:name=".ProviderPage.ProviderOrderActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
         </activity>
-        <activity android:name=".RestaurantMenuDetail"
+        <activity android:name=".CustomerPage.RestaurantPage.RestaurantMenuDetail"
             android:exported="false" />
         <activity
             android:name=".CustomerPage.CustomerViewRestaurant.TopRestaurant"
@@ -57,6 +68,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAiCjyQ-qsJsdzDbw9fwBURmdG18SbI0aA" />
 
+
         <activity
             android:name=".CustomerPage.Map.MapsActivity"
             android:exported="false"
@@ -74,7 +86,6 @@
             android:exported="false">
 
         </activity>
-
         <activity
             android:name=".CustomerPage.RestaurantPage.DemoAddRestaurants"
             android:exported="false" />
@@ -83,7 +94,16 @@
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"
-            android:exported="false">
+            android:exported="false" />
+        <activity
+            android:name=".CustomerPage.MainPage.CustomerHomepage"
+
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity

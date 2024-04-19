@@ -14,13 +14,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.homemadefood.CustomerPage.MainPage.CustomerHomepage;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantDataModel;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantMenuDrinkModel;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantMenuFoodModel;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantMenuSelectionAdapter;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RecyclerViewInterface;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.RecyclerViewMenuInterface;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantDataModel;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantMenuDrinkModel;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantMenuFoodModel;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.Adapter.RestaurantMenuSelectionAdapter;
 import com.example.homemadefood.R;
-import com.example.homemadefood.RestaurantMenuDetail;
+import com.example.homemadefood.CustomerPage.RestaurantPage.RestaurantMenuDetail;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -29,7 +29,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerMenuSelection extends AppCompatActivity implements RecyclerViewInterface {
+public class CustomerMenuSelection extends AppCompatActivity implements RecyclerViewMenuInterface {
 
     private FirebaseFirestore mFirestore;
     private RecyclerView drinkMenuRecyclerView;
@@ -133,19 +133,20 @@ public class CustomerMenuSelection extends AppCompatActivity implements Recycler
         });
     }
 
+
     @Override
-    public void onItemClick(int position) {
-        // Handle item click for both drink and food items
-        if (position < drinkList.size()) {
-            Intent intent = new Intent(CustomerMenuSelection.this, RestaurantMenuDetail.class);
-            intent.putExtra("drink_data", drinkList.get(position));
-            startActivity(intent);
-        } else {
-            int foodPosition = position - drinkList.size();
-            Intent intent = new Intent(CustomerMenuSelection.this, RestaurantMenuDetail.class);
-            intent.putExtra("food_data", foodList.get(foodPosition));
-            startActivity(intent);
-        }
+    public void onDrinkItemClick(int position) {
+        RestaurantMenuDrinkModel data = drinkList.get(position);
+        Intent intent = new Intent(CustomerMenuSelection.this, RestaurantMenuDetail.class);
+        intent.putExtra("drink_data", data);
+        startActivity(intent);
     }
 
+    @Override
+    public void onFoodItemClick(int position) {
+        RestaurantMenuFoodModel data = foodList.get(position);
+        Intent intent = new Intent(CustomerMenuSelection.this, RestaurantMenuDetail.class);
+        intent.putExtra("food_data", data);
+        startActivity(intent);
+    }
 }
