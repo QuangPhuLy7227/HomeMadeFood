@@ -32,7 +32,10 @@
             android:name=".CustomerPage.MainPage.CustomerCartPage"
             android:exported="false" />
         <activity
-            android:name=".CustomerPage.RestaurantPage.RestaurantMenuDetail"
+            android:name=".ProviderPage.ProviderOrderActivity"
+            android:exported="false">
+        </activity>
+        <activity android:name=".CustomerPage.RestaurantPage.RestaurantMenuDetail"
             android:exported="false" />
         <activity
             android:name=".CustomerPage.CustomerViewRestaurant.TopRestaurant"
@@ -43,6 +46,7 @@
         <activity
             android:name=".CustomerPage.RestaurantPage.DemoAddRestaurantMenu"
             android:exported="false" />
+
         <activity
             android:name=".UserProfileActivity"
             android:exported="false" />
@@ -79,7 +83,9 @@
 
         <activity
             android:name=".SplashScreen"
-            android:exported="false" />
+            android:exported="false">
+
+        </activity>
         <activity
             android:name=".CustomerPage.RestaurantPage.DemoAddRestaurants"
             android:exported="false" />
@@ -99,11 +105,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-
         </activity>
+        <activity
+            android:name=".CustomerPage.MainPage.CustomerHomepage"
+            android:exported="false" />
         <activity
             android:name=".CustomerPage.RestaurantPage.RestaurantMenuActivity"
             android:exported="false" />
+
+        <activity android:name=".ProviderPage.MessageActivity" />
+
     </application>
 
 </manifest>

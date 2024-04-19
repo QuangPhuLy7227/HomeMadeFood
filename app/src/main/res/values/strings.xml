@@ -10,4 +10,28 @@
     <string name="title_activity_maps">MapsActivity</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logo">logo</string>
+    <string name="update_profile">update_profile</string>
+    <string name="log_out">log_out</string>
+    <string name="provider_s_account_name">provider_s_account_name</string>
+    <string name="open_9_00am_10_00pm">open_9_00am_10_00pm</string>
+    <string name="pending_orders">pending_orders</string>
+    <string name="chat">chat</string>
+    <string name="customer_s_username">Customer\'s Username:</string>
+    <string name="displaying_customer_s_username">Displaying Customer\'s Username</string>
+    <string name="customer_s_email">Customer\'s Email:</string>
+    <string name="displaying_customer_s_email">Displaying Customer\'s Email</string>
+    <string name="displaying_customer_s_order">Displaying Customer\'s Order:</string>
+    <string name="customer_s_order_1">Customer\'s Order #1</string>
+    <string name="cancel">Cancel</string>
+    <string name="accept">Accept</string>
+    <string name="message">Message</string>
+    <string name="pending_orders2">Pending orders:</string>
+    <string name="update_profile2">Update profile</string>
+    <string name="log_out2">Log out</string>
+    <string name="Messages">Message</string>
+    <string name="back">Back</string>
+    <string name="send">Send</string>
+    <string name="write_message">Write message</string>
+    <string name="send_message">send message</string>
 </resources>
