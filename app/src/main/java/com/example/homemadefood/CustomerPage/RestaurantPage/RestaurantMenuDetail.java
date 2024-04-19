@@ -78,7 +78,7 @@ public class RestaurantMenuDetail extends AppCompatActivity {
         });
 
         addToCartButton.setOnClickListener(v -> {
-            addOrderToFirestore(); // Add order to Firestore
+            addOrderToFirestore();
         });
     }
 
@@ -98,7 +98,7 @@ public class RestaurantMenuDetail extends AppCompatActivity {
 
         order.put("itemName", itemNameValue);
         order.put("timestamp", Timestamp.now());
-        order.put("itemImage", itemImageUrl); // Add item image URL to Firestore
+        order.put("itemImage", itemImageUrl);
 
         // Price node with itemPricePerUnit and itemTotalPrice
         Map<String, Object> price = new HashMap<>();
@@ -106,11 +106,10 @@ public class RestaurantMenuDetail extends AppCompatActivity {
         price.put("itemTotalPrice", calculatePricePerItem());
         order.put("price", price); // Add price node to Firestore
 
-        // Generate a unique ID with the pattern "ORDER...."
         String orderId = "ORDER" + UUID.randomUUID().toString().substring(0, 6); // Using first 6 characters of UUID
         order.put("orderId", orderId); // Add the generated orderId to the order map
 
-        mFirestore.collection("orders") // Assume "orders" is your collection for order documents
+        mFirestore.collection("orders")
                 .document(orderId) // Use the generated orderId as the document ID for the order
                 .set(order)
                 .addOnSuccessListener(aVoid -> {
