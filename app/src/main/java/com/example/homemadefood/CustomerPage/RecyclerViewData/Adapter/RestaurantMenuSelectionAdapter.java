@@ -1,4 +1,4 @@
-package com.example.homemadefood.CustomerPage.RecyclerViewData;
+package com.example.homemadefood.CustomerPage.RecyclerViewData.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.RecyclerViewMenuInterface;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantMenuDrinkModel;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantMenuFoodModel;
 import com.example.homemadefood.R;
 
 import java.text.DecimalFormat;
@@ -19,9 +22,9 @@ import java.util.List;
 public class RestaurantMenuSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final Context context;
     private List<Object> dataList; // Contain both Drink and Food items
-    private final RecyclerViewInterface recyclerViewInterface;
+    private final RecyclerViewMenuInterface recyclerViewInterface;
 
-    public RestaurantMenuSelectionAdapter(Context context, List<Object> dataList, RecyclerViewInterface recyclerViewInterface) {
+    public RestaurantMenuSelectionAdapter(Context context, List<Object> dataList, RecyclerViewMenuInterface recyclerViewInterface) {
         this.context = context;
         this.dataList = dataList;
         this.recyclerViewInterface = recyclerViewInterface;
@@ -85,9 +88,9 @@ public class RestaurantMenuSelectionAdapter extends RecyclerView.Adapter<Recycle
             drinkPrice = itemView.findViewById(R.id.drinkPrice);
 
             itemView.setOnClickListener(v -> {
-                int position = getAdapterPosition();
+                int position = getAdapterPosition(); //  Retrieves the current position of the item in the adapter
                 if (position != RecyclerView.NO_POSITION) {
-                    recyclerViewInterface.onItemClick(position);
+                    recyclerViewInterface.onDrinkItemClick(position);
                 }
             });
         }
@@ -119,7 +122,7 @@ public class RestaurantMenuSelectionAdapter extends RecyclerView.Adapter<Recycle
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    recyclerViewInterface.onItemClick(position);
+                    recyclerViewInterface.onFoodItemClick(position);
                 }
             });
         }

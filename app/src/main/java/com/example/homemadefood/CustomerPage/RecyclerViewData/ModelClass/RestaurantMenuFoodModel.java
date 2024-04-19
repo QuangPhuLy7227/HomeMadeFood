@@ -1,4 +1,4 @@
-package com.example.homemadefood.CustomerPage.RecyclerViewData;
+package com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass;
 
 import android.os.Parcel;
 import android.os.Parcelable;

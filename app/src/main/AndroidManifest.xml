@@ -5,6 +5,19 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!-- Preloaded Fonts -->
+    <meta-data
+        android:name="preloaded_fonts"
+        android:resource="@array/preloaded_fonts" />
+
+    <!-- Supports Screens -->
+    <supports-screens
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:anyDensity="true" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,7 +29,10 @@
         android:theme="@style/Theme.HomeMadeFood"
         tools:targetApi="31">
         <activity
-            android:name=".RestaurantMenuDetail"
+            android:name=".CustomerPage.MainPage.CustomerCartPage"
+            android:exported="false" />
+        <activity
+            android:name=".CustomerPage.RestaurantPage.RestaurantMenuDetail"
             android:exported="false" />
         <activity
             android:name=".CustomerPage.CustomerViewRestaurant.TopRestaurant"
@@ -48,6 +64,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAiCjyQ-qsJsdzDbw9fwBURmdG18SbI0aA" />
 
+
         <activity
             android:name=".CustomerPage.Map.MapsActivity"
             android:exported="false"
@@ -62,7 +79,7 @@
 
         <activity
             android:name=".SplashScreen"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".CustomerPage.RestaurantPage.DemoAddRestaurants"
             android:exported="false" />

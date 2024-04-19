@@ -24,7 +24,7 @@ import com.example.homemadefood.CustomerPage.CustomerViewRestaurant.TopRestauran
 import com.example.homemadefood.CustomerPage.RestaurantPage.DemoAddRestaurantMenu;
 import com.example.homemadefood.CustomerPage.RestaurantPage.DemoAddRestaurants;
 import com.example.homemadefood.CustomerPage.Map.MapsActivity;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotionModel;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantPromotionModel;
 import com.example.homemadefood.LoginActivity;
 import com.example.homemadefood.R;
 import com.example.homemadefood.UserProfileActivity;
