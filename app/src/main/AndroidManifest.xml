@@ -64,7 +64,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAiCjyQ-qsJsdzDbw9fwBURmdG18SbI0aA" />
 
-
         <activity
             android:name=".CustomerPage.Map.MapsActivity"
             android:exported="false"
@@ -91,19 +90,14 @@
             android:exported="false" />
         <activity
             android:name=".CustomerPage.MainPage.CustomerHomepage"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
-        <activity
-            android:name=".CustomerPage.RestaurantPage.RestaurantMenuActivity"
-            android:exported="false" />
+
     </application>
 
 </manifest>
