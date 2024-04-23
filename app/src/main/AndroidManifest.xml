@@ -53,6 +53,9 @@
         <activity
             android:name=".ForgetPasswordActivity"
             android:exported="false" />
+
+        <activity android:name=".AnunjinPart.MyCartActivity"
+            android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -106,9 +109,7 @@
             </intent-filter>
 
         </activity>
-        <activity
-            android:name=".CustomerPage.MainPage.CustomerHomepage"
-            android:exported="false" />
+
         <activity
             android:name=".CustomerPage.RestaurantPage.RestaurantMenuActivity"
             android:exported="false" />
