@@ -17,6 +17,7 @@ import android.widget.PopupMenu;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
+import com.example.homemadefood.AnunjinPart.MyCartActivity;
 import com.example.homemadefood.CustomerPage.BottomSheetDialog.DeliveryFeeListener;
 import com.example.homemadefood.CustomerPage.BottomSheetDialog.DeliveryFeeBottomSheetFragment;
 import com.example.homemadefood.CustomerPage.BottomSheetDialog.PriceBottomSheetFragment;
@@ -115,7 +116,7 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
         cartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CustomerHomepage.this, DemoAddRestaurants.class);
+                Intent intent = new Intent(CustomerHomepage.this, MyCartActivity.class);
                 startActivity(intent);
             }
         });

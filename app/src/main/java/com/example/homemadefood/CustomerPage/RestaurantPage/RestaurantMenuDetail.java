@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.Timestamp;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -92,6 +93,10 @@ public class RestaurantMenuDetail extends AppCompatActivity {
     }
 
     private void addOrderToFirestore() {
+
+        String username ="pham012";
+        String restaurantName = "Fast Food";
+
         Map<String, Object> order = new HashMap<>();
         String itemNameValue = menuDrinkData != null ? menuDrinkData.getDrinkName() : menuFoodData.getFoodName();
         String itemImageUrl = menuDrinkData != null ? menuDrinkData.getDrinkImage() : menuFoodData.getFoodImage();
@@ -99,6 +104,9 @@ public class RestaurantMenuDetail extends AppCompatActivity {
         order.put("itemName", itemNameValue);
         order.put("timestamp", Timestamp.now());
         order.put("itemImage", itemImageUrl);
+        order.put("username", username);
+
+        order.put("restaurantName", restaurantName);
 
         // Price node with itemPricePerUnit and itemTotalPrice
         Map<String, Object> price = new HashMap<>();
@@ -118,6 +126,9 @@ public class RestaurantMenuDetail extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     Toast.makeText(RestaurantMenuDetail.this, "Failed to add order", Toast.LENGTH_SHORT).show();
                 });
+
+
+
     }
 
 }
