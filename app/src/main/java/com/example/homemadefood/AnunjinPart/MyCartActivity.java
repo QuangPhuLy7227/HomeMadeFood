@@ -1,5 +1,6 @@
 package com.example.homemadefood.AnunjinPart;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -19,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/** @noinspection ALL*/
 public class MyCartActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<FoodItem_Model> dataList;
@@ -45,17 +45,19 @@ public class MyCartActivity extends AppCompatActivity {
 //        fetchCartItemsFromFirestore();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void fetchCartItemsFromFirestore(){
         mFirestore.collection("orders")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    /** @noinspection DataFlowIssue*/
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
 
                             String itemName = documentSnapshot.getString("itemName");
-                            Double pricePerUnit = documentSnapshot.getDouble("price.itemPricePerUnit");
-                            double itemPrice = pricePerUnit != null ? pricePerUnit : 0.0;
+                            double itemPrice = documentSnapshot.getDouble("price.itemPricePerUnit");
+//                            double itemPrice = pricePerUnit != null ? pricePerUnit : 0.0;
                             double quantity = documentSnapshot.getDouble("price.itemQuantity");
                             //double itemQuantity != null ? quantity : 0.0;
                             String itemImage = documentSnapshot.getString("itemImage");
