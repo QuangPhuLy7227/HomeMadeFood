@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
-                android:text="All Restaurants"
+                android:text="All Kitchens"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
