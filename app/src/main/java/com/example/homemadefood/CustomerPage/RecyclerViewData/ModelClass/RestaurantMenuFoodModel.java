@@ -9,6 +9,11 @@ public class RestaurantMenuFoodModel implements Parcelable {
     private String foodDescription;
     private float foodPrice;
 
+    public RestaurantMenuFoodModel() {
+        // Default constructor required for Firestore
+    }
+
+
     public RestaurantMenuFoodModel(String foodImage, String foodName, String foodDescription, float foodPrice) {
         this.foodImage = foodImage;
         this.foodName = foodName;
