@@ -433,7 +433,7 @@
                     android:layout_marginEnd="25dp"
                     android:textSize="25sp"
                     android:textStyle="bold"
-                    android:text="Top Restaurants"/>
+                    android:text="Top Home Chefs Kitchen"/>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
