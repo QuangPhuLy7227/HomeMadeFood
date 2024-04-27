@@ -66,7 +66,7 @@
         android:layout_below="@id/openingSection"
         android:layout_alignParentEnd="true" />
 
-<!--     RecyclerView to display restaurant data -->
+<!--     RecyclerView to display Provider data -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -116,5 +116,23 @@
         android:text="No menu data available"
         android:visibility="gone"
         android:layout_below="@id/addMenuButton" />
+
+    <!--     RecyclerView to display Provider data -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:padding="8dp"
+        tools:listitem="@layout/item_menu_drink"
+        android:layout_below="@id/modifyMenuButton" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:padding="8dp"
+        tools:listitem="@layout/item_menu_food"
+        android:layout_below="@id/recyclerView1" />
 
 </RelativeLayout>
