@@ -14,7 +14,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="Upload Restaurant's Item (Food / Drink)"
+        android:text="Upload Provider's Item (Food / Drink)"
         android:textStyle="bold"
         android:textSize="30sp" />
 
@@ -55,7 +55,7 @@
             <Spinner
                 android:id="@+id/foodCategorySpinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginBottom="10dp"
                 android:padding="10dp"
                 android:background="@drawable/lavender_border"

@@ -102,8 +102,6 @@ public class AddRestaurantInfoActivity extends AppCompatActivity {
             }
         });
 
-        // Set onClickListener for the Add button
-//        saveButton.setOnClickListener(v -> saveRestaurantToFirestore());
         // Set onClickListener for the Cancel button
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override

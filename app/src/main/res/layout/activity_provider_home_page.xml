@@ -43,14 +43,14 @@
             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
     </LinearLayout>
 
-    <!-- Add Restaurant button -->
+    <!-- Add Provider button -->
     <Button
         android:id="@+id/addRestaurantButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:layout_gravity="end"
-        android:text="Add Restaurant"
+        android:text="Add Kitchen"
         android:visibility="visible"
         android:layout_alignParentEnd="true" />
 
@@ -80,7 +80,7 @@
         android:id="@+id/restaurantPlaceholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No restaurant data available"
+        android:text="No Provider's data available"
         android:visibility="gone"
         android:layout_below="@id/addRestaurantButton" />
 

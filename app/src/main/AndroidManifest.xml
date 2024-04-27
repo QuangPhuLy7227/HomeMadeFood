@@ -54,10 +54,7 @@
             android:name=".ProviderPage.ProvidersHomePage"
             android:exported="false" />
         <activity android:name=".ProviderPage.AddRestaurantInfoActivity" />
-        <activity
-            android:name=".ProviderPage.RestaurantDetailsActivity"
-            android:label="Restaurant Details">
-        </activity>
+        <activity android:name=".ProviderPage.DemoAddRestaurantMenu" />
 
         <meta-data
             android:name="preloaded_fonts"
@@ -87,6 +84,7 @@
         <activity
             android:name=".CustomerPage.RestaurantPage.RestaurantMenuActivity"
             android:exported="false" />
+        <activity android:name="com.example.homemadefood.ProviderPage.DemoAddRestaurantMenu" />
     </application>
 
 </manifest>

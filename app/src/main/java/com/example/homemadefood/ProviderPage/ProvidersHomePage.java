@@ -41,7 +41,6 @@ public class ProvidersHomePage extends AppCompatActivity {
     private Button modifyMenButton;
     private TextView menuPlaceholder;
 
-    // Declare FirebaseFirestore variable
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
     private RestaurantAdapter adapter;
@@ -122,6 +121,19 @@ public class ProvidersHomePage extends AppCompatActivity {
 
                 // Pass a flag indicating it's for modification
                 intent.putExtra("isEditMode", true);
+
+                // Start the activity
+                startActivity(intent);
+            }
+        });
+        addMenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to start the DemoAddRestaurantMenu
+                Intent intent = new Intent(ProvidersHomePage.this, DemoAddRestaurantMenu.class);
+
+//                // Pass a flag indicating it's for modification
+//                intent.putExtra("isEditMode", true);
 
                 // Start the activity
                 startActivity(intent);
