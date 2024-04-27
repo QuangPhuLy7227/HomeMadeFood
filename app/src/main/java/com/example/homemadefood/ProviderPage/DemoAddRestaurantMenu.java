@@ -119,6 +119,7 @@ public class DemoAddRestaurantMenu extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
                                     Toast.makeText(com.example.homemadefood.ProviderPage.DemoAddRestaurantMenu.this, "New Item Added", Toast.LENGTH_SHORT).show();
+                                    onBackPressed();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
