@@ -137,7 +137,7 @@ public class ProvidersHomePage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Create an Intent to start the AddRestaurantInfoActivity
-                Intent intent = new Intent(ProvidersHomePage.this, AddRestaurantInfoActivity.class);
+                Intent intent = new Intent(ProvidersHomePage.this, DemoAddRestaurantMenu.class);
 
                 // Start the activity
                 startActivity(intent);
