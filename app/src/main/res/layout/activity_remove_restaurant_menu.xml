@@ -113,23 +113,24 @@
                     android:text="Back" />
 
                 <Button
-                    android:id="@+id/addbtn"
+                    android:id="@+id/deleteBtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginTop="20dp"
+
                     android:theme="@style/Theme.Material3.DayNight.NoActionBar"
-                    android:text="Add" />
+                    android:text="Delete" />
 
                 <Button
-                    android:id="@+id/deleteBtn"
+                    android:id="@+id/addbtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
                     android:theme="@style/Theme.Material3.DayNight.NoActionBar"
-                    android:text="Delete" />
+                    android:text="Add" />
 
 
             </LinearLayout>
