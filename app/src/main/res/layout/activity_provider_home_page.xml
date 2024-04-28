@@ -24,7 +24,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="20dp"
-            android:text="Browse"
+            android:text="Provider's Kitchen"
             android:textSize="30dp"
             android:textStyle="bold" />
 
@@ -117,6 +117,12 @@
         android:text="No menu data available"
         android:visibility="gone"
         android:layout_below="@id/addMenuButton" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addSecondMenuButton"
+        android:text="Kitchen's Menu" />
 
     <!--     RecyclerView to display Provider data -->
     <androidx.recyclerview.widget.RecyclerView
