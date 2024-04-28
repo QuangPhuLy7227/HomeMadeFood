@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.net.Uri;
@@ -166,7 +167,10 @@ public class DemoAddRestaurantMenu extends AppCompatActivity {
                                             .addOnSuccessListener(aVoid -> {
                                                 // Item added successfully
                                                 Toast.makeText(DemoAddRestaurantMenu.this, "New Item Added", Toast.LENGTH_SHORT).show();
-                                                onBackPressed(); // Go back to previous activity
+                                                // Start ProvidersHomepage activity and pass menuItemId
+                                                Intent intent = new Intent(DemoAddRestaurantMenu.this, ProvidersHomePage.class);
+                                                startActivity(intent);
+
                                             })
                                             .addOnFailureListener(e -> {
                                                 // Error adding item to Firestore
@@ -188,7 +192,9 @@ public class DemoAddRestaurantMenu extends AppCompatActivity {
                     .addOnSuccessListener(aVoid -> {
                         // Item added successfully
                         Toast.makeText(DemoAddRestaurantMenu.this, "New Item Added", Toast.LENGTH_SHORT).show();
-                        onBackPressed(); // Go back to previous activity
+                        // Start ProvidersHomepage activity and pass menuItemId
+                        Intent intent = new Intent(DemoAddRestaurantMenu.this, ProvidersHomePage.class);
+                        startActivity(intent);
                     })
                     .addOnFailureListener(e -> {
                         // Error adding item to Firestore
