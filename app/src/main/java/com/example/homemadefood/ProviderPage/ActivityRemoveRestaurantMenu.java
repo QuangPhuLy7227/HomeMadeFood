@@ -32,7 +32,7 @@ public class ActivityRemoveRestaurantMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Code to add item to menu goes here
-                Toast.makeText(ActivityRemoveRestaurantMenu.this, "Item added!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityRemoveRestaurantMenu.this, "Item updated!", Toast.LENGTH_SHORT).show();
             }
         });
 
