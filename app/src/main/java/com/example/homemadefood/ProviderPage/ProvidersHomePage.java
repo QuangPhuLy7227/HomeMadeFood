@@ -37,7 +37,7 @@ public class ProvidersHomePage extends AppCompatActivity {
 
     private ImageButton profileBtn;
     private Button addButton;
-    private Button addMenButton;
+    private Button addMenButton, updateDrink, updateFood, addMenuSecondBtn;
     private TextView restaurantPlaceholder;
     private Button modifyResButton;
     private Button modifyMenButton;
@@ -63,7 +63,8 @@ public class ProvidersHomePage extends AppCompatActivity {
         addButton = findViewById(R.id.addRestaurantButton);
         addMenButton = findViewById(R.id.addMenuButton);
         modifyResButton = findViewById(R.id.modifyResButton);
-        modifyMenButton = findViewById(R.id.modifyMenuButton);
+        addMenuSecondBtn = findViewById(R.id.addSecondMenuButton);
+
 
         // Initialize placeholders
         restaurantPlaceholder = findViewById(R.id.restaurantPlaceholder);
@@ -132,6 +133,17 @@ public class ProvidersHomePage extends AppCompatActivity {
             }
         });
 
+        addMenuSecondBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create an Intent to start the AddRestaurantInfoActivity
+                Intent intent = new Intent(ProvidersHomePage.this, AddRestaurantInfoActivity.class);
+
+                // Start the activity
+                startActivity(intent);
+            }
+        });
+
         modifyResButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,7 +189,7 @@ public class ProvidersHomePage extends AppCompatActivity {
                         // User has data, hide add button and show modify button
                         addButton.setVisibility(View.GONE);
                         modifyResButton.setVisibility(View.VISIBLE);
-                        modifyMenButton.setVisibility(View.VISIBLE);
+                        addMenuSecondBtn.setVisibility(View.VISIBLE);
                         // Fetch restaurant data
                         fetchRestaurantData();
                         // Fetch Menu data

@@ -98,15 +98,16 @@
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:id="@+id/modifyMenuButton"
+        android:id="@+id/addSecondMenuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_gravity="end"
-        android:text="Update Menu"
+        android:text="Add Menu"
         android:visibility="gone"
         android:layout_below="@id/recyclerView"
         android:layout_alignParentEnd="true" />
+
 
     <!-- Placeholder for menu data -->
     <TextView
@@ -125,7 +126,7 @@
         android:visibility="visible"
         android:padding="8dp"
         tools:listitem="@layout/item_menu_drink"
-        android:layout_below="@id/modifyMenuButton" />
+        android:layout_below="@id/addSecondMenuButton" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"
         android:layout_width="match_parent"
@@ -136,3 +137,4 @@
         android:layout_below="@id/recyclerView1" />
 
 </RelativeLayout>
+
