@@ -12,5 +12,7 @@
     <string-array name="date_ranges">
         <item>Monday to Friday</item>
         <item>Monday to Saturday</item>
+        <item>Monday to Sunday</item>
+        <item>Saturday to Sunday</item>
     </string-array>
 </resources>

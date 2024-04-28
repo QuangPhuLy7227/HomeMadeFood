@@ -14,9 +14,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.homemadefood.ProviderPage.adapter.DrinkMenuAdapter;
+import com.example.homemadefood.ProviderPage.adapter.FoodMenuAdapter;
 import com.example.homemadefood.ProviderPage.adapter.RestaurantAdapter;
+import com.example.homemadefood.ProviderPage.data.MenuData;
 import com.example.homemadefood.ProviderPage.data.RestaurantData;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -43,8 +45,15 @@ public class ProvidersHomePage extends AppCompatActivity {
 
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
+
+    private RecyclerView recyclerView1; // For drinks menu
+    private RecyclerView recyclerView2; // For food menu
+    private DrinkMenuAdapter drinkMenuAdapter;
+    private FoodMenuAdapter foodMenuAdapter;
     private RestaurantAdapter adapter;
     private List<RestaurantData> restaurantList;
+    private List<MenuData> drinkMenuList;
+    private List<MenuData> foodMenuList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +73,16 @@ public class ProvidersHomePage extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         // Initialize RecyclerView and adapter
         recyclerView = findViewById(R.id.recyclerView);
+        recyclerView1 = findViewById(R.id.recyclerView1);
+        recyclerView2 = findViewById(R.id.recyclerView2);
+
+        // Initialize menu adapters
+        drinkMenuList = new ArrayList<>();
+        foodMenuList = new ArrayList<>();
+
+        drinkMenuAdapter = new DrinkMenuAdapter(this, drinkMenuList); // Assuming menuDataList is a List<MenuData>
+        foodMenuAdapter = new FoodMenuAdapter(this, foodMenuList); // Assuming you have a MenuAdapter for food
+
         restaurantList = new ArrayList<>();
 
         adapter = new RestaurantAdapter(this, restaurantList); // Pass context here
@@ -158,6 +177,8 @@ public class ProvidersHomePage extends AppCompatActivity {
                         modifyMenButton.setVisibility(View.VISIBLE);
                         // Fetch restaurant data
                         fetchRestaurantData();
+                        // Fetch Menu data
+                        fetchMenuData();
                     } else {
                         // User does not have data, show placeholder views
                         showPlaceholderViews();
@@ -193,6 +214,65 @@ public class ProvidersHomePage extends AppCompatActivity {
                     Log.e("ProvidersHomePage", "Error fetching restaurant data: " + e.getMessage());
                 });
     }
+
+    private void fetchMenuData() {
+        // Retrieve the username of the current user
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString(KEY_USERNAME, "");
+
+        // Query Firestore for food menu data added by the current user
+        firestore.collection("restaurants")
+                .document(username)
+                .collection("Menu")
+                .document("Food_Menu")
+                .collection("Items")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        // Convert Firestore document to MenuData object
+                        MenuData menuData = document.toObject(MenuData.class);
+                        // Add menuData to the foodMenuList
+                        foodMenuList.add(menuData);
+                    }
+                    // Notify the adapter that the data set has changed
+                    foodMenuAdapter.notifyDataSetChanged();
+                    // Set the adapter on the RecyclerView
+                    recyclerView1.setAdapter(foodMenuAdapter);
+                    // Set the layout manager on the RecyclerView
+                    recyclerView1.setLayoutManager(new LinearLayoutManager(this));
+                })
+                .addOnFailureListener(e -> {
+                    // Handle any errors
+                    Log.e("ProvidersHomePage", "Error fetching food menu data: " + e.getMessage());
+                });
+
+        // Query Firestore for drink menu data added by the current user
+        firestore.collection("restaurants")
+                .document(username)
+                .collection("Menu")
+                .document("Drink_Menu")
+                .collection("Items")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        // Convert Firestore document to MenuData object
+                        MenuData menuData = document.toObject(MenuData.class);
+                        // Add menuData to the drinkMenuList
+                        drinkMenuList.add(menuData);
+                    }
+                    // Notify the adapter that the data set has changed
+                    drinkMenuAdapter.notifyDataSetChanged();
+                    // Set the adapter on the RecyclerView
+                    recyclerView2.setAdapter(drinkMenuAdapter);
+                    // Set the layout manager on the RecyclerView
+                    recyclerView2.setLayoutManager(new LinearLayoutManager(this));
+                })
+                .addOnFailureListener(e -> {
+                    // Handle any errors
+                    Log.e("ProvidersHomePage", "Error fetching drink menu data: " + e.getMessage());
+                });
+    }
+
 
     private void showPlaceholderViews() {
         // Show the placeholder views

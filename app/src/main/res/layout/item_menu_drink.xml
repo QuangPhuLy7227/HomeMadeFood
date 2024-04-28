@@ -5,7 +5,7 @@
     android:padding="16dp">
 
     <ImageView
-        android:id="@+id/imageViewRestaurant"
+        android:id="@+id/imageViewDrinkPic"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
@@ -15,7 +15,7 @@
         android:id="@+id/textViewDrink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/imageViewRestaurant"
+        android:layout_toEndOf="@id/imageViewDrinkPic"
         android:layout_marginStart="16dp"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewDrink"
-        android:layout_toEndOf="@id/imageViewRestaurant"
+        android:layout_toEndOf="@id/imageViewDrinkPic"
         android:layout_marginStart="16dp"
         android:textSize="16sp"
         android:text="Category" />
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewCategory"
-        android:layout_toEndOf="@id/imageViewRestaurant"
+        android:layout_toEndOf="@id/imageViewDrinkPic"
         android:layout_marginStart="16dp"
         android:textSize="16sp"
         android:text="Drink Description" />
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewDrinkDescription"
-        android:layout_toEndOf="@id/imageViewRestaurant"
+        android:layout_toEndOf="@id/imageViewDrinkPic"
         android:layout_marginStart="16dp"
         android:textSize="16sp"
         android:text="Drink Price" />

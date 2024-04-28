@@ -197,7 +197,6 @@ public class DemoAddRestaurantMenu extends AppCompatActivity {
         }
     }
 
-
 }
 // Before creating Method.
 //        addItemButton.setOnClickListener(new View.OnClickListener() {
