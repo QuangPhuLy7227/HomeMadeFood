@@ -7,7 +7,10 @@
         <item>Coffee</item>
         <item>Pizza</item>
         <item>Burger</item>
+        <item>Sandwiches</item>
         <item>Sushi</item>
+        <item>Soups</item>
+        <item>Paste</item>
     </string-array>
     <string-array name="date_ranges">
         <item>Monday to Friday</item>
