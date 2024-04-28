@@ -1,9 +1,11 @@
 package com.example.homemadefood.ProviderPage.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.homemadefood.ProviderPage.ActivityRemoveRestaurantMenu;
 import com.example.homemadefood.ProviderPage.data.MenuData;
 import com.example.homemadefood.R;
 
@@ -36,6 +39,13 @@ public class FoodMenuAdapter extends RecyclerView.Adapter<FoodMenuAdapter.FoodVi
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
         MenuData foodData = foodMenuList.get(position);
         holder.bind(foodData, context, holder.imageViewFood);
+        holder.updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ActivityRemoveRestaurantMenu.class);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -49,6 +59,7 @@ public class FoodMenuAdapter extends RecyclerView.Adapter<FoodMenuAdapter.FoodVi
         TextView textViewCategory;
         TextView textViewFoodDescription;
         TextView textViewPrice;
+        Button updateButton;
 
         public FoodViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,6 +68,7 @@ public class FoodMenuAdapter extends RecyclerView.Adapter<FoodMenuAdapter.FoodVi
             textViewCategory = itemView.findViewById(R.id.textViewCategory);
             textViewFoodDescription = itemView.findViewById(R.id.textViewFoodDescription);
             textViewPrice = itemView.findViewById(R.id.textViewPrice);
+            updateButton = itemView.findViewById(R.id.updateFood);
         }
 
         public void bind(MenuData foodData, Context context, ImageView imageView) {

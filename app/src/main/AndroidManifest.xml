@@ -85,6 +85,8 @@
             android:name=".CustomerPage.RestaurantPage.RestaurantMenuActivity"
             android:exported="false" />
         <activity android:name="com.example.homemadefood.ProviderPage.DemoAddRestaurantMenu" />
+        <activity android:name=".ProviderPage.ActivityRemoveRestaurantMenu" />
+
     </application>
 
 </manifest>

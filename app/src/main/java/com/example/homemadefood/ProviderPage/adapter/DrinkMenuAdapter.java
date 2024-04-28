@@ -1,9 +1,11 @@
 package com.example.homemadefood.ProviderPage.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.homemadefood.ProviderPage.ActivityRemoveRestaurantMenu;
 import com.example.homemadefood.ProviderPage.data.MenuData;
 import com.example.homemadefood.R;
 
@@ -36,6 +39,14 @@ public class DrinkMenuAdapter extends RecyclerView.Adapter<DrinkMenuAdapter.Drin
     public void onBindViewHolder(@NonNull DrinkViewHolder holder, int position) {
         MenuData drinkData = drinkMenuList.get(position);
         holder.bind(drinkData, context, holder.imageViewDrink);
+        holder.updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ActivityRemoveRestaurantMenu.class);
+                v.getContext().startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -49,6 +60,7 @@ public class DrinkMenuAdapter extends RecyclerView.Adapter<DrinkMenuAdapter.Drin
         TextView textViewCategory;
         TextView textViewDrinkDescription;
         TextView textViewPrice;
+        Button updateButton;
 
         public DrinkViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,6 +69,7 @@ public class DrinkMenuAdapter extends RecyclerView.Adapter<DrinkMenuAdapter.Drin
             textViewCategory = itemView.findViewById(R.id.textViewCategory);
             textViewDrinkDescription = itemView.findViewById(R.id.textViewDrinkDescription);
             textViewPrice = itemView.findViewById(R.id.textViewPrice);
+            updateButton = itemView.findViewById(R.id.updateDrink); // Add this line
         }
 
         public void bind(MenuData drinkData, Context context, ImageView imageView) {
