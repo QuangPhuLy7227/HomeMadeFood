@@ -1,6 +1,9 @@
 package com.example.homemadefood.ProviderPage.data;
 
-public class RestaurantData {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class RestaurantData implements Parcelable {
     private String addedBy;
     private String address;
     private String category;
@@ -41,8 +44,56 @@ public class RestaurantData {
         this.providerUsername = providerUsername;
     }
 
-    public RestaurantData(String address, double latitude, double longitude,  String zipCode) {
+    // Constructor for parcelable
+    public RestaurantData(Parcel in) {
+        addedBy = in.readString();
+        address = in.readString();
+        category = in.readString();
+        closeHours = in.readString();
+        date = in.readString();
+        info = in.readString();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
+        name = in.readString();
+        openHours = in.readString();
+        phoneNumber = in.readString();
+        restaurantImageUri = in.readString();
+        zipCode = in.readString();
+        providerUsername = in.readString();
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(addedBy);
+        dest.writeString(address);
+        dest.writeString(category);
+        dest.writeString(closeHours);
+        dest.writeString(date);
+        dest.writeString(info);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
+        dest.writeString(name);
+        dest.writeString(openHours);
+        dest.writeString(phoneNumber);
+        dest.writeString(restaurantImageUri);
+        dest.writeString(zipCode);
+        dest.writeString(providerUsername);
+    }
+
+    public static final Parcelable.Creator<RestaurantData> CREATOR = new Parcelable.Creator<RestaurantData>() {
+        public RestaurantData createFromParcel(Parcel in) {
+            return new RestaurantData(in);
+        }
+
+        public RestaurantData[] newArray(int size) {
+            return new RestaurantData[size];
+        }
+    };
 
     // Getters and setters for all fields
 
@@ -144,18 +195,5 @@ public class RestaurantData {
 
     public String getZipCode() {
         return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    // Getter and setter for providerUsername
-    public String getProviderUsername() {
-        return providerUsername;
-    }
-
-    public void setProviderUsername(String providerUsername) {
-        this.providerUsername = providerUsername;
     }
 }

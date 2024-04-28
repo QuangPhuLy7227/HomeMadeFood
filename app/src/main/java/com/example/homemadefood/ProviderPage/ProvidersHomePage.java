@@ -138,6 +138,9 @@ public class ProvidersHomePage extends AppCompatActivity {
                 // Create an Intent to start the AddRestaurantInfoActivity
                 Intent intent = new Intent(ProvidersHomePage.this, AddRestaurantInfoActivity.class);
 
+                // Pass the restaurant data
+                intent.putExtra("restaurantData", restaurantList.get(0)); // Assuming you have a single restaurant
+
                 // Pass a flag indicating it's for modification
                 intent.putExtra("isEditMode", true);
 

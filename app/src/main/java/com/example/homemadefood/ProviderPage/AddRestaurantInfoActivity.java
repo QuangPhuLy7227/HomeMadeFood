@@ -23,6 +23,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.homemadefood.ProviderPage.data.RestaurantData;
 import com.example.homemadefood.R;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -48,6 +49,7 @@ public class AddRestaurantInfoActivity extends AppCompatActivity {
     private Button selectRestaurantImage;
     private ActivityResultLauncher<String> imagePickerLauncher;
     private boolean isEditMode = false;
+    private RestaurantData restaurantData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +92,24 @@ public class AddRestaurantInfoActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.save);
         cancelButton = findViewById(R.id.cancel);
 
-        // Check if it's edit mode
-        isEditMode = getIntent().getBooleanExtra("isEditMode", false);
+        // Get the Intent extras
+        Intent intent = getIntent();
+        RestaurantData restaurantData = intent.getParcelableExtra("restaurantData");
+        isEditMode = intent.getBooleanExtra("isEditMode", false);
+
+        if (isEditMode && restaurantData != null) {
+            // Fill the fields with the restaurant data
+            resNameEditText.setText(restaurantData.getName());
+            resInfoEditText.setText(restaurantData.getInfo());
+            resAddressEditText.setText(restaurantData.getAddress());
+            zipCodeEditText.setText(restaurantData.getZipCode());
+            phoneNumberEditText.setText(restaurantData.getPhoneNumber());
+            openHoursEditText.setText(restaurantData.getOpenHours());
+            closeHoursEditText.setText(restaurantData.getCloseHours());
+
+            // Load the restaurant image
+            Glide.with(this).load(restaurantData.getRestaurantImageUri()).into(addRestaurantImage);
+        }
 
         // Set onClickListener for the Save button
         saveButton.setOnClickListener(v -> {
