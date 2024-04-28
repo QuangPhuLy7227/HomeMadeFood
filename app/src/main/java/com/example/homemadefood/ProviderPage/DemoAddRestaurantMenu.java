@@ -151,56 +151,63 @@ public class DemoAddRestaurantMenu extends AppCompatActivity {
             selectedItemCategory = drinkMenu;
         }
 
-        // Check if an image is selected
-        if (selectedImageUri != null) {
-            // Upload image to Firebase Storage
-            mStorageRef.child(foodOrDrinkName).putFile(selectedImageUri)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        // Image uploaded successfully, get its download URL
-                        mStorageRef.child(foodOrDrinkName).getDownloadUrl()
-                                .addOnSuccessListener(uri -> {
-                                    // Add image URL to the menu item data
-                                    menuItem.put("image", uri.toString());
+        // Check if the menu item already exists in the database
+        selectedItemCategory.document(foodOrDrinkName).get().addOnCompleteListener(task -> {
+            if (task.getResult().exists()) {
+                // Menu item already exists, show an error message
+                Toast.makeText(DemoAddRestaurantMenu.this, "Menu item already exists!", Toast.LENGTH_SHORT).show();
+            } else {
+                // Menu item does not exist, add it to the database
+                if (selectedImageUri != null) {
+                    // Upload image to Firebase Storage
+                    mStorageRef.child(foodOrDrinkName).putFile(selectedImageUri)
+                            .addOnSuccessListener(taskSnapshot -> {
+                                // Image uploaded successfully, get its download URL
+                                mStorageRef.child(foodOrDrinkName).getDownloadUrl()
+                                        .addOnSuccessListener(uri -> {
+                                            // Add image URL to the menu item data
+                                            menuItem.put("image", uri.toString());
 
-                                    // Add the menu item to Firestore with the item name as the document ID
-                                    selectedItemCategory.document(foodOrDrinkName).set(menuItem)
-                                            .addOnSuccessListener(aVoid -> {
-                                                // Item added successfully
-                                                Toast.makeText(DemoAddRestaurantMenu.this, "New Item Added", Toast.LENGTH_SHORT).show();
-                                                // Start ProvidersHomepage activity and pass menuItemId
-                                                Intent intent = new Intent(DemoAddRestaurantMenu.this, ProvidersHomePage.class);
-                                                startActivity(intent);
+                                            // Add the menu item to Firestore with the item name as the document ID
+                                            selectedItemCategory.document(foodOrDrinkName).set(menuItem)
+                                                    .addOnSuccessListener(aVoid -> {
+                                                        // Item added successfully
+                                                        Toast.makeText(DemoAddRestaurantMenu.this, "New Item Added", Toast.LENGTH_SHORT).show();
+                                                        // Start ProvidersHomepage activity and pass menuItemId
+                                                        Intent intent = new Intent(DemoAddRestaurantMenu.this, ProvidersHomePage.class);
+                                                        startActivity(intent);
 
-                                            })
-                                            .addOnFailureListener(e -> {
-                                                // Error adding item to Firestore
-                                                Toast.makeText(DemoAddRestaurantMenu.this, "Failed to add this item", Toast.LENGTH_SHORT).show();
-                                            });
-                                })
-                                .addOnFailureListener(e -> {
-                                    // Error getting image URL
-                                    Toast.makeText(DemoAddRestaurantMenu.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
-                                });
-                    })
-                    .addOnFailureListener(e -> {
-                        // Error uploading image
-                        Toast.makeText(DemoAddRestaurantMenu.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
-                    });
-        } else {
-            // No image selected, add the menu item without an image
-            selectedItemCategory.document(foodOrDrinkName).set(menuItem)
-                    .addOnSuccessListener(aVoid -> {
-                        // Item added successfully
-                        Toast.makeText(DemoAddRestaurantMenu.this, "New Item Added", Toast.LENGTH_SHORT).show();
-                        // Start ProvidersHomepage activity and pass menuItemId
-                        Intent intent = new Intent(DemoAddRestaurantMenu.this, ProvidersHomePage.class);
-                        startActivity(intent);
-                    })
-                    .addOnFailureListener(e -> {
-                        // Error adding item to Firestore
-                        Toast.makeText(DemoAddRestaurantMenu.this, "Failed to add this item", Toast.LENGTH_SHORT).show();
-                    });
-        }
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        // Error adding item to Firestore
+                                                        Toast.makeText(DemoAddRestaurantMenu.this, "Failed to add this item", Toast.LENGTH_SHORT).show();
+                                                    });
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            // Error getting image URL
+                                            Toast.makeText(DemoAddRestaurantMenu.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
+                                        });
+                            })
+                            .addOnFailureListener(e -> {
+                                // Error uploading image
+                                Toast.makeText(DemoAddRestaurantMenu.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+                            });
+                } else {
+                    // No image selected, add the menu item without an image
+                    selectedItemCategory.document(foodOrDrinkName).set(menuItem)
+                            .addOnSuccessListener(aVoid -> {
+                                // Item added successfully
+                                Toast.makeText(DemoAddRestaurantMenu.this, "New Item Added", Toast.LENGTH_SHORT).show();
+                                // Start ProvidersHomepage activity and pass menuItemId
+                                Intent intent = new Intent(DemoAddRestaurantMenu.this, ProvidersHomePage.class);
+                                startActivity(intent);
+                            })
+                            .addOnFailureListener(e -> {
+                                // Error adding item to Firestore
+                                Toast.makeText(DemoAddRestaurantMenu.this, "Failed to add this item", Toast.LENGTH_SHORT).show();
+                            });
+                }
+            }
+        });
     }
-
 }
