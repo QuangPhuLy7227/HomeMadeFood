@@ -37,7 +37,7 @@ public class ProvidersHomePage extends AppCompatActivity {
 
     private ImageButton profileBtn;
     private Button addButton;
-    private Button addMenButton, updateDrink, updateFood, addMenuSecondBtn;
+    private Button addMenButton, addMenuSecondBtn;
     private TextView restaurantPlaceholder;
     private Button modifyResButton;
     private Button modifyMenButton;

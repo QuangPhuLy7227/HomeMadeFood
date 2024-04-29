@@ -129,23 +129,39 @@
         android:layout_marginTop="8dp"
         android:text="Kitchen's Menu" />
 
-    <!--     RecyclerView to display Provider data -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView1"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:padding="8dp"
-        tools:listitem="@layout/item_menu_drink"
-        android:layout_below="@id/addSecondMenuButton" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:padding="8dp"
-        tools:listitem="@layout/item_menu_food"
-        android:layout_below="@id/recyclerView1" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/textViewMenu">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- RecyclerView for drinks -->
+
+            <!-- RecyclerView for food -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:visibility="visible"
+                tools:listitem="@layout/item_menu_drink" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:padding="8dp"
+                tools:listitem="@layout/item_menu_food" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>
 
