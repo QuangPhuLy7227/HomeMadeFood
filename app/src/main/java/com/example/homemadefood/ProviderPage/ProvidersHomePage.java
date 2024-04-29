@@ -41,7 +41,7 @@ public class ProvidersHomePage extends AppCompatActivity {
     private TextView restaurantPlaceholder;
     private Button modifyResButton;
     private Button modifyMenButton;
-    private TextView menuPlaceholder;
+    private TextView menuPlaceholder, menuText;
 
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
@@ -64,6 +64,7 @@ public class ProvidersHomePage extends AppCompatActivity {
         addMenButton = findViewById(R.id.addMenuButton);
         modifyResButton = findViewById(R.id.modifyResButton);
         addMenuSecondBtn = findViewById(R.id.addSecondMenuButton);
+        menuText = findViewById(R.id.textViewMenu);
 
 
         // Initialize placeholders
@@ -190,6 +191,7 @@ public class ProvidersHomePage extends AppCompatActivity {
                         addButton.setVisibility(View.GONE);
                         modifyResButton.setVisibility(View.VISIBLE);
                         addMenuSecondBtn.setVisibility(View.VISIBLE);
+                        menuText.setVisibility(View.VISIBLE);
                         // Fetch restaurant data
                         fetchRestaurantData();
                         // Fetch Menu data

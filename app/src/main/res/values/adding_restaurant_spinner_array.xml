@@ -11,6 +11,9 @@
         <item>Sushi</item>
         <item>Soups</item>
         <item>Paste</item>
+        <item>Comfort Food</item>
+        <item>Home-Style Cooking</item>
+        <item>Traditional Cuisine</item>
     </string-array>
     <string-array name="date_ranges">
         <item>Monday to Friday</item>
