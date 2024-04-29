@@ -40,7 +40,6 @@ public class ProvidersHomePage extends AppCompatActivity {
     private Button addMenButton, addMenuSecondBtn;
     private TextView restaurantPlaceholder;
     private Button modifyResButton;
-    private Button modifyMenButton;
     private TextView menuPlaceholder, menuText;
 
     private FirebaseFirestore firestore;
@@ -166,9 +165,6 @@ public class ProvidersHomePage extends AppCompatActivity {
             public void onClick(View v) {
                 // Create an Intent to start the DemoAddRestaurantMenu
                 Intent intent = new Intent(ProvidersHomePage.this, DemoAddRestaurantMenu.class);
-
-//                // Pass a flag indicating it's for modification
-//                intent.putExtra("isEditMode", true);
 
                 // Start the activity
                 startActivity(intent);
