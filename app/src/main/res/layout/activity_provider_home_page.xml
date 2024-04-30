@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".ProviderPage.ProvidersHomePage">
+    tools:context=".ProviderPage.ProviderHomePage">
 
     <!-- Top Section with Browse Text, Search, and Profile Button -->
     <LinearLayout
@@ -63,7 +63,7 @@
         android:layout_below="@id/openingSection"
         android:layout_alignParentEnd="true" />
 
-<!--     RecyclerView to display Provider data -->
+    <!--     RecyclerView to display Provider data -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -163,4 +163,3 @@
     </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>
-

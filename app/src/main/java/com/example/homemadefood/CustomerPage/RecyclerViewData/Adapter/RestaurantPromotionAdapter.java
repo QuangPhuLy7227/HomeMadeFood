@@ -1,4 +1,4 @@
-package com.example.homemadefood.CustomerPage.RecyclerViewData;
+package com.example.homemadefood.CustomerPage.RecyclerViewData.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,24 +10,26 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.homemadefood.CustomerPage.RecyclerViewData.RecyclerViewInterface;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantPromotionModel;
 import com.example.homemadefood.R;
 
 import java.util.List;
 
 public class RestaurantPromotionAdapter extends RecyclerView.Adapter<RestaurantPromotionAdapter.ViewHolder> {
     private final Context context;
-    private List<RestaurantPromotion> dataList;
+    private List<RestaurantPromotionModel> dataList;
     private final RecyclerViewInterface recyclerViewInterface;
     private boolean isHorizontal;
 
-    public RestaurantPromotionAdapter(Context context, List<RestaurantPromotion> dataList, RecyclerViewInterface recyclerViewInterface, boolean isHorizontal) {
+    public RestaurantPromotionAdapter(Context context, List<RestaurantPromotionModel> dataList, RecyclerViewInterface recyclerViewInterface, boolean isHorizontal) {
         this.context = context;
         this.dataList = dataList;
         this.recyclerViewInterface = recyclerViewInterface;
         this.isHorizontal = isHorizontal;
     }
 
-    public void setData(List<RestaurantPromotion> dataList) {
+    public void setData(List<RestaurantPromotionModel> dataList) {
         this.dataList = dataList;
         notifyDataSetChanged();
     }
@@ -42,7 +44,7 @@ public class RestaurantPromotionAdapter extends RecyclerView.Adapter<RestaurantP
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        RestaurantPromotion promotion = dataList.get(position);
+        RestaurantPromotionModel promotion = dataList.get(position);
 
         if (promotion == null) {
             return;
@@ -78,7 +80,7 @@ public class RestaurantPromotionAdapter extends RecyclerView.Adapter<RestaurantP
             priceRange = itemView.findViewById(R.id.priceRange);
         }
 
-        public void bind(RestaurantPromotion promotion) {
+        public void bind(RestaurantPromotionModel promotion) {
             restaurantImage.setImageResource(promotion.getRestaurantImage());
             restaurantName.setText(promotion.getRestaurantName());
             ratingTextView.setText(String.valueOf(promotion.getRating()));

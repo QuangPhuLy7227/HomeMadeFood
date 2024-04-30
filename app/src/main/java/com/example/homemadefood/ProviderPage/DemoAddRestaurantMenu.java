@@ -5,7 +5,6 @@ import static com.example.homemadefood.LoginActivity.SHARED_PREF_NAME;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -23,18 +22,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.homemadefood.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class DemoAddRestaurantMenu extends AppCompatActivity {
 
@@ -173,8 +167,8 @@ public class DemoAddRestaurantMenu extends AppCompatActivity {
                                                     .addOnSuccessListener(aVoid -> {
                                                         // Item added successfully
                                                         Toast.makeText(DemoAddRestaurantMenu.this, "New Item Added", Toast.LENGTH_SHORT).show();
-                                                        // Start ProvidersHomepage activity and pass menuItemId
-                                                        Intent intent = new Intent(DemoAddRestaurantMenu.this, ProvidersHomePage.class);
+                                                        // Start ProviderHomepage activity and pass menuItemId
+                                                        Intent intent = new Intent(DemoAddRestaurantMenu.this, ProviderHomePage.class);
                                                         startActivity(intent);
 
                                                     })
@@ -198,8 +192,8 @@ public class DemoAddRestaurantMenu extends AppCompatActivity {
                             .addOnSuccessListener(aVoid -> {
                                 // Item added successfully
                                 Toast.makeText(DemoAddRestaurantMenu.this, "New Item Added", Toast.LENGTH_SHORT).show();
-                                // Start ProvidersHomepage activity and pass menuItemId
-                                Intent intent = new Intent(DemoAddRestaurantMenu.this, ProvidersHomePage.class);
+                                // Start ProviderHomepage activity and pass menuItemId
+                                Intent intent = new Intent(DemoAddRestaurantMenu.this, ProviderHomePage.class);
                                 startActivity(intent);
                             })
                             .addOnFailureListener(e -> {

@@ -313,8 +313,8 @@ public class AddRestaurantInfoActivity extends AppCompatActivity {
                     // Restaurant data added successfully
                     Toast.makeText(this, "Restaurant added successfully!", Toast.LENGTH_SHORT).show();
 
-                    // Refresh the ProvidersHomePage activity
-                    Intent intent = new Intent(this, ProvidersHomePage.class);
+                    // Refresh the ProviderHomePage activity
+                    Intent intent = new Intent(this, ProviderHomePage.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
 

@@ -24,7 +24,7 @@ import com.example.homemadefood.CustomerPage.CustomerViewRestaurant.TopRestauran
 import com.example.homemadefood.CustomerPage.RestaurantPage.DemoAddRestaurantMenu;
 import com.example.homemadefood.CustomerPage.RestaurantPage.DemoAddRestaurants;
 import com.example.homemadefood.CustomerPage.Map.MapsActivity;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotion;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantPromotionModel;
 import com.example.homemadefood.LoginActivity;
 import com.example.homemadefood.R;
 import com.example.homemadefood.UserProfileActivity;
@@ -244,7 +244,7 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
             @Override
             public void onClick(View v) {
                 // Pass data to TopRestaurant activity
-                List<RestaurantPromotion> promotionList = listViewFragment.generatePromotionList();
+                List<RestaurantPromotionModel> promotionList = listViewFragment.generatePromotionList();
                 Intent intent = new Intent(CustomerHomepage.this, TopRestaurant.class);
                 intent.putParcelableArrayListExtra("promotion_list", new ArrayList<>(promotionList));
                 startActivity(intent);
@@ -267,15 +267,19 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
 
-            state = category;
-            listViewFragment.queryRestaurants(maxDeliveryFee, state);
+            if (!searchView.hasFocus()) { // Check if the SearchView has focus
+                state = category;
+                listViewFragment.queryRestaurants(maxDeliveryFee, state);
+            }
         } else {
             animation = new RotateAnimation(-20, 0,
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
 
-            state = "All";
-            listViewFragment.queryRestaurants(maxDeliveryFee, state);
+            if (!searchView.hasFocus()) { // Check if the SearchView has focus
+                state = "All";
+                listViewFragment.queryRestaurants(maxDeliveryFee, state);
+            }
         }
         animation.setDuration(200);
         animation.setFillAfter(true);
@@ -284,6 +288,7 @@ public class CustomerHomepage extends AppCompatActivity implements DeliveryFeeLi
         isRotated = !isRotated; // Toggle between the state
         lastClickedButton = button; // Set the current clicked button as the last clicked button
     }
+
 
     private void resetButtonAnimation(ImageButton button) { // Reset animation
         RotateAnimation animation = new RotateAnimation(-20, 0,

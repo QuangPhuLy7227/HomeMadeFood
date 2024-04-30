@@ -1,9 +1,9 @@
-package com.example.homemadefood.CustomerPage.RecyclerViewData;
+package com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class RestaurantPromotion implements Parcelable {
+public class RestaurantPromotionModel implements Parcelable {
     private final int restaurantImage;
     private final String restaurantName;
     private final float rating;
@@ -12,7 +12,7 @@ public class RestaurantPromotion implements Parcelable {
     private String deliveryTime;
     private String priceRange;
 
-    public RestaurantPromotion(int restaurantImage, String restaurantName, float rating, int totalRating, String distance, String deliveryTime, String priceRange) {
+    public RestaurantPromotionModel(int restaurantImage, String restaurantName, float rating, int totalRating, String distance, String deliveryTime, String priceRange) {
         this.restaurantImage = restaurantImage;
         this.restaurantName = restaurantName;
         this.rating = rating;
@@ -22,7 +22,7 @@ public class RestaurantPromotion implements Parcelable {
         this.priceRange = priceRange;
     }
 
-    protected RestaurantPromotion(Parcel in) {
+    protected RestaurantPromotionModel(Parcel in) {
         restaurantImage = in.readInt();
         restaurantName = in.readString();
         rating = in.readFloat();
@@ -32,15 +32,15 @@ public class RestaurantPromotion implements Parcelable {
         priceRange = in.readString();
     }
 
-    public static final Creator<RestaurantPromotion> CREATOR = new Creator<RestaurantPromotion>() {
+    public static final Creator<RestaurantPromotionModel> CREATOR = new Creator<RestaurantPromotionModel>() {
         @Override
-        public RestaurantPromotion createFromParcel(Parcel in) {
-            return new RestaurantPromotion(in);
+        public RestaurantPromotionModel createFromParcel(Parcel in) {
+            return new RestaurantPromotionModel(in);
         }
 
         @Override
-        public RestaurantPromotion[] newArray(int size) {
-            return new RestaurantPromotion[size];
+        public RestaurantPromotionModel[] newArray(int size) {
+            return new RestaurantPromotionModel[size];
         }
     };
 

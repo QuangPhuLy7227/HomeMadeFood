@@ -1,4 +1,4 @@
-package com.example.homemadefood.CustomerPage.RecyclerViewData;
+package com.example.homemadefood.CustomerPage.RecyclerViewData.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,16 +9,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.RecyclerViewInterface;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantDataModel;
 import com.example.homemadefood.R;
 import java.text.DecimalFormat;
 import java.util.List;
 
 public class RestaurantMenuAdapter extends RecyclerView.Adapter<RestaurantMenuAdapter.ViewHolder> {
     private final Context context;
-    private List<RestaurantData> dataList;
+    private List<RestaurantDataModel> dataList;
     private final RecyclerViewInterface recyclerViewInterface;
 
-    public RestaurantMenuAdapter(Context context, List<RestaurantData> dataList, RecyclerViewInterface recyclerViewInterface) {
+    public RestaurantMenuAdapter(Context context, List<RestaurantDataModel> dataList, RecyclerViewInterface recyclerViewInterface) {
         if (context == null) {
             throw new IllegalArgumentException("Context cannot be null");
         }
@@ -27,7 +29,7 @@ public class RestaurantMenuAdapter extends RecyclerView.Adapter<RestaurantMenuAd
         this.recyclerViewInterface = recyclerViewInterface;
     }
 
-    public void setData(List<RestaurantData> dataList) {
+    public void setData(List<RestaurantDataModel> dataList) {
         this.dataList = dataList;
         notifyDataSetChanged();
     }
@@ -35,13 +37,13 @@ public class RestaurantMenuAdapter extends RecyclerView.Adapter<RestaurantMenuAd
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.list_item_layout, parent, false);
         return new ViewHolder(view, recyclerViewInterface);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        RestaurantData data = dataList.get(position);
+        RestaurantDataModel data = dataList.get(position);
         // Load restaurant image using Glide
         Glide.with(context)
                 .load(data.getRestaurantImageUri())

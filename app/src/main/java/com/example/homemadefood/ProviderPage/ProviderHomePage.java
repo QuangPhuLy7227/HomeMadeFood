@@ -33,7 +33,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProvidersHomePage extends AppCompatActivity {
+public class ProviderHomePage extends AppCompatActivity {
 
     private ImageButton profileBtn;
     private Button addButton;
@@ -96,7 +96,7 @@ public class ProvidersHomePage extends AppCompatActivity {
         profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(ProvidersHomePage.this, profileBtn);
+                PopupMenu popupMenu = new PopupMenu(ProviderHomePage.this, profileBtn);
                 popupMenu.getMenuInflater().inflate(R.menu.profile_pop_up_menu, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -126,7 +126,7 @@ public class ProvidersHomePage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Create an Intent to start the AddRestaurantInfoActivity
-                Intent intent = new Intent(ProvidersHomePage.this, AddRestaurantInfoActivity.class);
+                Intent intent = new Intent(ProviderHomePage.this, AddRestaurantInfoActivity.class);
 
                 // Start the activity
                 startActivity(intent);
@@ -137,7 +137,7 @@ public class ProvidersHomePage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Create an Intent to start the AddRestaurantInfoActivity
-                Intent intent = new Intent(ProvidersHomePage.this, DemoAddRestaurantMenu.class);
+                Intent intent = new Intent(ProviderHomePage.this, DemoAddRestaurantMenu.class);
 
                 // Start the activity
                 startActivity(intent);
@@ -148,7 +148,7 @@ public class ProvidersHomePage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Create an Intent to start the AddRestaurantInfoActivity
-                Intent intent = new Intent(ProvidersHomePage.this, AddRestaurantInfoActivity.class);
+                Intent intent = new Intent(ProviderHomePage.this, AddRestaurantInfoActivity.class);
 
                 // Pass the restaurant data
                 intent.putExtra("restaurantData", restaurantList.get(0)); // Assuming you have a single restaurant
@@ -164,7 +164,7 @@ public class ProvidersHomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Create an Intent to start the DemoAddRestaurantMenu
-                Intent intent = new Intent(ProvidersHomePage.this, DemoAddRestaurantMenu.class);
+                Intent intent = new Intent(ProviderHomePage.this, DemoAddRestaurantMenu.class);
 
                 // Start the activity
                 startActivity(intent);
@@ -199,7 +199,7 @@ public class ProvidersHomePage extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     // Handle any errors
-                    Log.e("ProvidersHomePage", "Error checking user data: " + e.getMessage());
+                    Log.e("ProviderHomePage", "Error checking user data: " + e.getMessage());
                 });
     }
 
@@ -224,7 +224,7 @@ public class ProvidersHomePage extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     // Handle any errors
-                    Log.e("ProvidersHomePage", "Error fetching restaurant data: " + e.getMessage());
+                    Log.e("ProviderHomePage", "Error fetching restaurant data: " + e.getMessage());
                 });
     }
 
@@ -256,7 +256,7 @@ public class ProvidersHomePage extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     // Handle any errors
-                    Log.e("ProvidersHomePage", "Error fetching food menu data: " + e.getMessage());
+                    Log.e("ProviderHomePage", "Error fetching food menu data: " + e.getMessage());
                 });
 
         // Query Firestore for drink menu data added by the current user
@@ -282,14 +282,14 @@ public class ProvidersHomePage extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     // Handle any errors
-                    Log.e("ProvidersHomePage", "Error fetching drink menu data: " + e.getMessage());
+                    Log.e("ProviderHomePage", "Error fetching drink menu data: " + e.getMessage());
                 });
     }
 
 
     private void showPlaceholderViews() {
         // Show the placeholder views
-        Log.d("ProvidersHomePage", "Showing placeholder views");
+        Log.d("ProviderHomePage", "Showing placeholder views");
         restaurantPlaceholder.setVisibility(View.VISIBLE);
         menuPlaceholder.setVisibility(View.VISIBLE);
         addButton.setVisibility(View.VISIBLE);
@@ -299,7 +299,7 @@ public class ProvidersHomePage extends AppCompatActivity {
 
     // Method for logging out
     private void logout() {
-        Intent intent = new Intent(ProvidersHomePage.this, LoginActivity.class);
+        Intent intent = new Intent(ProviderHomePage.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
