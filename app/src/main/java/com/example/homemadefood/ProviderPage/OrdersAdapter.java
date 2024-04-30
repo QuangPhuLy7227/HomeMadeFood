@@ -1,7 +1,5 @@
 package com.example.homemadefood.ProviderPage;
 
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -87,5 +85,6 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
             messageButton = itemView.findViewById(R.id.MsgBtn);
         }
     }
+
 }
 

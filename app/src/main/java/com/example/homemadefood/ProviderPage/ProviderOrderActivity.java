@@ -3,13 +3,16 @@ package com.example.homemadefood.ProviderPage;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
@@ -21,16 +24,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.homemadefood.LoginActivity;
 import com.example.homemadefood.R;
 import com.example.homemadefood.UserProfileActivity;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Firebase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.google.android.gms.tasks.OnCompleteListener;
 
 public class ProviderOrderActivity extends AppCompatActivity {
 
     private TextView textView;
     private ImageButton imageLogo;
     private RecyclerView recyclerView;
-
 
 
     @Override
@@ -65,7 +74,7 @@ public class ProviderOrderActivity extends AppCompatActivity {
 
         //Get provider information from database or wherever its stored
         String providerName = "Provider Name";
-        int logoResourceId = R.drawable.logo1;
+        int logoResourceId = R.drawable.logo2;
 
         //Set provider name to TextView
         textView.setText(providerName);
@@ -134,6 +143,7 @@ public class ProviderOrderActivity extends AppCompatActivity {
                         .show();
             }
         });
+
 
     }
 
