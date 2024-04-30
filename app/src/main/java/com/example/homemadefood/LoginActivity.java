@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.homemadefood.CustomerPage.MainPage.CustomerHomepage;
-import com.example.homemadefood.ProviderPage.ProvidersHomePage;
+import com.example.homemadefood.ProviderPage.ProviderHomePage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         } else if (type.equals("prov")) {
                             if (checkType == R.id.provider) {
-                                Intent intent = new Intent(LoginActivity.this, ProvidersHomePage.class);
+                                Intent intent = new Intent(LoginActivity.this, ProviderHomePage.class);
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(LoginActivity.this, "Incorrect User Type!", Toast.LENGTH_SHORT).show();
