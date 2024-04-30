@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".ProviderPage.ProvidersHomePage">
+    tools:context=".ProviderPage.ProviderHomePage">
 
     <!-- Top Section with Browse Text, Search, and Profile Button -->
     <LinearLayout
@@ -20,88 +19,92 @@
         <!-- Browse Text -->
         <TextView
             android:id="@+id/browseTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:layout_marginTop="20dp"
-            android:text="Browse"
+            android:text="Provider's Kitchen"
             android:textSize="30dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_weight="1" />
 
         <!-- Profile Button -->
         <ImageButton
             android:id="@+id/profileButton"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:layout_gravity="top|end"
-            android:layout_marginStart="225dp"
             android:layout_marginTop="25dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="5dp"
             android:background="@drawable/people"
             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
     </LinearLayout>
 
-    <!-- Add Restaurant button -->
+    <!-- Add Provider button -->
     <Button
         android:id="@+id/addRestaurantButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="end"
+        android:text="Add Kitchen"
+        android:visibility="visible"
+        android:layout_alignParentEnd="true" />
+
+    <!-- Modify Restaurant button -->
+    <Button
+        android:id="@+id/modifyResButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_gravity="end"
-        android:text="Add Restaurant"
-        android:visibility="gone"/>
+        android:text="Update Kitchen"
+        android:visibility="gone"
+        android:layout_below="@id/openingSection"
+        android:layout_alignParentEnd="true" />
 
-    <!-- Placeholder for restaurant data -->
+    <!--     RecyclerView to display Provider data -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:padding="8dp"
+        tools:listitem="@layout/item_restaurant"
+        android:layout_below="@id/modifyResButton" />
+
     <TextView
         android:id="@+id/restaurantPlaceholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No restaurant data available"
-        android:visibility="gone" />
+        android:text="No Provider's data available"
+        android:visibility="gone"
+        android:layout_below="@id/addRestaurantButton" />
 
-    <!-- Restaurant Name TextView -->
-    <TextView
-        android:id="@+id/restaurantNameTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:visibility="gone"/>
 
-    <!-- Restaurant Info TextView -->
-    <TextView
-        android:id="@+id/restaurantInfoTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"/>
-
-    <!-- Restaurant Address TextView -->
-    <TextView
-        android:id="@+id/restaurantAddressTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"/>
-
-    <!-- Add Menu button -->
+    <!-- Modify Menu button -->
     <Button
         android:id="@+id/addMenuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="250dp"
         android:layout_gravity="end"
         android:text="Add Menu"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_below="@id/restaurantPlaceholder"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/addSecondMenuButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="end"
+        android:text="Add Menu"
+        android:visibility="gone"
+        android:layout_below="@id/recyclerView"
+        android:layout_alignParentEnd="true" />
+
 
     <!-- Placeholder for menu data -->
     <TextView
@@ -109,6 +112,54 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="No menu data available"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_below="@id/addMenuButton" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/textViewMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recyclerView"
+        android:layout_toLeftOf="@+id/addSecondMenuButton"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:textSize="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Kitchen's Menu" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewMenu"
+        android:layout_marginBottom="50dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- RecyclerView for drinks -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:visibility="visible"
+                tools:listitem="@layout/item_menu_drink" />
+            <!-- RecyclerView for food -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:padding="8dp"
+                tools:listitem="@layout/item_menu_food" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>
