@@ -16,11 +16,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homemadefood.CustomerPage.CustomerViewRestaurant.CustomerMenuSelection;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantMenuFoodModel;
 import com.example.homemadefood.CustomerPage.RecyclerViewData.RecyclerViewInterface;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantDataModel;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantMenuAdapter;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotionModel;
-import com.example.homemadefood.CustomerPage.RecyclerViewData.RestaurantPromotionAdapter;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantDataModel;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.Adapter.RestaurantMenuAdapter;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantPromotionModel;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.Adapter.RestaurantPromotionAdapter;
 import com.example.homemadefood.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,9 +33,9 @@ import java.util.List;
 public class ResListViewFragment extends Fragment implements RecyclerViewInterface {
 
     protected List<RestaurantDataModel> dataList1;
+    protected List<RestaurantMenuFoodModel> dataListFood;
     protected RestaurantMenuAdapter adapter1;
     protected RecyclerView verticalRecyclerView;
-
     protected List<RestaurantPromotionModel> dataList2;
     protected RestaurantPromotionAdapter adapter2;
     protected RecyclerView horizontalRecyclerView;
@@ -46,10 +47,12 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataList1 = new ArrayList<>();
+        dataListFood = new ArrayList<>();
         adapter1 = new RestaurantMenuAdapter(getContext(), dataList1, this);
         dataList2 = generatePromotionList();
         adapter2 = new RestaurantPromotionAdapter(getContext(), dataList2, null, true);
         mFirestore = FirebaseFirestore.getInstance();
+        fetchMenuItemDataFromFirestore();
     }
 
     @Override
@@ -85,6 +88,20 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
                         Toast.makeText(getContext(), "Failed to read data from Firestore", Toast.LENGTH_SHORT).show());
     }
 
+    private void fetchMenuItemDataFromFirestore() {
+        mFirestore.collection("Menu")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    dataListFood.clear();
+                    for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                        RestaurantMenuFoodModel foodData = snapshot.toObject(RestaurantMenuFoodModel.class);
+                        dataListFood.add(foodData);
+                    }
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(getContext(), "Failed to read data from Firestore", Toast.LENGTH_SHORT).show());
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     public void queryRestaurants(float maxDeliveryFee, String category) {
         Query query = mFirestore.collection("restaurants");
@@ -110,8 +127,6 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
         });
     }
 
-
-
     public void restoreOriginalList() {
         fetchDataFromFirestore();
     }
@@ -124,9 +139,9 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
         startActivity(intent);
     }
 
-
     public void searchList(String text) {
         List<RestaurantDataModel> searchListData1 = new ArrayList<>();
+        List<RestaurantMenuFoodModel> searchListData2 = new ArrayList<>();
 
         for (RestaurantDataModel data : dataList1) {
             if (data.getName() != null && data.getName().toLowerCase().contains(text.toLowerCase())) {
@@ -134,7 +149,13 @@ public class ResListViewFragment extends Fragment implements RecyclerViewInterfa
             }
         }
 
-        if (searchListData1.isEmpty()) {
+        for (RestaurantMenuFoodModel data : dataListFood) {
+            if (data.getFoodName() != null && data.getFoodName().toLowerCase().contains(text.toLowerCase())) {
+                searchListData2.add(data);
+            }
+        }
+
+        if (searchListData1.isEmpty() && searchListData2.isEmpty()) {
             adapter1.setData(new ArrayList<>());
             requireView().findViewById(R.id.noResultFound).setVisibility(View.VISIBLE);
         } else {

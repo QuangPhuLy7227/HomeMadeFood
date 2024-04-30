@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.example.homemadefood.CustomerPage.MainPage.CustomerHomepage;
 import com.example.homemadefood.ProviderPage.ProviderHomePage;
-import com.example.homemadefood.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
@@ -38,8 +37,8 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseFirestore db;
 
     // Shared Preferences constants
-    private static final String SHARED_PREF_NAME = "homemadefood_shared_pref";
-    private static final String KEY_USERNAME = "username";
+    public static final String SHARED_PREF_NAME = "homemadefood_shared_pref";
+    public static final String KEY_USERNAME = "username";
     private static final String KEY_FULL_NAME = "full_name";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PHONE = "phone";

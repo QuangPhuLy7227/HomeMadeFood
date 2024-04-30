@@ -1,4 +1,4 @@
-package com.example.homemadefood.CustomerPage.RecyclerViewData;
+package com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,6 +8,11 @@ public class RestaurantMenuFoodModel implements Parcelable {
     private String foodName;
     private String foodDescription;
     private float foodPrice;
+
+    public RestaurantMenuFoodModel() {
+        // Default constructor required for Firestore
+    }
+
 
     public RestaurantMenuFoodModel(String foodImage, String foodName, String foodDescription, float foodPrice) {
         this.foodImage = foodImage;

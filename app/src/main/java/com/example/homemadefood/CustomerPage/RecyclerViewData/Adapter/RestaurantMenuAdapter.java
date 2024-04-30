@@ -1,4 +1,4 @@
-package com.example.homemadefood.CustomerPage.RecyclerViewData;
+package com.example.homemadefood.CustomerPage.RecyclerViewData.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.RecyclerViewInterface;
+import com.example.homemadefood.CustomerPage.RecyclerViewData.ModelClass.RestaurantDataModel;
 import com.example.homemadefood.R;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -35,7 +37,7 @@ public class RestaurantMenuAdapter extends RecyclerView.Adapter<RestaurantMenuAd
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.list_item_layout, parent, false);
         return new ViewHolder(view, recyclerViewInterface);
     }
 

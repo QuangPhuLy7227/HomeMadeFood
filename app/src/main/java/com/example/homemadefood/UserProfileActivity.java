@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.homemadefood.CustomerPage.MainPage.CustomerHomepage;
-import com.example.homemadefood.ProviderPage.ProviderHomePage;
 
 public class UserProfileActivity extends AppCompatActivity {
 
