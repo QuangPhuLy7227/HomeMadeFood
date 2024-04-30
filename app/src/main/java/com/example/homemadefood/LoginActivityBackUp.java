@@ -17,15 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.homemadefood.CustomerPage.MainPage.CustomerHomepage;
-import com.example.homemadefood.ProviderPage.ProviderHomePage;
+import com.example.homemadefood.ProviderPage.ProvidersHomePage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -185,7 +182,7 @@ public class LoginActivityBackUp extends AppCompatActivity {
                             }
                         } else if (type.equals("prov")) {
                             if (checkType == R.id.provider) {
-                                Intent intent = new Intent(LoginActivityBackUp.this, ProviderHomePage.class);
+                                Intent intent = new Intent(LoginActivityBackUp.this, ProvidersHomePage.class);
                                 intent.putExtra("username", usernameFromDB);
                                 startActivity(intent);
                             } else {

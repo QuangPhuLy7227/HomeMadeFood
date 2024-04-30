@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/imageViewDrinkPic"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_restaurant_image" />
+
+    <TextView
+        android:id="@+id/textViewDrink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imageViewDrinkPic"
+        android:layout_marginStart="16dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="Drink Name" />
+    <TextView
+        android:id="@+id/textViewCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewDrink"
+        android:layout_toEndOf="@id/imageViewDrinkPic"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"
+        android:text="Category" />
+
+    <TextView
+        android:id="@+id/textViewDrinkDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewCategory"
+        android:layout_toEndOf="@id/imageViewDrinkPic"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"
+        android:text="Drink Description" />
+
+    <TextView
+        android:id="@+id/textViewPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewDrinkDescription"
+        android:layout_toEndOf="@id/imageViewDrinkPic"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"
+        android:text="Drink Price" />
+
+    <Button
+        android:id="@+id/updateDrink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Update"
+        android:visibility="visible"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true" />
+
+</RelativeLayout>
